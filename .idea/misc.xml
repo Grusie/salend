@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salend/app/src/main/res/drawable/ic_search.xml" value="0.25333333333333335" />
+        <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salend/app/src/main/res/drawable/user_selector.xml" value="0.13697916666666668" />
+        <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salend/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salend/app/src/main/res/layout/main_toolbar.xml" value="0.24114583333333334" />
+        <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salend/app/src/main/res/layout/navigation_bottom_list.xml" value="0.12" />
+        <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salend/app/src/main/res/menu/menu_main_toolbar.xml" value="0.24114583333333334" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
