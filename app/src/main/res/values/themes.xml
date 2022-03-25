@@ -19,8 +19,5 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="category_button_style">
-        <item name="backgroundTint">@color/gray</item>
-    </style>
 
 </resources>
