@@ -6,140 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/main_toolbar"
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vp_ac_main_frag_pager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/teal_200"
-        >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="지역"
-            style="@style/title_text_style"
-            android:layout_gravity="center"
-            />
-
-    </androidx.appcompat.widget.Toolbar>
-
-    <EditText
-        android:id="@+id/search_edit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/main_toolbar"
-        android:drawableEnd="@drawable/ic_search"
-        />
-
-        <LinearLayout
-            android:id="@+id/RectTest"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/search_edit"
-            android:weightSum="2"
-            android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:weightSum="4">
-
-                <cf.untitled.salend.RectButton
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"/>
-
-                <cf.untitled.salend.RectButton
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    />
-                <cf.untitled.salend.RectButton
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    />
-                <cf.untitled.salend.RectButton
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:weightSum="4">
-
-                <cf.untitled.salend.RectButton
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"/>
-
-                <cf.untitled.salend.RectButton
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    />
-
-                <cf.untitled.salend.RectButton
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-                <cf.untitled.salend.RectButton
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    />
-            </LinearLayout>
-        </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/nearby_sale_tab"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/RectTest"
-        android:orientation="vertical"
-        >
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="내 주변 할인매장"
-            style="@style/title_text_style"
-            android:gravity="center" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/nearby_sale_recyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:orientation="horizontal"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/nearby_sale_tab"
-        android:orientation="vertical"
-        >
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="마감 임박"
-            style="@style/title_text_style"
-            android:gravity="center" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+        android:layout_height="match_parent"></androidx.viewpager.widget.ViewPager>
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/navigation_bar"
+        android:id="@+id/tl_ac_main_bottom_menu"
+        android:background="#FFFFFF"
+        android:elevation="5dp"
+        app:tabIndicatorColor="#40D39F"
         android:layout_width="match_parent"
         android:layout_height="52dp"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent">
+    </com.google.android.material.tabs.TabLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
