@@ -68,6 +68,7 @@ class HomeFragment : Fragment() {
                 productInfo(R.drawable.ic_search,"A 면목 4동점","장갑",7000),
                 productInfo(R.drawable.ic_search,"B 면목 4동점","마우스",7000),
                 productInfo(R.drawable.ic_search,"C 면목 4동점","빵",3000),
+                productInfo(R.drawable.ic_search,"D 면목 4동점","회",5000),
             )
         binding.nearbySaleRecyclerview.apply{
             layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
