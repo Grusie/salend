@@ -18,9 +18,7 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 class HomeFragment : Fragment() {
-    override fun onStart() {
-        super.onStart()
-    }
+    lateinit var binding: FragmentHomeBinding
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -32,19 +30,19 @@ class HomeFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-        initRecyclerView()
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        binding = FragmentHomeBinding.inflate(layoutInflater)
+        return initRecyclerView()
     }
 
     companion object {
-        /**
+        /**`
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
@@ -62,9 +60,7 @@ class HomeFragment : Fragment() {
                 }
             }
     }
-    private fun initRecyclerView() {
-        val binding = FragmentHomeBinding.inflate(layoutInflater)
-
+    private fun initRecyclerView() : View? {
         val productList = arrayOf(
                 productInfo(R.drawable.ic_search,"GS25 면목 4동점","아메리카노",2000),
                 productInfo(R.drawable.ic_search,"CU 면목 4동점","캔디",500),
@@ -84,5 +80,6 @@ class HomeFragment : Fragment() {
             setHasFixedSize(true)
             adapter = NearbySaleRecyclerAdapter(productList)
         }
+        return binding.root
     }
 }

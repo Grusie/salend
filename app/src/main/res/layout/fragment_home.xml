@@ -143,6 +143,9 @@
                     android:layout_height="match_parent"
                     android:nestedScrollingEnabled="false"
                     />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"/>
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
