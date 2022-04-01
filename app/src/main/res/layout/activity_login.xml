@@ -54,7 +54,7 @@
         android:layout_marginTop="30dp">
 
         <Button
-            android:id="@+id/loginBtn"
+            android:id="@+id/login_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -62,7 +62,15 @@
             android:textSize="20sp" />
 
         <Button
-            android:id="@+id/authBtn"
+            android:id="@+id/google_login_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="구글"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/auth_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"

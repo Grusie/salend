@@ -46,6 +46,7 @@ class MyPageFragment : Fragment() {
         binding = FragmentMyPageBinding.inflate(layoutInflater)
 
         binding.logoutBtn.setOnClickListener {
+            MyApplication.auth.signOut()
             changeLoginStatus("LogOut")
         }
 
@@ -94,6 +95,8 @@ class MyPageFragment : Fragment() {
                 authInfo.visibility = View.GONE
                 logoutBtn.visibility = View.GONE
                 authTextView.visibility = View.VISIBLE
+
+                authInfo.text = ""
             }
         }
     }
