@@ -1,7 +1,6 @@
 package fragment
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import cf.untitled.salend.R
 import cf.untitled.salend.adapter.NearbySaleRecyclerAdapter
 import cf.untitled.salend.databinding.FragmentHomeBinding
-import cf.untitled.salend.model.productInfo
+import cf.untitled.salend.model.ProductInfo
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -62,13 +61,13 @@ class HomeFragment : Fragment() {
     }
     private fun initRecyclerView() : View? {
         val productList = arrayOf(
-                productInfo(R.drawable.ic_search,"GS25 면목 4동점","아메리카노",2000),
-                productInfo(R.drawable.ic_search,"CU 면목 4동점","캔디",500),
-                productInfo(R.drawable.ic_search,"hello 면목 4동점","디사론노",12000),
-                productInfo(R.drawable.ic_search,"A 면목 4동점","장갑",7000),
-                productInfo(R.drawable.ic_search,"B 면목 4동점","마우스",7000),
-                productInfo(R.drawable.ic_search,"C 면목 4동점","빵",3000),
-                productInfo(R.drawable.ic_search,"D 면목 4동점","회",5000),
+                ProductInfo(R.drawable.ic_search,"GS25 면목 4동점","아메리카노",2000),
+                ProductInfo(R.drawable.ic_search,"CU 면목 4동점","캔디",500),
+                ProductInfo(R.drawable.ic_search,"hello 면목 4동점","디사론노",12000),
+                ProductInfo(R.drawable.ic_search,"A 면목 4동점","장갑",7000),
+                ProductInfo(R.drawable.ic_search,"B 면목 4동점","마우스",7000),
+                ProductInfo(R.drawable.ic_search,"C 면목 4동점","빵",3000),
+                ProductInfo(R.drawable.ic_search,"D 면목 4동점","회",5000),
             )
         binding.nearbySaleRecyclerview.apply{
             layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)

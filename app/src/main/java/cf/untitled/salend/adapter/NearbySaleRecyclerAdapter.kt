@@ -1,15 +1,14 @@
 package cf.untitled.salend.adapter
 
-import android.opengl.Visibility
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import cf.untitled.salend.databinding.ItemNearbySaleBinding
-import cf.untitled.salend.model.productInfo
+import cf.untitled.salend.model.ProductInfo
 
-class NearbySaleRecyclerAdapter(private var datas: Array<productInfo>) :
+class NearbySaleRecyclerAdapter(private var datas: Array<ProductInfo>) :
     RecyclerView.Adapter<NearbySaleRecyclerAdapter.NearbySaleViewHolder>() {
     class NearbySaleViewHolder(binding: ItemNearbySaleBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -28,7 +27,6 @@ class NearbySaleRecyclerAdapter(private var datas: Array<productInfo>) :
     override fun onBindViewHolder(holder: NearbySaleViewHolder, position: Int) {
 
         holder.apply {
-            Log.d("grusie", "$position")
             val evenPosition = position * 2
             val oddPosition = position * 2 + 1
             img.setImageResource(datas[evenPosition].img)
