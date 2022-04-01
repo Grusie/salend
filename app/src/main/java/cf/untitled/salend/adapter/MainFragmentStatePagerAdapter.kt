@@ -13,8 +13,8 @@ class MainFragmentStatePagerAdapter(fm : FragmentManager, val fragmentCount : In
             0 -> return HomeFragment()
             1 -> return LikeFragment()
             2 -> return MapFragment()
-            3 -> return MyPageFragment()
-            4 -> return PayListFragment()
+            3 -> return PayListFragment()
+            4 -> return MyPageFragment()
             else -> return HomeFragment()
         }
     }

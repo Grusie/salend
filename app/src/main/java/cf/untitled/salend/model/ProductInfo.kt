@@ -1,6 +1,6 @@
 package cf.untitled.salend.model
 
-data class productInfo(
+data class ProductInfo(
     var img: Int,
     var shop: String,
     var name: String,
