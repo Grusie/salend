@@ -7,7 +7,7 @@ import cf.untitled.salend.adapter.MainFragmentStatePagerAdapter
 import cf.untitled.salend.databinding.ActivityMainBinding
 import cf.untitled.salend.databinding.BottomNavigationTabBinding
 
-lateinit var binding:ActivityMainBinding
+private lateinit var binding:ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

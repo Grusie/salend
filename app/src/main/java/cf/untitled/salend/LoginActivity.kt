@@ -14,12 +14,18 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 
+private lateinit var binding: ActivityLoginBinding
 class LoginActivity : AppCompatActivity() {
+/*    override fun onWindowFocusChanged(hasFocus: Boolean) {        //TODO resizing...
+        super.onWindowFocusChanged(hasFocus)
+        resizeView()
+    }*/
+
     lateinit var googleSignInClient: GoogleSignInClient
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding = ActivityLoginBinding.inflate(layoutInflater)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.authBtn.setOnClickListener {
@@ -27,7 +33,7 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
         binding.googleLoginBtn.setOnClickListener {
-            signIn()
+            firebaseSignIn()
         }
 
         binding.loginBtn.setOnClickListener {
@@ -60,7 +66,20 @@ class LoginActivity : AppCompatActivity() {
         googleSignInClient = GoogleSignIn.getClient(this, gso)
     }
 
-    private fun signIn() {
+/*    private fun resizeView() {
+        val btnWidth = binding.kakaoLoginBtn.width
+        Log.d("grusie","btnWidth : $btnWidth")
+        Log.d("grusie","btnWidth : ${binding.googleLoginBtn.width}")
+        binding.apply {
+            googleLoginBtn.layoutParams.width = btnWidth
+            loginBtn.layoutParams.width = btnWidth
+            authBtn.layoutParams.width = btnWidth
+        }
+    }*/
+
+
+
+    private fun firebaseSignIn() {
         val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent,9001)
     }
