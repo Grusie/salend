@@ -49,15 +49,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/loginLinear"
         android:orientation="vertical"
-        android:weightSum="2"
         app:layout_constraintTop_toBottomOf="@+id/loginLinear"
         android:layout_marginTop="30dp">
-
         <Button
             android:id="@+id/login_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="14"
             android:text="로그인"
             android:textSize="20sp" />
 
@@ -68,6 +66,14 @@
             android:layout_weight="1"
             android:text="구글"
             android:textSize="20sp" />
+
+        <ImageButton
+            android:id="@+id/kakao_login_btn"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:background="@drawable/kakao_login_medium_wide"/>
 
         <Button
             android:id="@+id/auth_btn"
