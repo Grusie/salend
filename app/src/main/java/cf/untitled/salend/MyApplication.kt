@@ -6,6 +6,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import io.reactivex.disposables.CompositeDisposable
 
 class MyApplication: MultiDexApplication() {
     companion object {
@@ -13,8 +14,7 @@ class MyApplication: MultiDexApplication() {
         val auth = Firebase.auth
         @SuppressLint("StaticFieldLeak")
         lateinit var db: FirebaseFirestore
-
-        lateinit var realtime: DatabaseReference
+        var disposables = CompositeDisposable()
         var email: String? = null
 
         fun checkAuth(): Boolean {     //이메일 인증 완료해야만 true 반환

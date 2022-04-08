@@ -13,9 +13,8 @@
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tl_ac_main_bottom_menu"
-        android:background="#FFFFFF"
         android:elevation="5dp"
-        app:tabIndicatorColor="#40D39F"
+        style="@style/navigation_bottom_style"
         android:layout_width="match_parent"
         android:layout_height="52dp"
         app:layout_constraintBottom_toBottomOf="parent">

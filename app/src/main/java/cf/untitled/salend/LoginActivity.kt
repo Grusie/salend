@@ -1,5 +1,6 @@
 package cf.untitled.salend
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -13,15 +14,18 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
+import com.kakao.sdk.user.UserApiClient
+import com.kakao.sdk.user.rx
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
+import io.reactivex.schedulers.Schedulers
 
 private lateinit var binding: ActivityLoginBinding
 class LoginActivity : AppCompatActivity() {
-/*    override fun onWindowFocusChanged(hasFocus: Boolean) {        //TODO resizing...
-        super.onWindowFocusChanged(hasFocus)
-        resizeView()
-    }*/
 
     lateinit var googleSignInClient: GoogleSignInClient
+    @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -34,6 +38,37 @@ class LoginActivity : AppCompatActivity() {
         }
         binding.googleLoginBtn.setOnClickListener {
             firebaseSignIn()
+        }
+
+        binding.kakaoLoginBtn.setOnClickListener {
+            // 카카오톡으로 로그인
+            UserApiClient.rx.loginWithKakaoTalk(this)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ token ->
+                    Log.i("grusie", "로그인 성공 ${token.accessToken}")
+                    UserApiClient.rx.me()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe { user ->
+                            val userEmail = user.id.toString()    //TODO 카카오 이메일 받아오기 실패..
+                            val userName = user.kakaoAccount?.profile?.nickname
+                            MyApplication.db.collection("profile").document(userEmail).addSnapshotListener { snapshot, e ->
+                                if (snapshot?.exists() == false) {
+                                    val userData = UserData(
+                                        userName, userName,    //TODO 네임 값 변경 고민
+                                    )
+                                    MyApplication.db = FirebaseFirestore.getInstance()
+                                    MyApplication.db.collection("profile").document(userEmail)
+                                        .set(userData)
+                                }
+                            }
+                        }
+
+                    finish()
+                }, { error ->
+                    Log.e("grusie", "로그인 실패", error)
+                })
+                .addTo(MyApplication.disposables)
         }
 
         binding.loginBtn.setOnClickListener {
@@ -66,19 +101,6 @@ class LoginActivity : AppCompatActivity() {
         googleSignInClient = GoogleSignIn.getClient(this, gso)
     }
 
-/*    private fun resizeView() {
-        val btnWidth = binding.kakaoLoginBtn.width
-        Log.d("grusie","btnWidth : $btnWidth")
-        Log.d("grusie","btnWidth : ${binding.googleLoginBtn.width}")
-        binding.apply {
-            googleLoginBtn.layoutParams.width = btnWidth
-            loginBtn.layoutParams.width = btnWidth
-            authBtn.layoutParams.width = btnWidth
-        }
-    }*/
-
-
-
     private fun firebaseSignIn() {
         val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent,9001)
@@ -96,14 +118,19 @@ class LoginActivity : AppCompatActivity() {
                 val googleSign = GoogleSignIn.getLastSignedInAccount(this)
 
                 val userEmail = googleSign?.email
-
-                val userData = UserData(
-                    userEmail!!, userEmail!!,    //TODO 네임 값 변경 고민
-                )
                 MyApplication.db = FirebaseFirestore.getInstance()
-                MyApplication.db.collection("profile").document(userEmail)
-                    .set(userData)
+                Log.d("grusie","${MyApplication.db.collection("profile").document(userEmail!!)}")
 
+                MyApplication.db.collection("profile").document(userEmail).addSnapshotListener { snapshot, e ->
+                    if (snapshot?.exists() == false) {
+                        val userData = UserData(
+                            userEmail, userEmail,    //TODO 네임 값 변경 고민
+                        )
+                        MyApplication.db = FirebaseFirestore.getInstance()
+                        MyApplication.db.collection("profile").document(userEmail)
+                            .set(userData)
+                    }
+                }
                 Log.d("grusie", "firebaseAuthWithGoogle:" + account.id)
                 firebaseAuthWithGoogle(account.idToken!!)
             } catch (e: ApiException) {
