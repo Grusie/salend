@@ -1,11 +1,15 @@
 package cf.untitled.salend
 
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.RelativeLayout
+import android.util.Log
 import cf.untitled.salend.adapter.MainFragmentStatePagerAdapter
 import cf.untitled.salend.databinding.ActivityMainBinding
 import cf.untitled.salend.databinding.BottomNavigationTabBinding
+import com.kakao.sdk.common.util.Utility
+import java.security.MessageDigest
+import java.util.*
 
 private lateinit var binding:ActivityMainBinding
 
@@ -16,7 +20,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         configureBottomNavigation()
+        val keyHash = Utility.getKeyHash(this)
+        Log.d("Hash", keyHash)
     }
+
+
 
     private fun configureBottomNavigation(){
         val tabButtonBinding = BottomNavigationTabBinding.inflate(layoutInflater)

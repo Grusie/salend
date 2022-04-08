@@ -2,7 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cf.untitled.salend">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
+        android:name=".GlobalApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -11,7 +14,17 @@
         android:theme="@style/Theme.Salend">
         <activity
             android:name=".LoginActivity"
-            android:exported="false" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="oauth"
+                    android:scheme="kakao3bbcda37653f4ec196075c15eca1dfaa" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".AuthActivity"
             android:exported="false" />
@@ -24,6 +37,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="3bbcda37653f4ec196075c15eca1dfaa"/>
     </application>
 
 </manifest>

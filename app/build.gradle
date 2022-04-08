@@ -59,6 +59,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'androidx.multidex:multidex:2.0.1'
 
+    //kakao login
+    implementation "com.kakao.sdk:v2-user-rx:2.9.0" // 카카오 로그인
 
     //noinspection GradleCompatible
     implementation 'com.android.support:design:28.0.0'

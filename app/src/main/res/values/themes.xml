@@ -15,11 +15,24 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <!--title-->
     <style name="title_text_style">
         <item name="android:textSize">@dimen/title_text_size</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
+    <!--navigation-->
+    <style name = "navigation_bottom_style">
+        <item name="android:background">@color/white</item>
+        <item name="tabIndicatorColor">@color/light_white</item>
+    </style>
+    
+    <style name="navigation_bottom_item_style">
+        <item name="tint">@color/black</item>
+    </style>
+
+    <!--auth-->
     <style name="auth_button_style">
         <item name="android:layout_width">@dimen/auth_btn_width</item>
         <item name="android:layout_height">@dimen/auth_btn_height</item>
@@ -35,4 +48,7 @@
 
     <style name="auth_button_style.kakao" parent="auth_button_style">
     </style>
+
+
+
 </resources>
