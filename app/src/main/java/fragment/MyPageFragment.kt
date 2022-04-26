@@ -104,10 +104,10 @@ class MyPageFragment : Fragment() {
 
                 profileImg.setImageResource(R.drawable.ic_search)
                 val docRef = MyApplication.db.collection("profile")
-                docRef.whereEqualTo("email", current_user_email).get()
+                docRef.whereEqualTo("u_id", current_user_email).get()
                     .addOnSuccessListener { document ->
                         for(fields in document){
-                            authInfo.text = fields["name"] as String + "님 반갑습니다."
+                            authInfo.text = fields["u_name"] as String + "님 반갑습니다."
                         }
                         Log.d("grusie","asasd")
                     }
@@ -147,12 +147,12 @@ class MyPageFragment : Fragment() {
                                     "\n프로필사진: ${user.kakaoAccount?.profile?.thumbnailImageUrl}"
                         )
                         //current_user_email = user.kakaoAccount?.email
-                        current_user_email = user.kakaoAccount?.profile?.nickname
+                        current_user_email = user.id.toString()
                         val docRef = MyApplication.db.collection("profile")
-                        docRef.whereEqualTo("email", current_user_email).get()
+                        docRef.whereEqualTo("u_id", current_user_email).get()
                             .addOnSuccessListener { document ->
                                 for (fields in document) {
-                                    authInfo.text = fields["name"] as String + "님 반갑습니다."
+                                    authInfo.text = fields["u_name"] as String + "님 반갑습니다."
                                 }
                             }.addOnFailureListener{ exception ->
                                 Log.d("grusie", "get failed with ", exception)

@@ -36,13 +36,24 @@
             android:layout_height="wrap_content"
             android:text="TextView"
             android:layout_gravity="center"/>
-
-        <TextView
-            android:id="@+id/product_price"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView"
-            android:layout_gravity="center"/>
+            android:orientation="horizontal"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/product_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:paddingEnd="8dp"/>
+            <TextView
+                android:id="@+id/product_now_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                />
+        </LinearLayout>
 
     </LinearLayout>
     <LinearLayout
@@ -74,12 +85,23 @@
             android:text="TextView"
             android:layout_gravity="center"/>
 
-        <TextView
-            android:id="@+id/product_price2"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView"
-            android:layout_gravity="center"/>
-
+            android:orientation="horizontal"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/product_price2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:paddingEnd="8dp"/>
+            <TextView
+                android:id="@+id/product_now_price2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                />
+        </LinearLayout>
     </LinearLayout>
 </androidx.appcompat.widget.LinearLayoutCompat>

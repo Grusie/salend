@@ -50,16 +50,14 @@ class LoginActivity : AppCompatActivity() {
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe { user ->
-                            val userEmail = user.id.toString()    //TODO 카카오 이메일 받아오기 실패..
+                            val userId = user.id.toString()    //TODO 카카오 이메일 받아오기 실패..
                             val userName = user.kakaoAccount?.profile?.nickname
-                            MyApplication.db.collection("profile").document(userEmail).addSnapshotListener { snapshot, e ->
+                            MyApplication.db.collection("profile").document(userId).addSnapshotListener { snapshot, e ->
                                 if (snapshot?.exists() == false) {
                                     val userData = UserData(
-                                        userName, userName,    //TODO 네임 값 변경 고민
+                                        userId, userName,null, null
                                     )
-                                    MyApplication.db = FirebaseFirestore.getInstance()
-                                    MyApplication.db.collection("profile").document(userEmail)
-                                        .set(userData)
+                                    MyApplication.saveUser(userData)
                                 }
                             }
                         }
@@ -117,18 +115,14 @@ class LoginActivity : AppCompatActivity() {
                 val account = task.getResult(ApiException::class.java)!!
                 val googleSign = GoogleSignIn.getLastSignedInAccount(this)
 
-                val userEmail = googleSign?.email
+                val userId = googleSign?.email
                 MyApplication.db = FirebaseFirestore.getInstance()
-                Log.d("grusie","${MyApplication.db.collection("profile").document(userEmail!!)}")
-
-                MyApplication.db.collection("profile").document(userEmail).addSnapshotListener { snapshot, e ->
+                MyApplication.db.collection("profile").document(userId!!).addSnapshotListener { snapshot, e ->
                     if (snapshot?.exists() == false) {
                         val userData = UserData(
-                            userEmail, userEmail,    //TODO 네임 값 변경 고민
+                            userId, userId,null,null
                         )
-                        MyApplication.db = FirebaseFirestore.getInstance()
-                        MyApplication.db.collection("profile").document(userEmail)
-                            .set(userData)
+                        MyApplication.saveUser(userData)
                     }
                 }
                 Log.d("grusie", "firebaseAuthWithGoogle:" + account.id)
