@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import cf.untitled.salend.R
 import cf.untitled.salend.adapter.NearbySaleRecyclerAdapter
 import cf.untitled.salend.databinding.FragmentHomeBinding
-import cf.untitled.salend.model.ProductInfo
+import cf.untitled.salend.model.ProductData
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -61,13 +61,13 @@ class HomeFragment : Fragment() {
     }
     private fun initRecyclerView() : View? {
         val productList = arrayOf(
-                ProductInfo(R.drawable.ic_search,"GS25 면목 4동점","아메리카노",2000),
-                ProductInfo(R.drawable.ic_search,"CU 면목 4동점","캔디",500),
-                ProductInfo(R.drawable.ic_search,"hello 면목 4동점","디사론노",12000),
-                ProductInfo(R.drawable.ic_search,"A 면목 4동점","장갑",7000),
-                ProductInfo(R.drawable.ic_search,"B 면목 4동점","마우스",7000),
-                ProductInfo(R.drawable.ic_search,"C 면목 4동점","빵",3000),
-                ProductInfo(R.drawable.ic_search,"D 면목 4동점","회",5000),
+                ProductData(0,"아메리카노","GS25 면목 4동점","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSt559x4ig-wTTMPcj3W9LD0dLvY6Ggi1E4L0WAP3IWcQ&s",3000,2000,null,null,null),
+                ProductData(0,"캔디","CU 면목 4동점","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSt559x4ig-wTTMPcj3W9LD0dLvY6Ggi1E4L0WAP3IWcQ&s",4000,2000,null,null,null),
+                ProductData(0,"디사론노","hello 면목 4동점","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSt559x4ig-wTTMPcj3W9LD0dLvY6Ggi1E4L0WAP3IWcQ&s",3000,2000,null,null,null),
+                ProductData(0,"장갑","A 면목 4동점","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSt559x4ig-wTTMPcj3W9LD0dLvY6Ggi1E4L0WAP3IWcQ&s",5000,2000,null,null,null),
+                ProductData(0,"마우스","B 면목 4동점","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSt559x4ig-wTTMPcj3W9LD0dLvY6Ggi1E4L0WAP3IWcQ&s",6000,3000,null,null,null),
+                ProductData(0,"빵","C 면목 4동점","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSt559x4ig-wTTMPcj3W9LD0dLvY6Ggi1E4L0WAP3IWcQ&s",5000,3000,null,null,null),
+                ProductData(0,"회","D 면목 4동점","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSt559x4ig-wTTMPcj3W9LD0dLvY6Ggi1E4L0WAP3IWcQ&s",6000,1000,null,null,null),
             )
         binding.nearbySaleRecyclerview.apply{
             layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)

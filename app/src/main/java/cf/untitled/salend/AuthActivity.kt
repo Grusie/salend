@@ -30,14 +30,9 @@ class AuthActivity : AppCompatActivity() {      //회원가입 액티비티
                         //회원가입 시 firebase에 새로운 ProfileData 추가 -> 이메일 인증 성공을 전제
                         val userEmail = MyApplication.auth.currentUser?.email!!
                         val userData = UserData(
-                            userEmail, userEmail,    //TODO 네임 값 변경 고민
+                            userEmail, userEmail,null,null
                         )
-                        MyApplication.db = FirebaseFirestore.getInstance()
-                        MyApplication.db.collection("profile").document(userEmail)
-                            .set(userData)
-                            .addOnSuccessListener { Toast.makeText(this,"프로필 정보 추가 완료", Toast.LENGTH_SHORT).show() }
-                            .addOnFailureListener { Toast.makeText(this,"프로필 정보 추가 실패", Toast.LENGTH_SHORT).show()  }
-
+                        MyApplication.saveUser(userData)
                         finish()
                     }else {
                         Toast.makeText(this,"메일 전송 실패", Toast.LENGTH_SHORT).show()

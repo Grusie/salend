@@ -1,7 +1,9 @@
 package cf.untitled.salend
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.multidex.MultiDexApplication
+import cf.untitled.salend.model.UserData
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -26,6 +28,9 @@ class MyApplication: MultiDexApplication() {
                 false
             }
         }
+        fun saveUser(userData: UserData) {
+            db = FirebaseFirestore.getInstance()
+            db.collection("profile").document(userData.u_id!!).set(userData)
+        }
     }
-
 }
