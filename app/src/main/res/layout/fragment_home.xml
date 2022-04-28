@@ -17,14 +17,18 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 android:background="@color/teal_200"
+
                 >
 
                 <TextView
+                    android:id="@+id/location_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="지역"
                     style="@style/title_text_style"
                     android:layout_gravity="center"
+                    android:drawableRight="@drawable/ic_pin_svgrepo_com"
+                    android:clickable="true"
                     />
 
             </androidx.appcompat.widget.Toolbar>
@@ -50,26 +54,34 @@
                     android:layout_weight="1"
                     android:layout_height="match_parent"
                     android:weightSum="4">
-                    w
-                    <cf.untitled.salend.RectButton
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"/>
 
                     <cf.untitled.salend.RectButton
+                        android:id="@+id/category_btn_0"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:text="한식"/>
+
+                    <cf.untitled.salend.RectButton
+                        android:id="@+id/category_btn_1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="양식"
                         />
                     <cf.untitled.salend.RectButton
+                        android:id="@+id/category_btn_2"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:text="중식"
                         />
                     <cf.untitled.salend.RectButton
+                        android:id="@+id/category_btn_3"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:text="일식"
                         />
                 </LinearLayout>
                 <LinearLayout
@@ -80,24 +92,33 @@
                     android:weightSum="4">
 
                     <cf.untitled.salend.RectButton
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"/>
-
-                    <cf.untitled.salend.RectButton
+                        android:id="@+id/category_btn_4"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:text="분식"/>
+
+                    <cf.untitled.salend.RectButton
+                        android:id="@+id/category_btn_5"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="카페"
                         />
 
                     <cf.untitled.salend.RectButton
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
-                    <cf.untitled.salend.RectButton
+                        android:id="@+id/category_btn_6"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:text="편의점"/>
+
+                    <cf.untitled.salend.RectButton
+                        android:id="@+id/category_btn_7"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="베이커리"
                         />
                 </LinearLayout>
             </LinearLayout>

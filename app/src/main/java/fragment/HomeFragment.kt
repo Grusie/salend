@@ -1,11 +1,13 @@
 package fragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import cf.untitled.salend.LocationSelectActivity
 import cf.untitled.salend.R
 import cf.untitled.salend.adapter.NearbySaleRecyclerAdapter
 import cf.untitled.salend.databinding.FragmentHomeBinding
@@ -37,6 +39,12 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(layoutInflater)
+
+        binding.locationTv.setOnClickListener{
+            val intent = Intent(this.context, LocationSelectActivity::class.java)
+            intent.putExtra("location",binding.locationTv.text.toString())
+            startActivity(intent)
+        }
         return initRecyclerView()
     }
 
