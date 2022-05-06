@@ -24,6 +24,14 @@
             android:text="지역"
             android:layout_gravity="center"
             app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            android:id="@+id/location_save_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="저장"
+            android:layout_gravity="end"
+            android:backgroundTint="@color/light_gray"
+            android:textColor="@color/black"/>
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.appcompat.widget.SearchView

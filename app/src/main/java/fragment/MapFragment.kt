@@ -1,11 +1,14 @@
 package fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import cf.untitled.salend.R
+import cf.untitled.salend.databinding.FragmentMapBinding
+import net.daum.mf.map.api.MapView;
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,8 +37,14 @@ class MapFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val binding = FragmentMapBinding.inflate(layoutInflater)
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_map, container, false)
+        val mapView = MapView(this.context)
+
+        val mapViewContainer = binding.mapView as ViewGroup
+        mapViewContainer.addView(mapView)
+
+        return binding.root
     }
 
     companion object {
