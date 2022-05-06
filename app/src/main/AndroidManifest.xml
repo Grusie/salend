@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cf.untitled.salend">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="cf.untitled.salend"
+    tools:ignore="CoarseFineLocation">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <application
         android:name=".GlobalApplication"
         android:allowBackup="true"
@@ -11,7 +14,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Salend">
+        android:theme="@style/Theme.Salend"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".LocationSelectActivity"
             android:exported="false" />

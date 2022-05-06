@@ -1,11 +1,14 @@
 package fragment
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import cf.untitled.salend.LocationSelectActivity
 import cf.untitled.salend.R
@@ -17,6 +20,7 @@ import cf.untitled.salend.model.ProductData
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
+lateinit var activityResultLauncher: ActivityResultLauncher<Intent>     //location result값을 받아오기 위해 사용하는 Intent
 
 class HomeFragment : Fragment() {
     lateinit var binding: FragmentHomeBinding
@@ -40,10 +44,15 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = FragmentHomeBinding.inflate(layoutInflater)
 
+        activityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            if(it.resultCode == Activity.RESULT_OK){
+                binding.locationTv.text = it.data?.getStringExtra("locationResult");
+            }
+        }
         binding.locationTv.setOnClickListener{
             val intent = Intent(this.context, LocationSelectActivity::class.java)
             intent.putExtra("location",binding.locationTv.text.toString())
-            startActivity(intent)
+            activityResultLauncher.launch(intent)
         }
         return initRecyclerView()
     }

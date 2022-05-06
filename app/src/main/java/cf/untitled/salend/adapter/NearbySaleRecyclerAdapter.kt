@@ -1,14 +1,19 @@
 package cf.untitled.salend.adapter
 
 import android.graphics.Paint
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import cf.untitled.salend.R
 import cf.untitled.salend.databinding.ItemNearbySaleBinding
 import cf.untitled.salend.model.ProductData
 import com.bumptech.glide.Glide
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.*
 
 class NearbySaleRecyclerAdapter(private var data: Array<ProductData>) :
     RecyclerView.Adapter<NearbySaleRecyclerAdapter.NearbySaleViewHolder>() {
