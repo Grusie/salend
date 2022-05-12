@@ -8,6 +8,5 @@ data class ProductData(
     var i_price: Int?,
     var i_now_price: Int?,
     var i_tag: Int?,
-    var i_exp: String?,
-    var i_status: Int?
+    var i_exp: String?
 )

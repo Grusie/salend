@@ -1,4 +1,4 @@
-package fragment
+package cf.untitled.salend.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,14 +8,14 @@ import android.view.ViewGroup
 import cf.untitled.salend.R
 
 // TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+// the cf.untitled.salend.fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
  * Use the [PayListFragment.newInstance] factory method to
- * create an instance of this fragment.
+ * create an instance of this cf.untitled.salend.fragment.
  */
 class PayListFragment : Fragment() {
     // TODO: Rename and change types of parameters
@@ -34,18 +34,18 @@ class PayListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+        // Inflate the layout for this cf.untitled.salend.fragment
         return inflater.inflate(R.layout.fragment_pay_list, container, false)
     }
 
     companion object {
         /**
          * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
+         * this cf.untitled.salend.fragment using the provided parameters.
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment PayListFragment.
+         * @return A new instance of cf.untitled.salend.fragment PayListFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic

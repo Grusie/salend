@@ -32,5 +32,6 @@ class MyApplication: MultiDexApplication() {
             db = FirebaseFirestore.getInstance()
             db.collection("profile").document(userData.u_id!!).set(userData)
         }
+
     }
 }

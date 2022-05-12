@@ -2,8 +2,8 @@
 buildscript {
     repositories {
         google()
-        mavenCentral()
         maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
+        mavenCentral()
     }
     dependencies {
         classpath "com.android.tools.build:gradle:7.0.3"
