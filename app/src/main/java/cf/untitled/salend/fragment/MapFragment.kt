@@ -1,30 +1,24 @@
 package cf.untitled.salend.fragment
 
 import android.Manifest
-import android.R
 import android.app.AlertDialog
-import android.app.Dialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
-import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import cf.untitled.salend.MainActivity
 import cf.untitled.salend.databinding.FragmentMapBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
-import net.daum.mf.map.api.MapView;
-import java.lang.Exception
+import net.daum.mf.map.api.MapView
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -62,9 +56,9 @@ class MapFragment : Fragment() {
     ): View? {
         // Inflate the layout for this cf.untitled.salend.fragment
         mapView = MapView(this.context)
-
         val mapViewContainer = binding.mapView as ViewGroup
         mapViewContainer.addView(mapView)
+        mapView.currentLocationTrackingMode = MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading
 
         binding.targetBtn.setOnClickListener {
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
@@ -82,6 +76,7 @@ class MapFragment : Fragment() {
                                     location.longitude
                                 ), true
                             )
+                            mapView.setZoomLevel(3,true)
                         }
                     }
             } else {
@@ -90,12 +85,11 @@ class MapFragment : Fragment() {
                     .setPositiveButton("권한설정하기") { _, _ ->
                         try {
                             val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                                .setData(Uri.parse("package:" + R.attr.packageNames));
-                            startActivity(intent);
+                            startActivity(intent)
                         } catch (e: Exception) {
-                            e.printStackTrace();
+                            e.printStackTrace()
                             val intent = Intent(Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS);
-                            startActivity(intent);
+                            startActivity(intent)
                         }
                     }.setNegativeButton("취소") { _, _ ->
                         Toast.makeText(requireContext(), "위치 권한을 설정하지 않았습니다.", Toast.LENGTH_SHORT)
