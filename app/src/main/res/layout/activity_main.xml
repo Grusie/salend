@@ -9,11 +9,11 @@
     <cf.untitled.salend.NonSwipeViewPager
         android:id="@+id/vp_ac_main_frag_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/tl_ac_main_bottom_menu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></cf.untitled.salend.NonSwipeViewPager>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tl_ac_main_bottom_menu"

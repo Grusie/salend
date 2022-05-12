@@ -26,4 +26,14 @@ public class NonSwipeViewPager extends ViewPager {
     public boolean onTouchEvent(MotionEvent ev) {
         return false;
     }
+
+    @Override
+    public void setCurrentItem(int item) {
+        super.setCurrentItem(item, false);
+    }
+
+    @Override
+    public void setCurrentItem(int item, boolean smoothScroll) {
+        super.setCurrentItem(item, false);
+    }
 }
