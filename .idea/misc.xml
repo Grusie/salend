@@ -38,6 +38,30 @@
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salend/app/src/main/res/layout/sdf.xml" value="0.1816123188405797" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salend/app/src/main/res/menu/menu_main_toolbar.xml" value="0.24114583333333334" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salend/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1390625" />
+        <entry key="..\:/ksh/study/and/app/src/main/res/drawable/border.xml" value="0.1245" />
+        <entry key="..\:/ksh/study/and/app/src/main/res/drawable/favorite_seletor.xml" value="0.1245" />
+        <entry key="..\:/ksh/study/and/app/src/main/res/drawable/home_seletor.xml" value="0.1245" />
+        <entry key="..\:/ksh/study/and/app/src/main/res/drawable/ic_favorite_selected.xml" value="0.1245" />
+        <entry key="..\:/ksh/study/and/app/src/main/res/drawable/ic_favorite_svgrepo_com.xml" value="0.1245" />
+        <entry key="..\:/ksh/study/and/app/src/main/res/drawable/ic_home_seleted.xml" value="0.1245" />
+        <entry key="..\:/ksh/study/and/app/src/main/res/drawable/ic_home_svgrepo_com__1_.xml" value="0.1245" />
+        <entry key="..\:/ksh/study/and/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1245" />
+        <entry key="..\:/ksh/study/and/app/src/main/res/drawable/ic_pin_svgrepo_com.xml" value="0.1245" />
+        <entry key="..\:/ksh/study/and/app/src/main/res/drawable/ic_search.xml" value="0.1245" />
+        <entry key="..\:/ksh/study/and/app/src/main/res/drawable/person_selector.xml" value="0.1245" />
+        <entry key="..\:/ksh/study/and/app/src/main/res/drawable/shopping_selector.xml" value="0.1245" />
+        <entry key="..\:/ksh/study/and/app/src/main/res/layout/activity_auth.xml" value="0.22826086956521738" />
+        <entry key="..\:/ksh/study/and/app/src/main/res/layout/activity_location_select.xml" value="0.22826086956521738" />
+        <entry key="..\:/ksh/study/and/app/src/main/res/layout/activity_login.xml" value="0.22826086956521738" />
+        <entry key="..\:/ksh/study/and/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/ksh/study/and/app/src/main/res/layout/bottom_navigation_tab.xml" value="0.22826086956521738" />
+        <entry key="..\:/ksh/study/and/app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="..\:/ksh/study/and/app/src/main/res/layout/fragment_like.xml" value="0.22826086956521738" />
+        <entry key="..\:/ksh/study/and/app/src/main/res/layout/fragment_my_page.xml" value="0.22826086956521738" />
+        <entry key="..\:/ksh/study/and/app/src/main/res/layout/fragment_pay_list.xml" value="0.25" />
+        <entry key="..\:/ksh/study/and/app/src/main/res/layout/item_kategorie.xml" value="0.22826086956521738" />
+        <entry key="..\:/ksh/study/and/app/src/main/res/layout/item_nearby_sale.xml" value="0.22826086956521738" />
+        <entry key="..\:/ksh/study/and/app/src/main/res/layout/kategorie_choice.xml" value="0.22826086956521738" />
       </map>
     </option>
   </component>
