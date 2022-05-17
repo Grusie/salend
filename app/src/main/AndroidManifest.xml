@@ -52,6 +52,10 @@
             android:exported="true">
         </activity>
 
+        <activity
+            android:name=".KategorieActivity"
+            android:exported="false"/>
+
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="3bbcda37653f4ec196075c15eca1dfaa" />
