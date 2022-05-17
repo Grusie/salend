@@ -25,6 +25,7 @@
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salend/app/src/main/res/layout/activity_location_select.xml" value="0.2" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salend/app/src/main/res/layout/activity_login.xml" value="0.2" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salend/app/src/main/res/layout/activity_main.xml" value="0.10400000000000001" />
+        <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salend/app/src/main/res/layout/activity_splash.xml" value="0.12083333333333333" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salend/app/src/main/res/layout/bottom_navigation_tab.xml" value="0.2" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salend/app/src/main/res/layout/fragment_home.xml" value="0.2" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salend/app/src/main/res/layout/fragment_like.xml" value="0.14479166666666668" />
@@ -38,6 +39,7 @@
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salend/app/src/main/res/layout/sdf.xml" value="0.1816123188405797" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salend/app/src/main/res/menu/menu_main_toolbar.xml" value="0.24114583333333334" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salend/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1390625" />
+        <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salend/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1315" />
       </map>
     </option>
   </component>

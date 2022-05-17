@@ -34,12 +34,12 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             vpAcMainFragPager.adapter = MainFragmentStatePagerAdapter(supportFragmentManager, 5)
             tlAcMainBottomMenu.setupWithViewPager(vpAcMainFragPager)
+            vpAcMainFragPager.offscreenPageLimit = 5
             tlAcMainBottomMenu.getTabAt(0)!!.customView = tabButtonBinding.btnBottomNaviHomeTab
             tlAcMainBottomMenu.getTabAt(1)!!.customView = tabButtonBinding.btnBottomNaviLikeTab
             tlAcMainBottomMenu.getTabAt(2)!!.customView = tabButtonBinding.btnBottomNaviMapTab
             tlAcMainBottomMenu.getTabAt(3)!!.customView = tabButtonBinding.btnBottomNaviPayListTab
             tlAcMainBottomMenu.getTabAt(4)!!.customView = tabButtonBinding.btnBottomNaviMyPageTab
-
         }
     }
 

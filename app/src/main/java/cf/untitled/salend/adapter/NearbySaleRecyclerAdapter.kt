@@ -8,18 +8,17 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import cf.untitled.salend.R
+import cf.untitled.salend.databinding.FragmentHomeBinding
 import cf.untitled.salend.databinding.ItemNearbySaleBinding
+import cf.untitled.salend.fragment.HomeFragment
 import cf.untitled.salend.model.ProductData
 import com.bumptech.glide.Glide
-import java.time.LocalDate
-import java.time.LocalDateTime
 import java.util.*
 
 class NearbySaleRecyclerAdapter(private var data: ArrayList<ProductData>) :
     RecyclerView.Adapter<NearbySaleRecyclerAdapter.NearbySaleViewHolder>() {
     class NearbySaleViewHolder(binding: ItemNearbySaleBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        val holder1 = binding.leftItemView
         val holder2 = binding.rightItemView
         val img = binding.productImg
         val shop = binding.shopName
@@ -35,16 +34,11 @@ class NearbySaleRecyclerAdapter(private var data: ArrayList<ProductData>) :
     }
 
     override fun onBindViewHolder(holder: NearbySaleViewHolder, position: Int) {
-
         holder.apply {
             val evenPosition = position * 2
             val oddPosition = position * 2 + 1
-            Log.d("position", "size : ${data.size}")
-            Log.d("position", "position : ${position}")
-            Log.d("position", "evenPosition : ${evenPosition}")
-            Log.d("position", "oddPosition : ${oddPosition}")
 
-            if (evenPosition <= data.size-1) {
+            if (evenPosition <= data.size - 1) {
                 Glide.with(img.context)
                     .load(data[evenPosition].i_image)
                     .error(R.drawable.ic_map_svgrepo_com)
@@ -56,7 +50,7 @@ class NearbySaleRecyclerAdapter(private var data: ArrayList<ProductData>) :
                 price.paintFlags = price.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                 nowPrice.text = data[evenPosition].i_now_price.toString()
             }
-            if(data.size %2 == 1 && evenPosition == data.size - 1){
+            if (data.size % 2 == 1 && evenPosition == data.size - 1) {
                 holder2.visibility = View.INVISIBLE
             }
 
@@ -74,17 +68,17 @@ class NearbySaleRecyclerAdapter(private var data: ArrayList<ProductData>) :
     }
 
     override fun getItemCount(): Int {
-        if(data.size %2 == 0)
-            return data.size/2
+        if (data.size % 2 == 0)
+            return data.size / 2
         else
-            return (data.size / 2)+1
+            return (data.size / 2) + 1
     }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): NearbySaleRecyclerAdapter.NearbySaleViewHolder {
-        return NearbySaleRecyclerAdapter.NearbySaleViewHolder(
+    ): NearbySaleViewHolder {
+        return NearbySaleViewHolder(
             ItemNearbySaleBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
