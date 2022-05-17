@@ -8,9 +8,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
+import cf.untitled.salend.KategorieActivity
 import cf.untitled.salend.LocationSelectActivity
 import cf.untitled.salend.adapter.NearbySaleRecyclerAdapter
 import cf.untitled.salend.databinding.FragmentHomeBinding
@@ -48,17 +50,36 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(layoutInflater)
-
-        activityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-            if(it.resultCode == Activity.RESULT_OK){
-                binding.locationTv.text = it.data?.getStringExtra("locationResult");
+        val btnList: Array<cf.untitled.salend.RectButton> = arrayOf(
+            binding.categoryBtn0,
+            binding.categoryBtn1,
+            binding.categoryBtn2,
+            binding.categoryBtn3,
+            binding.categoryBtn4,
+            binding.categoryBtn5,
+            binding.categoryBtn6,
+            binding.categoryBtn7
+        )
+        activityResultLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                if (it.resultCode == Activity.RESULT_OK) {
+                    binding.locationTv.text = it.data?.getStringExtra("locationResult");
+                }
             }
-        }
-        binding.locationTv.setOnClickListener{
+        binding.locationTv.setOnClickListener {
             val intent = Intent(this.context, LocationSelectActivity::class.java)
-            intent.putExtra("location",binding.locationTv.text.toString())
+            intent.putExtra("location", binding.locationTv.text.toString())
             activityResultLauncher.launch(intent)
         }
+        for(i: Int in btnList.indices){
+            btnList[i].setOnClickListener {
+                val intent01 = Intent(this.context, KategorieActivity::class.java)
+                intent01.putExtra("storeName", btnList[i].text.toString())
+                startActivity(intent01)
+            }
+        }
+
+
         return initRecyclerView()
     }
 
@@ -81,21 +102,22 @@ class HomeFragment : Fragment() {
                 }
             }
     }
-    private fun initRecyclerView() : View? {
+
+    private fun initRecyclerView(): View? {
         var nearbyProductList = ArrayList<ProductData>()
         var endTimeProductList = ArrayList<ProductData>()
         RetrofitClass.service.getProductArrayPage3().enqueue(object : Callback<ProductArray> {
             override fun onResponse(call: Call<ProductArray>, response: Response<ProductArray>) {
-                if(response.isSuccessful){
+                if (response.isSuccessful) {
                     // 정상적으로 통신이 성공된 경우
                     var result: ProductArray? = response.body()
                     result?.near_by?.let { nearbyProductList.addAll(it) }
                     result?.end_time?.let { endTimeProductList.addAll(it) }
                     recyclerSetData(nearbyProductList, endTimeProductList)
 
-                }else{
+                } else {
                     // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
-                    Log.d("retrofit","${response.code()}")
+                    Log.d("retrofit", "${response.code()}")
                     Log.d("retrofit", "onResponse 실패")
                 }
             }
@@ -107,13 +129,17 @@ class HomeFragment : Fragment() {
         })
         return binding.root
     }
-    private fun recyclerSetData(nearByProductList : ArrayList<ProductData>, endTimeProductList : ArrayList<ProductData>){
-        binding.nearbySaleRecyclerview.apply{
+
+    private fun recyclerSetData(
+        nearByProductList: ArrayList<ProductData>,
+        endTimeProductList: ArrayList<ProductData>
+    ) {
+        binding.nearbySaleRecyclerview.apply {
             layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
             setHasFixedSize(true)
             adapter = NearbySaleRecyclerAdapter(nearByProductList)
         }
-        binding.deadlineSaleRecyclerview.apply{
+        binding.deadlineSaleRecyclerview.apply {
             layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
             setHasFixedSize(true)
             adapter = NearbySaleRecyclerAdapter(endTimeProductList)
