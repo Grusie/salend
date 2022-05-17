@@ -49,4 +49,10 @@
     <style name="auth_button_style.kakao" parent="auth_button_style">
         <item name="android:textColor">@color/black</item>
     </style>
+
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowBackground">@drawable/salend_logo</item>
+    </style>
 </resources>
