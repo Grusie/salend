@@ -6,12 +6,11 @@ import androidx.fragment.app.FragmentPagerAdapter
 import cf.untitled.salend.fragment.*
 
 
-class MainFragmentStatePagerAdapter(fm: FragmentManager, val fragmentCount: Int) :
-    FragmentPagerAdapter(fm) {
-    override fun getCount(): Int = fragmentCount
+class MainFragmentStatePagerAdapter(fm : FragmentManager, val fragmentCount : Int) : FragmentPagerAdapter(fm) {
+    override fun getCount(): Int  = fragmentCount
 
     override fun getItem(position: Int): Fragment {
-        when (position) {
+        when(position){
             0 -> return HomeFragment()
             1 -> return LikeFragment()
             2 -> return MapFragment()
@@ -20,5 +19,5 @@ class MainFragmentStatePagerAdapter(fm: FragmentManager, val fragmentCount: Int)
             else -> return HomeFragment()
         }
     }
-
+    
 }

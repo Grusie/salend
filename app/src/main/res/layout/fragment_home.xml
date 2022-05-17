@@ -146,6 +146,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/endTime_sale_tab"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/nearby_sale_tab"
