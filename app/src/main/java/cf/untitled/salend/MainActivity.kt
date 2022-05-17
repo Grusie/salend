@@ -1,18 +1,21 @@
 package cf.untitled.salend
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Rect
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.core.app.ActivityCompat
+import android.view.View
 import cf.untitled.salend.adapter.MainFragmentStatePagerAdapter
 import cf.untitled.salend.databinding.ActivityMainBinding
 import cf.untitled.salend.databinding.BottomNavigationTabBinding
+import cf.untitled.salend.databinding.FragmentHomeBinding
 import com.kakao.sdk.common.util.Utility
 import java.security.MessageDigest
 import java.util.*
-
 
 
 class MainActivity : AppCompatActivity() {
@@ -24,6 +27,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         configureBottomNavigation()
+        val keyHash = Utility.getKeyHash(this)
+        Log.d("Hash", keyHash)
+
         requestRuntimePermissions()
     }
 
