@@ -155,7 +155,7 @@ class MyPageFragment : Fragment() {
                             }.addOnFailureListener{ exception ->
                                 Log.d("grusie", "get failed with ", exception)
                             }
-                        profileImg.setImageResource(R.drawable.ic_search)
+                        profileImg.setImageResource(R.drawable.ic_person_selected)
                     }
                 }
             }
