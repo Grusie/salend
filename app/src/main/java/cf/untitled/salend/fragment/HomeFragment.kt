@@ -1,7 +1,9 @@
 package cf.untitled.salend.fragment
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -14,6 +16,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import cf.untitled.salend.KategorieActivity
 import cf.untitled.salend.LocationSelectActivity
+import cf.untitled.salend.MyApplication
 import cf.untitled.salend.adapter.NearbySaleRecyclerAdapter
 import cf.untitled.salend.databinding.FragmentHomeBinding
 import cf.untitled.salend.model.ProductArray
@@ -49,8 +52,11 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        MyApplication.sharedPref = requireActivity().getSharedPreferences("location", Context.MODE_PRIVATE)   
+        MyApplication.edit = MyApplication.sharedPref.edit()        //Location을 저장할 SharedPreference 선언
+
         binding = FragmentHomeBinding.inflate(layoutInflater)
-        val btnList: Array<cf.untitled.salend.RectButton> = arrayOf(
+        val btnList: Array<cf.untitled.salend.RectButton> = arrayOf(        //카테고리 버튼 배열
             binding.categoryBtn0,
             binding.categoryBtn1,
             binding.categoryBtn2,
@@ -60,16 +66,19 @@ class HomeFragment : Fragment() {
             binding.categoryBtn6,
             binding.categoryBtn7
         )
+        binding.locationTv.text = MyApplication.sharedPref.getString("location","지역")
         activityResultLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {      //액티비티 결과 콜백 지정 
                 if (it.resultCode == Activity.RESULT_OK) {
-                    binding.locationTv.text = it.data?.getStringExtra("locationResult");
+                    binding.locationTv.text = it.data?.getStringExtra("locationResult")
                 }
             }
-        binding.locationTv.setOnClickListener {
+        binding.locationTv.setOnClickListener {     //지역 텍스트 뷰 클릭 시 LocationSelectActivity 실행
             val intent = Intent(this.context, LocationSelectActivity::class.java)
             intent.putExtra("location", binding.locationTv.text.toString())
             activityResultLauncher.launch(intent)
+
+
         }
         for(i: Int in btnList.indices){
             btnList[i].setOnClickListener {
@@ -78,7 +87,6 @@ class HomeFragment : Fragment() {
                 startActivity(intent01)
             }
         }
-
 
         return initRecyclerView()
     }
@@ -103,10 +111,10 @@ class HomeFragment : Fragment() {
             }
     }
 
-    private fun initRecyclerView(): View? {
+    private fun initRecyclerView(): View? {     //retrofit통신으로, ProductArray형태를 받아 옴
         var nearbyProductList = ArrayList<ProductData>()
         var endTimeProductList = ArrayList<ProductData>()
-        RetrofitClass.service.getProductArrayPage3().enqueue(object : Callback<ProductArray> {
+        RetrofitClass.service.getProductArrayPage("test2.html").enqueue(object : Callback<ProductArray> {
             override fun onResponse(call: Call<ProductArray>, response: Response<ProductArray>) {
                 if (response.isSuccessful) {
                     // 정상적으로 통신이 성공된 경우
@@ -130,7 +138,7 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
-    private fun recyclerSetData(
+    private fun recyclerSetData(        //리사이클러 뷰 데이터 지정
         nearByProductList: ArrayList<ProductData>,
         endTimeProductList: ArrayList<ProductData>
     ) {
