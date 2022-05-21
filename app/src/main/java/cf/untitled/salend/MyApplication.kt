@@ -1,8 +1,12 @@
 package cf.untitled.salend
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.multidex.MultiDexApplication
+import cf.untitled.salend.fragment.HomeFragment
 import cf.untitled.salend.model.UserData
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
@@ -18,6 +22,8 @@ class MyApplication: MultiDexApplication() {
         lateinit var db: FirebaseFirestore
         var disposables = CompositeDisposable()
         var email: String? = null
+        lateinit var sharedPref:SharedPreferences
+        lateinit var edit : SharedPreferences.Editor
 
         fun checkAuth(): Boolean {     //이메일 인증 완료해야만 true 반환
             val currentUser = auth.currentUser
