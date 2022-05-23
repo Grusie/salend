@@ -1,11 +1,13 @@
 package cf.untitled.salend.model
 
 data class KategoriStoreData(
-    val sId : String,
-    val sName : String,
-    val sLocation : String,
-    val sTime : String,
-    val sImage : String
+    val s_id : String,
+    val s_name : String,
+    val s_location : String,
+    val s_time : String,
+    val s_image : String
 )
 
-class KategoriStore : ArrayList<KategoriStoreData>()
+data class KategoriStore(
+    val stores : List<KategoriStoreData>?
+)
