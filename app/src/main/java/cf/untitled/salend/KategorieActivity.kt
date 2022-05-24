@@ -14,6 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class KategorieActivity : AppCompatActivity() {
 
     lateinit var binding: KategorieChoiceBinding
+    lateinit var save : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +23,10 @@ class KategorieActivity : AppCompatActivity() {
 
         val storeName = intent.getStringExtra("storeName")
         binding.kategorieChoiceToolbarText.setText(storeName)
+
+        save = storeName.toString()
+
+
 
         val retrofit = Retrofit.Builder()
             .baseUrl("https://salend.tk/")
@@ -37,6 +42,7 @@ class KategorieActivity : AppCompatActivity() {
                 binding.kategorieRv.adapter = customAdapter
                 val result = response.body()
                 customAdapter.storeList = result
+                customAdapter.save = save
                 binding.kategorieRv.layoutManager = GridLayoutManager(this@KategorieActivity, 2, GridLayoutManager.VERTICAL, false)
             }
 
