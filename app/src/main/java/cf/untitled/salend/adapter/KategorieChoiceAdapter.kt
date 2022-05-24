@@ -1,12 +1,19 @@
 package cf.untitled.salend.adapter
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import cf.untitled.salend.KategorieActivity
+import cf.untitled.salend.R
+import cf.untitled.salend.StoreChoiceActivity
 import cf.untitled.salend.databinding.ItemKategorieBinding
+import cf.untitled.salend.databinding.KategorieChoiceBinding
 import cf.untitled.salend.model.KategoriStore
+import cf.untitled.salend.model.KategoriStoreData
 import kotlinx.coroutines.*
 import java.lang.Exception
 import java.net.URL
@@ -14,6 +21,7 @@ import java.net.URL
 class KategorieChoiceAdapter : RecyclerView.Adapter<Holder>() {
 
     var storeList: KategoriStore? = null
+    lateinit var save : String
     lateinit var binding: ItemKategorieBinding
 
     override fun getItemCount(): Int {
@@ -22,7 +30,14 @@ class KategorieChoiceAdapter : RecyclerView.Adapter<Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         binding = ItemKategorieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return Holder(binding)
+        return Holder(binding).apply {
+            itemView.setOnClickListener {
+                val intent = Intent(parent.context, StoreChoiceActivity::class.java)
+                intent.putExtra("kategori", save)
+                parent.context.startActivity(intent)
+            }
+
+        }
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
@@ -54,3 +69,5 @@ suspend fun loadImage(imageUrl: String): Bitmap {
     val stream = url.openStream()
     return BitmapFactory.decodeStream(stream)
 }
+
+
