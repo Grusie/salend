@@ -1,173 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-    <androidx.core.widget.NestedScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_width="match_parent">
-        <androidx.constraintlayout.widget.ConstraintLayout
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".MainActivity">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/main_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".MainActivity">
+            android:layout_height="wrap_content"
+            android:background="@color/teal_200"
+            android:minHeight="?attr/actionBarSize"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/main_toolbar"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/location_tv"
+                style="@style/title_text_style"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                android:background="@color/teal_200"
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:drawableRight="@drawable/ic_pin_svgrepo_com"
+                android:text="지역" />
 
-                >
+        </androidx.appcompat.widget.Toolbar>
 
-                <TextView
-                    android:id="@+id/location_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="지역"
-                    style="@style/title_text_style"
-                    android:layout_gravity="center"
-                    android:drawableRight="@drawable/ic_pin_svgrepo_com"
-                    android:clickable="true"
-                    />
+        <Button
+            android:id="@+id/search_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:backgroundTint="@color/white"
+            android:drawableLeft="@drawable/ic_search"
+            android:hint="검색하려면 여기를 누르세요"
+            app:layout_constraintTop_toBottomOf="@id/main_toolbar" />
 
-            </androidx.appcompat.widget.Toolbar>
-
-            <androidx.appcompat.widget.SearchView
-                android:id="@+id/search_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/main_toolbar"
-                app:iconifiedByDefault="false"
-                app:queryHint="검색어를 입력하시오" />
+        <LinearLayout
+            android:id="@+id/RectTest"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:weightSum="2"
+            app:layout_constraintTop_toBottomOf="@id/search_view">
 
             <LinearLayout
-                android:id="@+id/RectTest"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintTop_toBottomOf="@id/search_view"
-                android:weightSum="2"
-                android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:orientation="horizontal"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <cf.untitled.salend.customView.RectButton
+                    android:id="@+id/category_btn_0"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:text="한식" />
+
+                <cf.untitled.salend.customView.RectButton
+                    android:id="@+id/category_btn_1"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:weightSum="4">
-
-                    <cf.untitled.salend.RectButton
-                        android:id="@+id/category_btn_0"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="한식"/>
-
-                    <cf.untitled.salend.RectButton
-                        android:id="@+id/category_btn_1"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="양식"
-                        />
-                    <cf.untitled.salend.RectButton
-                        android:id="@+id/category_btn_2"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="중식"
-                        />
-                    <cf.untitled.salend.RectButton
-                        android:id="@+id/category_btn_3"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="일식"
-                        />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:orientation="horizontal"
                     android:layout_weight="1"
+                    android:text="양식" />
+
+                <cf.untitled.salend.customView.RectButton
+                    android:id="@+id/category_btn_2"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:weightSum="4">
+                    android:layout_weight="1"
+                    android:text="중식" />
 
-                    <cf.untitled.salend.RectButton
-                        android:id="@+id/category_btn_4"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="분식"/>
-
-                    <cf.untitled.salend.RectButton
-                        android:id="@+id/category_btn_5"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="카페"
-                        />
-
-                    <cf.untitled.salend.RectButton
-                        android:id="@+id/category_btn_6"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="편의점"/>
-
-                    <cf.untitled.salend.RectButton
-                        android:id="@+id/category_btn_7"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="베이커리"
-                        />
-                </LinearLayout>
+                <cf.untitled.salend.customView.RectButton
+                    android:id="@+id/category_btn_3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="일식" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/nearby_sale_tab"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <cf.untitled.salend.customView.RectButton
+                    android:id="@+id/category_btn_4"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="분식" />
+
+                <cf.untitled.salend.customView.RectButton
+                    android:id="@+id/category_btn_5"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="카페" />
+
+                <cf.untitled.salend.customView.RectButton
+                    android:id="@+id/category_btn_6"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="편의점" />
+
+                <cf.untitled.salend.customView.RectButton
+                    android:id="@+id/category_btn_7"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="베이커리" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/nearby_sale_tab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/RectTest">
+
+            <TextView
+                style="@style/title_text_style"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/RectTest"
-                android:orientation="vertical"
-                >
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="내 주변 할인매장"
-                    style="@style/title_text_style"
-                    android:gravity="center" />
+                android:gravity="center"
+                android:text="내 주변 할인매장" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/nearby_sale_recyclerview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    android:orientation="horizontal"/>
-            </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/nearby_sale_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:background="@drawable/bottom_border"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/endTime_sale_tab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/nearby_sale_tab">
+
+            <TextView
+                style="@style/title_text_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="마감 임박" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/deadline_sale_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:nestedScrollingEnabled="false"
+                android:background="@drawable/bottom_border"/>
 
             <LinearLayout
-                android:id="@+id/endTime_sale_tab"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/nearby_sale_tab"
-                android:orientation="vertical"
-                >
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="마감 임박"
-                    style="@style/title_text_style"
-                    android:gravity="center" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/deadline_sale_recyclerview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:nestedScrollingEnabled="false"
-                    />
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="52dp"/>
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+                android:layout_height="52dp" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

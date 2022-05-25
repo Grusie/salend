@@ -1,12 +1,15 @@
 package cf.untitled.salend.adapter
 
+import android.content.Intent
 import android.graphics.Paint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import cf.untitled.salend.ProductActivity
 import cf.untitled.salend.R
 import cf.untitled.salend.databinding.FragmentHomeBinding
 import cf.untitled.salend.databinding.ItemNearbySaleBinding
@@ -63,6 +66,11 @@ class NearbySaleRecyclerAdapter(private var data: ArrayList<ProductData>) :
                 price2.text = data[oddPosition].i_price.toString()
                 price2.paintFlags = price.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                 nowPrice2.text = data[oddPosition].i_now_price.toString()
+            }
+            itemView.setOnClickListener {
+                val intent = Intent(holder.itemView.context, ProductActivity::class.java)
+                intent.putExtra("product_id", "${data[position]._id}")
+                ContextCompat.startActivity(holder.itemView.context, intent, null)
             }
         }
     }
