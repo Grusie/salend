@@ -11,6 +11,9 @@ interface RetrofitService {
     @GET("{page}")
     fun getProductArrayPage(@Path("page") page: String): Call<ProductArray>
 
+    @GET("test2.html")
+    fun getTest2page() : Call<ProductArray>
+
 
 //    @GET("posts/1")
 //    fun getStudent(@Query("school_id") schoolId: Int,

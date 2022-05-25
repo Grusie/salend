@@ -18,7 +18,7 @@ import kotlinx.coroutines.*
 import java.lang.Exception
 import java.net.URL
 
-class KategorieChoiceAdapter : RecyclerView.Adapter<Holder>() {
+class KategorieChoiceAdapter : RecyclerView.Adapter<KategorieChoiceAdapterHolder>() {
 
     var storeList: KategoriStore? = null
     lateinit var save : String
@@ -28,19 +28,25 @@ class KategorieChoiceAdapter : RecyclerView.Adapter<Holder>() {
         return storeList?.stores?.size ?: 0
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): KategorieChoiceAdapterHolder {
         binding = ItemKategorieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return Holder(binding).apply {
+        return KategorieChoiceAdapterHolder(binding).apply {
             itemView.setOnClickListener {
+                val storeName = storeList?.stores?.get(adapterPosition)?.s_name ?: ""
+                val storeTime = storeList?.stores?.get(adapterPosition)?.s_time ?: ""
+                val storeImage = storeList?.stores?.get(adapterPosition)?.s_image ?: ""
                 val intent = Intent(parent.context, StoreChoiceActivity::class.java)
                 intent.putExtra("kategori", save)
+                intent.putExtra("name", storeName)
+                intent.putExtra("time",storeTime)
+                intent.putExtra("image",storeImage)
                 parent.context.startActivity(intent)
             }
 
         }
     }
 
-    override fun onBindViewHolder(holder: Holder, position: Int) {
+    override fun onBindViewHolder(holder: KategorieChoiceAdapterHolder, position: Int) {
         val store = storeList?.stores?.get(position)
         if (store != null) {
             binding.kategorieStoreName.text = store.s_name
@@ -59,10 +65,10 @@ class KategorieChoiceAdapter : RecyclerView.Adapter<Holder>() {
         }
 
     }
+
 }
 
-
-class Holder(binding: ItemKategorieBinding) : RecyclerView.ViewHolder(binding.root)
+class KategorieChoiceAdapterHolder(binding: ItemKategorieBinding) : RecyclerView.ViewHolder(binding.root)
 
 suspend fun loadImage(imageUrl: String): Bitmap {
     val url = URL(imageUrl)
