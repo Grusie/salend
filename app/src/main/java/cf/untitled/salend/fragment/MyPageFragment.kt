@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import cf.untitled.salend.LoginActivity
+import cf.untitled.salend.auth.LoginActivity
 import cf.untitled.salend.MyApplication
 import cf.untitled.salend.R
 import cf.untitled.salend.databinding.FragmentMyPageBinding
