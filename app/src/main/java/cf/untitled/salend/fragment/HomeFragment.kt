@@ -3,21 +3,22 @@ package cf.untitled.salend.fragment
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import cf.untitled.salend.KategorieActivity
 import cf.untitled.salend.LocationSelectActivity
 import cf.untitled.salend.MyApplication
+import cf.untitled.salend.SearchActivity
 import cf.untitled.salend.adapter.NearbySaleRecyclerAdapter
+import cf.untitled.salend.customView.RectButton
 import cf.untitled.salend.databinding.FragmentHomeBinding
 import cf.untitled.salend.model.ProductArray
 import cf.untitled.salend.model.ProductData
@@ -56,7 +57,7 @@ class HomeFragment : Fragment() {
         MyApplication.edit = MyApplication.sharedPref.edit()        //Location을 저장할 SharedPreference 선언
 
         binding = FragmentHomeBinding.inflate(layoutInflater)
-        val btnList: Array<cf.untitled.salend.RectButton> = arrayOf(        //카테고리 버튼 배열
+        val btnList: Array<RectButton> = arrayOf(        //카테고리 버튼 배열
             binding.categoryBtn0,
             binding.categoryBtn1,
             binding.categoryBtn2,
@@ -71,15 +72,20 @@ class HomeFragment : Fragment() {
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {      //액티비티 결과 콜백 지정 
                 if (it.resultCode == Activity.RESULT_OK) {
                     binding.locationTv.text = it.data?.getStringExtra("locationResult")
+                    initRecyclerView()
                 }
             }
         binding.locationTv.setOnClickListener {     //지역 텍스트 뷰 클릭 시 LocationSelectActivity 실행
             val intent = Intent(this.context, LocationSelectActivity::class.java)
             intent.putExtra("location", binding.locationTv.text.toString())
             activityResultLauncher.launch(intent)
-
-
         }
+
+        binding.searchView.setOnClickListener {
+            val intent = Intent(this.context, SearchActivity::class.java)
+            startActivity(intent)
+        }
+
         for(i: Int in btnList.indices){
             btnList[i].setOnClickListener {
                 val intent01 = Intent(this.context, KategorieActivity::class.java)
@@ -114,7 +120,9 @@ class HomeFragment : Fragment() {
     private fun initRecyclerView(): View? {     //retrofit통신으로, ProductArray형태를 받아 옴
         var nearbyProductList = ArrayList<ProductData>()
         var endTimeProductList = ArrayList<ProductData>()
-        RetrofitClass.service.getProductArrayPage("test2.html").enqueue(object : Callback<ProductArray> {
+        var latitude = MyApplication.sharedPref.getString("latitude","0")
+        var longitude = MyApplication.sharedPref.getString("longitude","0")
+        RetrofitClass.service.getNearbyDataPage("${latitude},${longitude}").enqueue(object : Callback<ProductArray> {
             override fun onResponse(call: Call<ProductArray>, response: Response<ProductArray>) {
                 if (response.isSuccessful) {
                     // 정상적으로 통신이 성공된 경우
@@ -122,11 +130,18 @@ class HomeFragment : Fragment() {
                     result?.near_by?.let { nearbyProductList.addAll(it) }
                     result?.end_time?.let { endTimeProductList.addAll(it) }
                     recyclerSetData(nearbyProductList, endTimeProductList)
+                    Toast.makeText(requireContext(), "${latitude}, ${longitude}", Toast.LENGTH_SHORT).show()
 
                 } else {
                     // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
                     Log.d("retrofit", "${response.code()}")
                     Log.d("retrofit", "onResponse 실패")
+/*                    var dummyProductData = ProductData("6288e7d2e747d7702b9c4986","스누피", "경남","R.drawable.ic_map_svgrepo_com", 212,324,321,"Asd")
+                    var dummyNearbyProductData = ArrayList<ProductData>()
+                    var dummyEndTimeProductList = ArrayList<ProductData>()
+                    dummyNearbyProductData.add(dummyProductData)
+                    dummyEndTimeProductList.add(dummyProductData)*/
+                    recyclerSetData(nearbyProductList, endTimeProductList)
                 }
             }
 

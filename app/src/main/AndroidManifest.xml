@@ -5,8 +5,9 @@
     tools:ignore="CoarseFineLocation">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
         android:name=".GlobalApplication"
         android:allowBackup="true"
@@ -17,11 +18,16 @@
         android:theme="@style/Theme.Salend"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ProductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SearchActivity"
+            android:exported="false" />
+        <activity
             android:name=".LocationSelectActivity"
             android:exported="false" />
-
         <activity
-            android:name=".LoginActivity"
+            android:name=".auth.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -34,27 +40,25 @@
                     android:scheme="kakao3bbcda37653f4ec196075c15eca1dfaa" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".splashActivity"
+        <activity
+            android:name=".SplashActivity"
             android:exported="true"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name=".AuthActivity"
+            android:name=".auth.AuthActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-        </activity>
-
+            android:exported="true" />
         <activity
             android:name=".KategorieActivity"
-            android:exported="false"/>
+            android:exported="false" />
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"

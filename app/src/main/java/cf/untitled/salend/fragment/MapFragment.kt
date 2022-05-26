@@ -4,21 +4,27 @@ import android.Manifest
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.location.Location
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import cf.untitled.salend.MyApplication
+import cf.untitled.salend.R
 import cf.untitled.salend.databinding.FragmentMapBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
+import java.text.DecimalFormat
+import kotlin.math.log
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -58,8 +64,11 @@ class MapFragment : Fragment() {
         mapView = MapView(this.context)
         val mapViewContainer = binding.mapView as ViewGroup
         mapViewContainer.addView(mapView)
-        mapView.currentLocationTrackingMode = MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading
+        setCurrentLocationTrackingMode(true)
 
+        var latitude = MyApplication.sharedPref.getString("latitude","0")!!.toDouble()
+        var longitude = MyApplication.sharedPref.getString("longitude","0")!!.toDouble()
+        createMapMarker(latitude, longitude)
         binding.targetBtn.setOnClickListener {
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
             if (ActivityCompat.checkSelfPermission(
@@ -76,28 +85,43 @@ class MapFragment : Fragment() {
                                     location.longitude
                                 ), true
                             )
-                            mapView.setZoomLevel(3,true)
+                            mapView.setZoomLevel(3, true)
                         }
                     }
+                if (mapView.currentLocationTrackingMode == MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading) {
+                    setCurrentLocationTrackingMode(false)
+                } else {
+                    setCurrentLocationTrackingMode(true)
+                }
             } else {
-                val builder = AlertDialog.Builder(requireContext())
-                builder.setTitle("위치 권한 필요").setMessage("현재 위치를 받아오려면 위치 권한을 켜주세요")
-                    .setPositiveButton("권한설정하기") { _, _ ->
-                        try {
-                            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                            startActivity(intent)
-                        } catch (e: Exception) {
-                            e.printStackTrace()
-                            val intent = Intent(Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS);
-                            startActivity(intent)
-                        }
-                    }.setNegativeButton("취소") { _, _ ->
-                        Toast.makeText(requireContext(), "위치 권한을 설정하지 않았습니다.", Toast.LENGTH_SHORT)
-                            .show()
-                    }.create().show()
             }
         }
         return binding.root
+    }
+
+    private fun setCurrentLocationTrackingMode(tracking: Boolean) {
+        if (tracking) {
+            mapView.currentLocationTrackingMode =
+                MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading
+            binding.targetBtn.setColorFilter(Color.parseColor("#0000FF"))
+        } else {
+            mapView.currentLocationTrackingMode =
+                MapView.CurrentLocationTrackingMode.TrackingModeOff
+            binding.targetBtn.setColorFilter(Color.parseColor("#FF000000"))
+        }
+    }
+
+    private fun createMapMarker(latitude:Double, longitude:Double) {
+        Toast.makeText(requireContext(),"createMapMarker : $latitude, $longitude", Toast.LENGTH_SHORT).show()
+        val marker = MapPOIItem()
+        Log.d("grusie","$latitude, $longitude")
+        marker.apply {
+            itemName = "qweazx"   // 마커 이름
+            mapPoint = MapPoint.mapPointWithGeoCoord(latitude, longitude)   // 좌표
+            marker.markerType = MapPOIItem.MarkerType.BluePin
+            marker.selectedMarkerType = MapPOIItem.MarkerType.RedPin
+        }
+        mapView.addPOIItem(marker)
     }
 
     companion object {
