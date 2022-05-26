@@ -1,8 +1,9 @@
 package cf.untitled.salend.model
 
 data class ProductData(
-    var i_id: Int,
+    var _id: String,
     var i_name: String?,
+    var i_store_id: String?,
     var i_store_name: String?,
     var i_image: String?,
     var i_price: Int?,

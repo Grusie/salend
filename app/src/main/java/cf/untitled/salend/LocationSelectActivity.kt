@@ -11,14 +11,20 @@ import android.os.Message
 import android.util.Log
 import android.view.WindowManager
 import android.webkit.*
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import cf.untitled.salend.databinding.ActivityLocationSelectBinding
+import cf.untitled.salend.model.ProductData
+import cf.untitled.salend.retrofit.RetrofitClass
+import com.google.common.primitives.UnsignedBytes.toInt
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class LocationSelectActivity : AppCompatActivity() {
+    var latitude : Double = 0.0
+    var longitude : Double = 0.0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityLocationSelectBinding.inflate(layoutInflater)
@@ -32,21 +38,49 @@ class LocationSelectActivity : AppCompatActivity() {
                 view: WebView?,
                 request: WebResourceRequest?
             ): Boolean {
-                return true
+                return false
             }
 
         }
 
         class WebViewData {
             @JavascriptInterface
-            fun getAddress(zoneCode: String, roadAddress: String, buildingName: String) {
+            fun getAddress(zoneCode: String, roadAddress: String, buildingName: String, x: String, y : String) {
+                try{
                 CoroutineScope(Dispatchers.Default).launch {
                     withContext(CoroutineScope(Dispatchers.Main).coroutineContext) {
-                        binding.locationTv.text = "$roadAddress"
+                        val list = roadAddress.split(" ")
+                        binding.locationTv.text = "${list[0]+" "+ list[1] + " " + list[2]}"
+                        Toast.makeText(this@LocationSelectActivity,"$x, $y", Toast.LENGTH_SHORT).show()
+                        latitude = x.toDouble()
+                        longitude = y.toDouble()
+                        Toast.makeText(this@LocationSelectActivity,"$latitude, $longitude", Toast.LENGTH_SHORT).show()
+                        saveLocation()
                     }
                 }
+                }catch (e:Exception){
+                    Log.d("locationSelectError", "$e")
+                }
+            }
+
+            private fun saveLocation() {
+                val locationResult = binding.locationTv.text
+                MyApplication.edit.putString("location", locationResult.toString())
+                MyApplication.edit.putString("latitude",latitude.toString())
+                MyApplication.edit.putString("longitude",longitude.toString())
+                MyApplication.edit.apply()
+
+                if(locationResult.isNotEmpty()) {
+                    val intent = Intent()
+                    intent.putExtra("locationResult", locationResult)
+                    setResult(RESULT_OK, intent)
+                }else {
+                    setResult(RESULT_CANCELED)
+                }
+                finish()
             }
         }
+
         binding.locationSearchWebView.apply{
             settings.javaScriptEnabled = true
             settings.javaScriptCanOpenWindowsAutomatically = true
@@ -89,20 +123,6 @@ class LocationSelectActivity : AppCompatActivity() {
         binding.locationSearchWebView!!.loadUrl("https://salend.tk/map.html")
 
         binding.locationTv.text = intent.getStringExtra("location")
-
-        binding.locationSaveBtn.setOnClickListener {
-            val locationResult = binding.locationTv.text
-            MyApplication.edit.putString("location", locationResult.toString())
-            MyApplication.edit.apply()
-            if(locationResult.isNotEmpty()) {
-                val intent = Intent()
-                intent.putExtra("locationResult", locationResult)
-                setResult(RESULT_OK, intent)
-            }else {
-                setResult(RESULT_CANCELED)
-            }
-            finish()
-        }
 
     }
 }

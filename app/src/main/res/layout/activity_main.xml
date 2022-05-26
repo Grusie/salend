@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <cf.untitled.salend.NonSwipeViewPager
+    <cf.untitled.salend.customView.NonSwipeViewPager
         android:id="@+id/vp_ac_main_frag_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"

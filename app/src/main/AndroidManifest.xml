@@ -19,12 +19,16 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".StoreChoiceActivity"
+            android:name=".ProductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SearchActivity"
             android:exported="false" />
         <activity
             android:name=".LocationSelectActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".auth.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -38,7 +42,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".splashActivity"
+            android:name=".SplashActivity"
             android:exported="true"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -48,7 +52,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AuthActivity"
+            android:name=".auth.AuthActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
