@@ -80,25 +80,21 @@ class ProductActivity : AppCompatActivity() {
         })
     }
 
-    override suspend fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.product_menu, menu)
-/*        thread(start = true){
-            if(MyApplication.checkStoreFavorite("628edf00a1639ae216017c70"))
-                menu?.get(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_selected)
-            else
-                menu?.get(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_svgrepo_com)
-        }*/
-        if(MyApplication.checkStoreFavorite("628edf00a1639ae216017c70"))
-            menu?.get(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_selected)
-        else
-            menu?.get(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_svgrepo_com)
+        thread(start = true){
+            val flag = MyApplication.checkStoreFavorite("628edf00a1639ae216017c70")
+            runOnUiThread {
+                if(flag)
+                    menu?.getItem(0)?.icon = ContextCompat.getDrawable(this@ProductActivity,R.drawable.ic_favorite_selected)
+                else
+                    menu?.getItem(0)?.icon = ContextCompat.getDrawable(this@ProductActivity,R.drawable.ic_favorite_svgrepo_com)
+            }
+        }
 
         return super.onCreateOptionsMenu(menu)
     }
 
-    suspend fun asd(){
-
-    }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         return super.onOptionsItemSelected(item)

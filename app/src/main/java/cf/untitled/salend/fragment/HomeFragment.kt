@@ -54,7 +54,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        MyApplication.sharedPref = requireActivity().getSharedPreferences("location", Context.MODE_PRIVATE)   
+        MyApplication.sharedPref = requireActivity().getSharedPreferences("location", Context.MODE_PRIVATE)
         MyApplication.edit = MyApplication.sharedPref.edit()        //Location을 저장할 SharedPreference 선언
 
         binding = FragmentHomeBinding.inflate(layoutInflater)
@@ -70,7 +70,7 @@ class HomeFragment : Fragment() {
         )
         binding.locationTv.text = MyApplication.sharedPref.getString("location","지역")
         activityResultLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {      //액티비티 결과 콜백 지정 
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {      //액티비티 결과 콜백 지정
                 if (it.resultCode == Activity.RESULT_OK) {
                     binding.locationTv.text = it.data?.getStringExtra("locationResult")
                     initRecyclerView()
@@ -123,7 +123,7 @@ class HomeFragment : Fragment() {
         var endTimeProductList = ArrayList<ProductData>()
         var latitude = MyApplication.sharedPref.getString("latitude","0")
         var longitude = MyApplication.sharedPref.getString("longitude","0")
-        RetrofitClass.service.getProductDataPage("${latitude},${longitude}").enqueue(object : Callback<ProductArray> {
+        RetrofitClass.service.getProductArrayPage("${latitude},${longitude}").enqueue(object : Callback<ProductArray> {
             override fun onResponse(call: Call<ProductArray>, response: Response<ProductArray>) {
                 if (response.isSuccessful) {
                     // 정상적으로 통신이 성공된 경우
