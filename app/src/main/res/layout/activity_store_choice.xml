@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/storeChoiceToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#6EABDE"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/kategorie_choice_toolbar_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="카테고리 선택"
+            android:textColor="@color/black"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/kategorie_choice_favorite_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleX="1.5"
+                android:scaleY="1.5"
+                android:layout_gravity="end"
+                android:background="@drawable/favorite_off"
+                android:layout_marginEnd="10dp"/>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/activity_store_linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        android:background="#DBE1E7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/storeChoiceToolbar">
+
+        <ImageView
+            android:id="@+id/activity_store_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:scaleX="3.0"
+            app:srcCompat="@drawable/shopping_selector" />
+        <TextView
+            android:id="@+id/activity_store_storeName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="가게 이름"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@color/black"/>
+        <TextView
+            android:id="@+id/activity_store_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="운영 시간"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="3dp"/>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/activity_store_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_store_linearLayout" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
