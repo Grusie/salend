@@ -51,9 +51,9 @@ class LocationSelectActivity : AppCompatActivity() {
                     withContext(CoroutineScope(Dispatchers.Main).coroutineContext) {
                         val list = roadAddress.split(" ")
                         binding.locationTv.text = "${list[0]+" "+ list[1] + " " + list[2]}"
-                        Toast.makeText(this@LocationSelectActivity,"$x, $y", Toast.LENGTH_SHORT).show()
-                        latitude = x.toDouble()
-                        longitude = y.toDouble()
+                        Toast.makeText(this@LocationSelectActivity,"$y, $x", Toast.LENGTH_SHORT).show()
+                        latitude = y.toDouble()
+                        longitude = x.toDouble()
                         Toast.makeText(this@LocationSelectActivity,"$latitude, $longitude", Toast.LENGTH_SHORT).show()
                         saveLocation()
                     }
