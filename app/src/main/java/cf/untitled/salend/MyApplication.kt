@@ -24,6 +24,9 @@ class MyApplication: MultiDexApplication() {
         var email: String? = null
         lateinit var sharedPref:SharedPreferences
         lateinit var edit : SharedPreferences.Editor
+        lateinit var current_user_email : String
+        var storeFavorite = ArrayList<String>()
+        var productFavorite = ArrayList<String>()
 
         fun checkAuth(): Boolean {     //이메일 인증 완료해야만 true 반환
             val currentUser = auth.currentUser
@@ -34,6 +37,83 @@ class MyApplication: MultiDexApplication() {
                 false
             }
         }
+
+        fun initStoreFavorite(){
+            db = FirebaseFirestore.getInstance()
+            val docRef = db.collection("profile")
+            docRef.whereEqualTo("u_id", current_user_email).get()
+                .addOnSuccessListener { document ->
+                    for(fields in document){
+                        storeFavorite = fields["u_store_favorite"] as ArrayList<String>
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.d("grusie", "get failed with ", exception)
+                }
+        }
+
+        @JvmName("getStoreFavorite1")
+        fun getStoreFavorite(): ArrayList<String>{
+            initStoreFavorite()
+            return storeFavorite
+        }
+
+        fun setStoreFavorite(userId : String, productId : String) {
+            db = FirebaseFirestore.getInstance()
+            var lastStoreFavorite = getStoreFavorite()
+            lastStoreFavorite.add(productId)
+            db.collection("profile").document(userId).update("u_store_favorite", lastStoreFavorite)
+        }
+
+        fun updateStoreFavorite(userId: String, storeFavorite: ArrayList<String>){
+            db = FirebaseFirestore.getInstance()
+            db.collection("profile").document(userId).update("u_store_favorite",storeFavorite)
+        }
+
+        fun updateProductFavorite(userId: String, productFavorite: ArrayList<String>){
+            db = FirebaseFirestore.getInstance()
+            db.collection("profile").document(userId).update("u_product_favorite", productFavorite)
+        }
+
+        fun initProductFavorite(){
+            db = FirebaseFirestore.getInstance()
+            val docRef = db.collection("profile")
+            docRef.whereEqualTo("u_id", current_user_email).get()
+                .addOnSuccessListener { document ->
+                    for(fields in document){
+                        productFavorite = fields["u_item_favorite"] as ArrayList<String>
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.d("grusie", "get failed with ", exception)
+                }
+        }
+
+        @JvmName("getProductFavorite1")
+        fun getProductFavorite(): ArrayList<String>{
+            initStoreFavorite()
+            return storeFavorite
+        }
+
+        fun setProductFavorite(userId : String, productId : String) {
+            db = FirebaseFirestore.getInstance()
+            var lastProductFavorite = getStoreFavorite()
+            lastProductFavorite.add(productId)
+            db.collection("profile").document(userId).update("u_item_favorite", lastProductFavorite)
+        }
+
+        fun delStoreFavorite(userId: String, storeId: String) {
+            val lastStoreFavorite = getStoreFavorite()
+            lastStoreFavorite.removeAll(listOf(storeId))
+            updateStoreFavorite(userId, lastStoreFavorite)
+        }
+
+        fun delProductFavorite(userId : String, productId: String){
+            val lastProductFavorite = getProductFavorite()
+            lastProductFavorite.removeAll(listOf(productId))
+            updateStoreFavorite(userId, lastProductFavorite)
+        }
+
         fun saveUser(userData: UserData) {
             db = FirebaseFirestore.getInstance()
             db.collection("profile").document(userData.u_id!!).set(userData)
