@@ -126,12 +126,14 @@ class HomeFragment : Fragment() {
         RetrofitClass.service.getProductArrayPage("${latitude},${longitude}").enqueue(object : Callback<ProductArray> {
             override fun onResponse(call: Call<ProductArray>, response: Response<ProductArray>) {
                 if (response.isSuccessful) {
+
                     // 정상적으로 통신이 성공된 경우
                     var result: ProductArray? = response.body()
                     result?.near_by?.let { nearbyProductList.addAll(it) }
                     result?.end_time?.let { endTimeProductList.addAll(it) }
+                    Log.d("product","$nearbyProductList")
+                    Log.d("product","$endTimeProductList")
                     recyclerSetData(nearbyProductList, endTimeProductList)
-                    Toast.makeText(requireContext(), "${latitude}, ${longitude}", Toast.LENGTH_SHORT).show()
 
                 } else {
                     // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
