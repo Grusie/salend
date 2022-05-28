@@ -30,12 +30,11 @@
 
         </androidx.appcompat.widget.Toolbar>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/search_view"
+            style="@style/better_light_black_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:backgroundTint="@color/white"
             android:drawableLeft="@drawable/ic_search"
             android:hint="검색하려면 여기를 누르세요"
             app:layout_constraintTop_toBottomOf="@id/main_toolbar" />
@@ -45,6 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="vertical"
+            style="@style/light_black_style"
             android:weightSum="2"
             app:layout_constraintTop_toBottomOf="@id/search_view">
 
@@ -121,8 +121,16 @@
             </LinearLayout>
         </LinearLayout>
 
+        <View
+            android:id="@+id/horizon2"
+            app:layout_constraintTop_toBottomOf="@+id/RectTest"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/light_gray" />
+
         <LinearLayout
             android:id="@+id/nearby_sale_tab"
+            android:layout_marginTop="@dimen/base_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -130,9 +138,9 @@
 
             <TextView
                 style="@style/title_text_style"
+                android:padding="@dimen/base_padding"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:text="내 주변 할인매장" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -140,12 +148,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:background="@drawable/bottom_border"/>
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
         </LinearLayout>
-
+        <View
+            android:id="@+id/horizon3"
+            app:layout_constraintTop_toBottomOf="@id/nearby_sale_tab"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/light_gray" />
         <LinearLayout
             android:id="@+id/endTime_sale_tab"
+            android:layout_marginTop="@dimen/base_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -155,15 +168,14 @@
                 style="@style/title_text_style"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:padding="@dimen/base_padding"
                 android:text="마감 임박" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/deadline_sale_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:nestedScrollingEnabled="false"
-                android:background="@drawable/bottom_border"/>
+                android:nestedScrollingEnabled="false" />
 
             <LinearLayout
                 android:layout_width="match_parent"
