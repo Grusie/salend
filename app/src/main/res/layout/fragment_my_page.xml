@@ -27,6 +27,7 @@
         android:id="@+id/auth_linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/better_light_black_style"
         app:layout_constraintTop_toBottomOf="@id/my_page_toolbar"
         android:orientation="horizontal">
 
@@ -49,10 +50,18 @@
                 android:id="@+id/auth_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/base_text_size"
                 app:layout_constraintBottom_toTopOf="@id/logout_btn"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/profile_img"
                 app:layout_constraintTop_toTopOf="parent"
+                android:visibility="gone"/>
+            <View
+                android:id="@+id/horizon"
+                app:layout_constraintBottom_toTopOf="@id/logout_btn"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/light_gray"
                 android:visibility="gone"/>
             <ImageView
                 android:id="@+id/profile_img"
@@ -64,7 +73,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:src="@drawable/ic_person_svgrepo_com__1_"
                 android:visibility="gone"/>
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/logout_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -80,20 +89,21 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/auth_linear"
         android:weightSum="2"
-        android:background="@color/gray">
-        <Button
+        android:background="@color/light_gray">
+        <androidx.appcompat.widget.AppCompatButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:backgroundTint="@color/white"
+            android:background="@color/white"
             android:layout_margin="@dimen/base_margin"
             android:textColor="@color/black"
             android:text="쿠폰"/>
-        <Button
+
+        <androidx.appcompat.widget.AppCompatButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:backgroundTint="@color/white"
+            android:background="@color/white"
             android:layout_margin="@dimen/base_margin"
             android:textColor="@color/black"
             android:text="포인트"/>
@@ -105,12 +115,19 @@
         android:orientation="vertical"
         android:layout_margin="@dimen/base_margin">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:text="고객센터"
-            android:layout_marginVertical="@dimen/base_margin"/>
-        <Button
+            android:text="고객센터 >"
+            android:layout_marginVertical="@dimen/base_margin"
+            />
+        <View
+            android:id="@+id/horizon1"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/light_gray" />
+
+        <androidx.appcompat.widget.AppCompatButton
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:text="앱 버전 V.1.0.0"

@@ -76,19 +76,24 @@ class ProductActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.product_menu, menu)
-        thread(start = true){
-            val flag = MyApplication.checkProductFavorite(productId)
-            runOnUiThread {
-                if(flag) {
-                    menu?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_selected)
-                    menu?.getItem(0)?.setChecked(true)
-                }
-                else {
-                    menu?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_svgrepo_com)
-                    menu?.getItem(0)?.setChecked(false)
+        if(MyApplication.current_user_email != null && MyApplication.current_user_email != "") {
+            thread(start = true){
+                val flag = MyApplication.checkProductFavorite(productId)
+                runOnUiThread {
+                    if(flag) {
+                        menu?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_selected)
+                        menu?.getItem(0)?.setChecked(true)
+                    }
+                    else {
+                        menu?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_svgrepo_com)
+                        menu?.getItem(0)?.setChecked(false)
+                    }
                 }
             }
+            menu?.getItem(0)?.setVisible(true)
         }
+        else menu?.getItem(0)?.setVisible(false)
+
 
         return super.onCreateOptionsMenu(menu)
     }
@@ -108,14 +113,14 @@ class ProductActivity : AppCompatActivity() {
         if(flag) {
             item.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_selected)
             thread(start=true) {
-                MyApplication.setProductFavorite(MyApplication.current_user_email, productId)
+                MyApplication.setProductFavorite(MyApplication.current_user_email!!, productId)
             }
             item.setChecked(true)
         }
         else {
             item.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_svgrepo_com)
             thread(start=true) {
-                MyApplication.delProductFavorite(MyApplication.current_user_email, productId)
+                MyApplication.delProductFavorite(MyApplication.current_user_email!!, productId)
             }
             item.setChecked(false)
         }

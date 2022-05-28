@@ -9,5 +9,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <dimen name="auth_btn_width">300dp</dimen>
-    <dimen name="auth_btn_height">48dp</dimen>
+    <dimen name="auth_btn_height">35dp</dimen>
 </resources>

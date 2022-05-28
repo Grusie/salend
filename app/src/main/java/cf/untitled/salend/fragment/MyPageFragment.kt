@@ -99,6 +99,7 @@ class MyPageFragment : Fragment() {
                 authInfo.visibility = View.VISIBLE
                 logoutBtn.visibility = View.VISIBLE
                 authTextView.visibility = View.GONE
+                horizon.visibility = View.VISIBLE
 
                 profileImg.setImageResource(R.drawable.ic_search)
                 val docRef = MyApplication.db.collection("profile")
@@ -121,7 +122,9 @@ class MyPageFragment : Fragment() {
                 authInfo.visibility = View.GONE
                 logoutBtn.visibility = View.GONE
                 authTextView.visibility = View.VISIBLE
+                horizon.visibility = View.GONE
 
+                MyApplication.current_user_email = null
                 authInfo.text = ""
             }
         }
@@ -133,6 +136,7 @@ class MyPageFragment : Fragment() {
                 authInfo.visibility = View.VISIBLE
                 logoutBtn.visibility = View.VISIBLE
                 authTextView.visibility = View.GONE
+                horizon.visibility = View.VISIBLE
 
                 // 사용자 정보 요청 (기본)
                 UserApiClient.instance.me { user, error ->
