@@ -3,6 +3,7 @@ package cf.untitled.salend.retrofit
 import cf.untitled.salend.model.ProductArray
 import cf.untitled.salend.model.ProductData
 import cf.untitled.salend.model.StoreData
+import cf.untitled.salend.model.StoreItamData
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -14,8 +15,8 @@ interface RetrofitService {
     @GET("{page}")
     fun getProductArrayPage(@Path("page") page: String): Call<ProductArray>
 
-    @GET("test2.html")
-    fun getTest2page() : Call<ProductArray>
+    @GET("item")
+    fun getTest2page() : Call<StoreItamData>
 
     @GET("item/{page}")
     fun getProductDataPage(@Path("page") page: String): Call<ProductData>
