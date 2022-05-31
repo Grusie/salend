@@ -76,6 +76,7 @@ class ProductActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.product_menu, menu)
+
         if(MyApplication.current_user_email != null && MyApplication.current_user_email != "") {
             thread(start = true){
                 val flag = MyApplication.checkProductFavorite(productId)
@@ -113,6 +114,7 @@ class ProductActivity : AppCompatActivity() {
         if(flag) {
             item.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_selected)
             thread(start=true) {
+
                 MyApplication.setProductFavorite(MyApplication.current_user_email!!, productId)
             }
             item.setChecked(true)
@@ -121,6 +123,7 @@ class ProductActivity : AppCompatActivity() {
             item.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_svgrepo_com)
             thread(start=true) {
                 MyApplication.delProductFavorite(MyApplication.current_user_email!!, productId)
+
             }
             item.setChecked(false)
         }
