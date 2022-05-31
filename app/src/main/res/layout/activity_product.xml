@@ -13,7 +13,14 @@
         app:layout_constraintTop_toTopOf="parent"
         android:background="@color/teal_200"
         >
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/test_fire"
+            android:text="test"/>
         <TextView
+            android:layout_gravity="center"
+            style="@style/title_text_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="가게이름"
@@ -26,36 +33,43 @@
         app:layout_constraintTop_toBottomOf="@id/product_toolbar"
         app:layout_constraintBottom_toTopOf="@+id/pay_tab"
         android:weightSum="10">
-
+        <LinearLayout
+            android:layout_weight="5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#548f43fe">
         <ImageView
             android:id="@+id/product_info_img"
             android:layout_weight="4"
             android:layout_height="0dp"
             android:layout_width="match_parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:scaleType="fitCenter"/>
 
-        <TextView
-            android:id="@+id/product_info_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="상품명"
-            android:layout_weight="1"
-            app:layout_constraintTop_toBottomOf="@id/product_info_img" />
+            <TextView
+                android:id="@+id/product_info_name"
+                android:padding="@dimen/base_padding"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="상품명"
+                app:layout_constraintTop_toBottomOf="@id/product_info_img" />
 
-        <TextView
-            android:id="@+id/product_info_price"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="가격"
-            android:layout_weight="1"
-            app:layout_constraintTop_toBottomOf="@+id/product_info_name" />
-
+            <TextView
+                android:id="@+id/product_info_price"
+                android:padding="@dimen/base_padding"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="가격"
+                app:layout_constraintTop_toBottomOf="@+id/product_info_name" />
+        </LinearLayout>
         <TextView
             android:id="@+id/product_info_exp"
+            android:padding="@dimen/base_padding"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="유통기한"
-            android:layout_weight="1"
+            android:layout_weight="5"
             app:layout_constraintTop_toBottomOf="@+id/product_info_price" />
     </LinearLayout>
 
@@ -67,6 +81,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:backgroundTint="#00ffff"
+        android:backgroundTint="#ffff00"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

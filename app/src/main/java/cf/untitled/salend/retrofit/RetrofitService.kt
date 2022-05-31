@@ -2,6 +2,7 @@ package cf.untitled.salend.retrofit
 
 import cf.untitled.salend.model.ProductArray
 import cf.untitled.salend.model.ProductData
+import cf.untitled.salend.model.StoreArray
 import cf.untitled.salend.model.StoreData
 import retrofit2.Call
 import retrofit2.http.GET
@@ -11,19 +12,20 @@ import retrofit2.http.Query
 interface RetrofitService {
 
     //GET 예제
-    @GET("{page}")
-    fun getProductArrayPage(@Path("page") page: String): Call<ProductArray>
+/*    @GET("{page}")
+    fun getProductArrayPage(@Path("page") page: String): Call<ProductArray>*/
 
-    @GET("test2.html")
-    fun getTest2page() : Call<ProductArray>
-
+    //단일 상품
     @GET("item/{page}")
-    fun getProductDataPage(@Path("page") page: String): Call<ProductData>
+    fun getSingleProductDataPage(@Path("page") page: String): Call<ProductData>
 
+    //상품 전체
     @GET("item/nearby/")
-    fun getNearbyDataPage(
-        @Query("_loc") loc : String) : Call<ProductArray>
+    fun getProductDataPage(
+        @Query("_loc") loc:String) : Call<ProductArray>
 
+    @GET("store/test")
+    fun getNearbyStorePage() : Call<StoreArray>
 
 //    @GET("posts/1")
 //    fun getStudent(@Query("school_id") schoolId: Int,
@@ -32,7 +34,7 @@ interface RetrofitService {
 //
 //
 //    //POST 예제
-//    @FormUrlEncoded
 //    @POST("posts")
+//    @FormUrlEncoded
 //    fun getContactsObject(@Field("idx") idx: String): Call<JsonObject>
 }
