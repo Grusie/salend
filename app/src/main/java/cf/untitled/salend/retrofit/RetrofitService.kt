@@ -12,19 +12,23 @@ import retrofit2.http.Query
 interface RetrofitService {
 
     //GET 예제
-    @GET("{page}")
-    fun getProductArrayPage(@Path("page") page: String): Call<ProductArray>
+/*    @GET("{page}")
+    fun getProductArrayPage(@Path("page") page: String): Call<ProductArray>*/
 
     @GET("item")
     fun getTest2page() : Call<StoreItamData>
 
+    //단일 상품
     @GET("item/{page}")
-    fun getProductDataPage(@Path("page") page: String): Call<ProductData>
+    fun getSingleProductDataPage(@Path("page") page: String): Call<ProductData>
 
+    //상품 전체
     @GET("item/nearby/")
-    fun getNearbyDataPage(
-        @Query("_loc") loc : String) : Call<ProductArray>
+    fun getProductArrayPage(
+        @Query("_loc") loc:String) : Call<ProductArray>
 
+    @GET("store/test")
+    fun getNearbyStorePage() : Call<StoreArray>
 
 //    @GET("posts/1")
 //    fun getStudent(@Query("school_id") schoolId: Int,

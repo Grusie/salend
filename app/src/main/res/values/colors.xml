@@ -8,10 +8,13 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="light_black">#181818</color>
+    <color name="better_light_black">#2B2B2B</color>
     <color name="light_white">#F6F6F6</color>
     <color name="light_gray">#D3D3D3</color>
     <color name="gray">#808080</color>
     <color name="kakao">#FFEB00</color>
     <color name="google_dark">#4285F4</color>
     <color name="red">#ff0000</color>
+    <color name="salend_background">#FDF8F2</color>
+    <color name="light_salend_backgroud">#F5F4F0</color>
 </resources>

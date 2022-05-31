@@ -29,7 +29,7 @@ class LoginActivity : AppCompatActivity() {
     @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        MyApplication.db = FirebaseFirestore.getInstance()
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -51,7 +51,7 @@ class LoginActivity : AppCompatActivity() {
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe { user ->
-                            val userId = user.id.toString()    //TODO 카카오 이메일 받아오기 실패..
+                            val userId = user.id.toString()
                             val userName = user.kakaoAccount?.profile?.nickname
                             MyApplication.db.collection("profile").document(userId).addSnapshotListener { snapshot, e ->
                                 if (snapshot?.exists() == false) {
@@ -128,7 +128,6 @@ class LoginActivity : AppCompatActivity() {
                 val googleSign = GoogleSignIn.getLastSignedInAccount(this)
 
                 val userId = googleSign?.email
-                MyApplication.db = FirebaseFirestore.getInstance()
                 MyApplication.db.collection("profile").document(userId!!).addSnapshotListener { snapshot, e ->
                     if (snapshot?.exists() == false) {
                         val userData = UserData(
