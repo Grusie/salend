@@ -21,7 +21,6 @@ class MyApplication: MultiDexApplication() {
         var email: String? = null
         lateinit var sharedPref:SharedPreferences
         lateinit var edit : SharedPreferences.Editor
-      
         lateinit var current_user_email : String
         var current_user_email : String? = null
         private var storeFavorite = ArrayList<String?>()
@@ -41,8 +40,6 @@ class MyApplication: MultiDexApplication() {
         fun getStoreFavorite() : ArrayList<String?>{
             db = FirebaseFirestore.getInstance()
             val docRef = db.collection("profile")
-
-
             val task = docRef.whereEqualTo("u_id", current_user_email!!).get()
             var asd = Tasks.await(task)
             storeFavorite = asd.documents[0].data?.get("u_store_favorite") as ArrayList<String?>

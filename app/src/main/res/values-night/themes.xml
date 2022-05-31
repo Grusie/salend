@@ -12,6 +12,13 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/black</item>
         <!-- Customize your theme here. -->
+        <item name="android:windowBackground">@color/light_black</item>
+        <!--custom font-family 적용-->
+        <item name="android:textViewStyle">@style/customTextViewFontStyle</item>
+        <item name="android:buttonStyle">@style/customButtonFontStyle</item>
+        <item name="android:editTextStyle">@style/customEditTextFontStyle</item>
+        <item name="android:radioButtonStyle">@style/customRadioButtonFontStyle</item>
+        <item name="android:checkboxStyle">@style/customCheckboxFontStyle</item>
     </style>
 
     <!--title-->
@@ -37,9 +44,11 @@
         <item name="android:layout_height">@dimen/auth_btn_height</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:layout_gravity">center</item>
-        <item name="android:textSize">@dimen/base_text_size</item>
         <item name="android:padding">0dp</item>
-        <item name="backgroundTint">@color/gray</item>
+        <item name="android:textSize">@dimen/base_text_size</item>
+        <item name="android:paddingLeft">@dimen/base_padding</item>
+        <item name="android:background">@color/better_light_black</item>
+        <item name="android:layout_margin">@dimen/base_margin</item>
     </style>
 
     <style name="auth_button_style.google" parent="auth_button_style">
@@ -55,4 +64,34 @@
         <item name="windowActionBar">false</item>
         <item name="android:windowBackground">@drawable/salend_logo</item>
     </style>
+
+    <style name="light_black_style">
+        <item name="android:background">@color/light_black</item>
+    </style>
+
+    <style name="better_light_black_style">
+        <item name="android:background">@color/better_light_black</item>
+    </style>
+    <!-- Custom font 적용 -->
+    <style name="customTextViewFontStyle" parent="@android:style/Widget.DeviceDefault.TextView">
+        <item name="android:fontFamily">@font/custom_font_family</item>
+    </style>
+
+    <style name="customButtonFontStyle" parent="@android:style/Widget.DeviceDefault.Button.Borderless">
+        <item name="android:fontFamily">@font/custom_font_family</item>
+        <item name="android:textSize">@dimen/base_text_size</item>
+    </style>
+
+    <style name="customEditTextFontStyle" parent="@android:style/Widget.DeviceDefault.EditText">
+        <item name="android:fontFamily">@font/custom_font_family</item>
+    </style>
+
+    <style name="customRadioButtonFontStyle" parent="@android:style/Widget.DeviceDefault.CompoundButton.RadioButton">
+        <item name="android:fontFamily">@font/custom_font_family</item>
+    </style>
+
+    <style name="customCheckboxFontStyle" parent="@android:style/Widget.DeviceDefault.CompoundButton.CheckBox">
+        <item name="android:fontFamily">@font/custom_font_family</item>
+    </style>
+
 </resources>
