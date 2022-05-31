@@ -21,7 +21,7 @@ class MyApplication: MultiDexApplication() {
         var email: String? = null
         lateinit var sharedPref:SharedPreferences
         lateinit var edit : SharedPreferences.Editor
-        lateinit var current_user_email : String
+        var current_user_email : String? = null
         private var storeFavorite = ArrayList<String?>()
         private var productFavorite = ArrayList<String?>()
 
@@ -40,7 +40,7 @@ class MyApplication: MultiDexApplication() {
             db = FirebaseFirestore.getInstance()
             val docRef = db.collection("profile")
 
-            val task = docRef.whereEqualTo("u_id", current_user_email).get()
+            val task = docRef.whereEqualTo("u_id", current_user_email!!).get()
             var asd = Tasks.await(task)
             storeFavorite = asd.documents[0].data?.get("u_store_favorite") as ArrayList<String?>
             return storeFavorite
@@ -50,22 +50,22 @@ class MyApplication: MultiDexApplication() {
         fun getProductFavorite(): ArrayList<String?>{
             db = FirebaseFirestore.getInstance()
             val docRef = db.collection("profile")
-            val task = docRef.whereEqualTo("u_id", current_user_email).get()
+            val task = docRef.whereEqualTo("u_id", current_user_email!!).get()
             var asd = Tasks.await(task)
-            storeFavorite = asd.documents[0].data?.get("u_item_favorite") as ArrayList<String?>
+            productFavorite = asd.documents[0].data?.get("u_item_favorite") as ArrayList<String?>
             return productFavorite
         }
 
         fun setStoreFavorite(userId : String, productId : String) {
             db = FirebaseFirestore.getInstance()
-            var lastStoreFavorite = this.getStoreFavorite()
+            var lastStoreFavorite = getStoreFavorite()
             lastStoreFavorite.add(productId)
             db.collection("profile").document(userId).update("u_store_favorite", lastStoreFavorite)
         }
 
         fun setProductFavorite(userId : String, productId : String) {
             db = FirebaseFirestore.getInstance()
-            var lastProductFavorite = this.getStoreFavorite()
+            var lastProductFavorite = getProductFavorite()
             lastProductFavorite.add(productId)
             db.collection("profile").document(userId).update("u_item_favorite", lastProductFavorite)
         }
@@ -77,7 +77,7 @@ class MyApplication: MultiDexApplication() {
 
         fun updateProductFavorite(userId: String, productFavorite: ArrayList<String?>){
             db = FirebaseFirestore.getInstance()
-            db.collection("profile").document(userId).update("u_product_favorite", productFavorite)
+            db.collection("profile").document(userId).update("u_item_favorite", productFavorite)
         }
 
         fun delStoreFavorite(userId: String, storeId: String) {
