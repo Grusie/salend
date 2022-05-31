@@ -24,23 +24,17 @@ import kotlin.concurrent.thread
 
 class ProductActivity : AppCompatActivity() {
     lateinit var binding: ActivityProductBinding
+    var favoriteFlag = false
+    lateinit var productId: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        productId = intent.getStringExtra("product_id")!!
         binding = ActivityProductBinding.inflate(layoutInflater)
-        initProduct("6288e7d2e747d7702b9c4986")
         setContentView(binding.root)
 
-        //val productId = intent.getStringExtra("product_id")
+        initProduct(productId)
         setSupportActionBar(binding.productToolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        binding.testFire.setOnClickListener {
-            thread(start=true) {
-                MyApplication.setStoreFavorite(
-                    MyApplication.current_user_email,
-                    "628edf00a1639ae216017c70"
-                )
-            }
-        }
 
     }
 
@@ -82,21 +76,53 @@ class ProductActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.product_menu, menu)
-        thread(start = true){
-            val flag = MyApplication.checkStoreFavorite("628edf00a1639ae216017c70")
-            runOnUiThread {
-                if(flag)
-                    menu?.getItem(0)?.icon = ContextCompat.getDrawable(this@ProductActivity,R.drawable.ic_favorite_selected)
-                else
-                    menu?.getItem(0)?.icon = ContextCompat.getDrawable(this@ProductActivity,R.drawable.ic_favorite_svgrepo_com)
+        if(MyApplication.current_user_email != null && MyApplication.current_user_email != "") {
+            thread(start = true){
+                val flag = MyApplication.checkProductFavorite(productId)
+                runOnUiThread {
+                    if(flag) {
+                        menu?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_selected)
+                        menu?.getItem(0)?.setChecked(true)
+                    }
+                    else {
+                        menu?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_svgrepo_com)
+                        menu?.getItem(0)?.setChecked(false)
+                    }
+                }
             }
+            menu?.getItem(0)?.setVisible(true)
         }
+        else menu?.getItem(0)?.setVisible(false)
+
 
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
+        if(item.itemId == R.id.favorite_menu){
+            if(item.isChecked){
+                changeFavorite(item, false)
+            }
+            else {
+                changeFavorite(item, true)
+            }
+        }
         return super.onOptionsItemSelected(item)
+    }
+    fun changeFavorite(item: MenuItem, flag : Boolean){
+        if(flag) {
+            item.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_selected)
+            thread(start=true) {
+                MyApplication.setProductFavorite(MyApplication.current_user_email!!, productId)
+            }
+            item.setChecked(true)
+        }
+        else {
+            item.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_svgrepo_com)
+            thread(start=true) {
+                MyApplication.delProductFavorite(MyApplication.current_user_email!!, productId)
+            }
+            item.setChecked(false)
+        }
     }
 }
