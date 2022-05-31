@@ -21,7 +21,7 @@ interface RetrofitService {
 
     //상품 전체
     @GET("item/nearby/")
-    fun getProductDataPage(
+    fun getProductArrayPage(
         @Query("_loc") loc:String) : Call<ProductArray>
 
     @GET("store/test")
