@@ -27,7 +27,7 @@ private const val ARG_PARAM2 = "param2"
  */
 class MyPageFragment : Fragment() {
     lateinit var binding: FragmentMyPageBinding
-    var current_user_email : String? = null
+    //var current_user_email : String? = null
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -92,7 +92,7 @@ class MyPageFragment : Fragment() {
         if(status == "LogIn"){
             binding.apply{
                 if(MyApplication.auth.currentUser?.email != null)
-                    current_user_email = MyApplication.auth.currentUser?.email!!
+                    MyApplication.current_user_email = MyApplication.auth.currentUser?.email!!
 
                 MyApplication.db = FirebaseFirestore.getInstance()
                 profileImg.visibility = View.VISIBLE
@@ -102,7 +102,7 @@ class MyPageFragment : Fragment() {
 
                 profileImg.setImageResource(R.drawable.ic_search)
                 val docRef = MyApplication.db.collection("profile")
-                docRef.whereEqualTo("u_id", current_user_email).get()
+                docRef.whereEqualTo("u_id", MyApplication.current_user_email).get()
                     .addOnSuccessListener { document ->
                         for(fields in document){
                             authInfo.text = fields["u_name"] as String + "님 반갑습니다."
@@ -113,6 +113,7 @@ class MyPageFragment : Fragment() {
                         Log.d("grusie", "get failed with ", exception)
                     }
             }
+            
         }
         else if(status == "LogOut") {
             binding.apply {
@@ -138,16 +139,16 @@ class MyPageFragment : Fragment() {
                     if (error != null) {
                         Log.e("name", "사용자 정보 요청 실패", error)
                     }
-                    else if (user != null) {
+                    else if (user != null) {/*
                         Log.i("name", "사용자 정보 요청 성공" +
                                 "\n회원번호: ${user.id}" +
                                 "\n이메일: ${user.kakaoAccount?.email}" +
                                 "\n닉네임: ${user.kakaoAccount?.profile?.nickname}" +
-                                "\n프로필사진: ${user.kakaoAccount?.profile?.thumbnailImageUrl}")
+                                "\n프로필사진: ${user.kakaoAccount?.profile?.thumbnailImageUrl}")*/
                         //current_user_email = user.kakaoAccount?.email
-                        current_user_email = user.id.toString()
+                        MyApplication.current_user_email = user.id.toString()
                         val docRef = MyApplication.db.collection("profile")
-                        docRef.whereEqualTo("u_id", current_user_email).get()
+                        docRef.whereEqualTo("u_id", MyApplication.current_user_email).get()
                             .addOnSuccessListener { document ->
                                 for (fields in document) {
                                     authInfo.text = fields["u_name"] as String + "님 반갑습니다."
