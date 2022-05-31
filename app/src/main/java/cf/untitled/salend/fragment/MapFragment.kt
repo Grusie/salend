@@ -18,13 +18,20 @@ import androidx.fragment.app.Fragment
 import cf.untitled.salend.MyApplication
 import cf.untitled.salend.R
 import cf.untitled.salend.databinding.FragmentMapBinding
+import cf.untitled.salend.model.StoreArray
+import cf.untitled.salend.model.StoreData
+import cf.untitled.salend.retrofit.RetrofitClass
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.DecimalFormat
 import kotlin.math.log
+import kotlin.properties.Delegates
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -40,6 +47,8 @@ private const val ARG_PARAM2 = "param2"
 class MapFragment : Fragment() {
     private lateinit var mapView: MapView
     private lateinit var binding: FragmentMapBinding
+    private var latitude by Delegates.notNull<Double>()
+    private var longitude by Delegates.notNull<Double>()
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -66,9 +75,43 @@ class MapFragment : Fragment() {
         mapViewContainer.addView(mapView)
         setCurrentLocationTrackingMode(true)
 
-        var latitude = MyApplication.sharedPref.getString("latitude","0")!!.toDouble()
-        var longitude = MyApplication.sharedPref.getString("longitude","0")!!.toDouble()
-        createMapMarker(latitude, longitude)
+        var nearbyStoreList = ArrayList<StoreData>()
+        RetrofitClass.service.getNearbyStorePage().enqueue(object :
+            Callback<StoreArray> {
+            override fun onResponse(call: Call<StoreArray>, response: Response<StoreArray>) {
+                if (response.isSuccessful) {
+                    // 정상적으로 통신이 성공된 경우
+                    var result: StoreArray? = response.body()
+                    result?.stores?.let { nearbyStoreList.addAll(it) }
+
+                    for (i in 0 until nearbyStoreList.size) {
+                        nearbyStoreList[i].s_name?.let {
+                            nearbyStoreList[i].s_lat?.let {it1 ->
+                                nearbyStoreList[i].s_lng?.let { it2 ->
+                                    createMapMarker(
+                                        it,
+                                        it1,
+                                        it2
+                                    )
+                                }
+                            }
+                        }
+                    }
+                    Log.d("grusie", "$result")
+
+                } else {
+                    // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
+                    Log.d("retrofit", "${response.code()}")
+                    Log.d("retrofit", "onResponse 실패")
+                }
+            }
+
+            override fun onFailure(call: Call<StoreArray>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+        })
+
+        //createMapMarker(latitude, longitude)
         binding.targetBtn.setOnClickListener {
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
             if (ActivityCompat.checkSelfPermission(
@@ -99,6 +142,7 @@ class MapFragment : Fragment() {
         return binding.root
     }
 
+
     private fun setCurrentLocationTrackingMode(tracking: Boolean) {
         if (tracking) {
             mapView.currentLocationTrackingMode =
@@ -111,12 +155,12 @@ class MapFragment : Fragment() {
         }
     }
 
-    private fun createMapMarker(latitude:Double, longitude:Double) {
+    private fun createMapMarker(name:String, latitude:Double, longitude:Double) {
         Toast.makeText(requireContext(),"createMapMarker : $latitude, $longitude", Toast.LENGTH_SHORT).show()
         val marker = MapPOIItem()
         Log.d("grusie","$latitude, $longitude")
         marker.apply {
-            itemName = "qweazx"   // 마커 이름
+            itemName = name   // 마커 이름
             mapPoint = MapPoint.mapPointWithGeoCoord(latitude, longitude)   // 좌표
             marker.markerType = MapPOIItem.MarkerType.BluePin
             marker.selectedMarkerType = MapPOIItem.MarkerType.RedPin

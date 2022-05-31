@@ -22,7 +22,8 @@ class NearbySaleRecyclerAdapter(private var data: ArrayList<ProductData>) :
     RecyclerView.Adapter<NearbySaleRecyclerAdapter.NearbySaleViewHolder>() {
     class NearbySaleViewHolder(binding: ItemNearbySaleBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        val holder2 = binding.rightItemView
+        val leftHolder = binding.leftItemView
+        val rightHolder = binding.rightItemView
         val img = binding.productImg
         val shop = binding.shopName
         val name = binding.productName
@@ -46,31 +47,37 @@ class NearbySaleRecyclerAdapter(private var data: ArrayList<ProductData>) :
                     .load(data[evenPosition].i_image)
                     .error(R.drawable.ic_map_svgrepo_com)
                     .into(img)
-
+                val product_id = data[evenPosition]._id
                 shop.text = data[evenPosition].i_store_name
                 name.text = data[evenPosition].i_name
                 price.text = data[evenPosition].i_price.toString()
                 price.paintFlags = price.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                 nowPrice.text = data[evenPosition].i_now_price.toString()
+                leftHolder.setOnClickListener{
+                    val intent = Intent(holder.itemView.context, ProductActivity::class.java)
+                    intent.putExtra("product_id", "$product_id")
+                    ContextCompat.startActivity(holder.itemView.context, intent, null)
+                }
             }
             if (data.size % 2 == 1 && evenPosition == data.size - 1) {
-                holder2.visibility = View.INVISIBLE
+                rightHolder.visibility = View.INVISIBLE
             }
 
             if (oddPosition <= data.size - 1) {
                 Glide.with(img2.context)
                     .load(data[oddPosition].i_image).error(R.drawable.ic_map_svgrepo_com)
                     .into(img2)
+                val product_id = data[oddPosition]._id
                 shop2.text = data[oddPosition].i_store_name
                 name2.text = data[oddPosition].i_name
                 price2.text = data[oddPosition].i_price.toString()
                 price2.paintFlags = price.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                 nowPrice2.text = data[oddPosition].i_now_price.toString()
-            }
-            itemView.setOnClickListener {
-                val intent = Intent(holder.itemView.context, ProductActivity::class.java)
-                intent.putExtra("product_id", "${data[position]._id}")
-                ContextCompat.startActivity(holder.itemView.context, intent, null)
+                rightHolder.setOnClickListener {
+                    val intent = Intent(holder.itemView.context, ProductActivity::class.java)
+                    intent.putExtra("product_id", "$product_id")
+                    ContextCompat.startActivity(holder.itemView.context, intent, null)
+                }
             }
         }
     }
@@ -85,7 +92,7 @@ class NearbySaleRecyclerAdapter(private var data: ArrayList<ProductData>) :
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): NearbySaleViewHolder {
+    ): NearbySaleRecyclerAdapter.NearbySaleViewHolder {
         return NearbySaleViewHolder(
             ItemNearbySaleBinding.inflate(
                 LayoutInflater.from(parent.context),

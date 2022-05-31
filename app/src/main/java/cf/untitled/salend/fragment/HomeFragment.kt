@@ -22,6 +22,7 @@ import cf.untitled.salend.customView.RectButton
 import cf.untitled.salend.databinding.FragmentHomeBinding
 import cf.untitled.salend.model.ProductArray
 import cf.untitled.salend.model.ProductData
+import cf.untitled.salend.model.StoreArray
 import cf.untitled.salend.retrofit.RetrofitClass
 import retrofit2.Call
 import retrofit2.Callback
@@ -53,7 +54,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        MyApplication.sharedPref = requireActivity().getSharedPreferences("location", Context.MODE_PRIVATE)   
+        MyApplication.sharedPref = requireActivity().getSharedPreferences("location", Context.MODE_PRIVATE)
         MyApplication.edit = MyApplication.sharedPref.edit()        //Location을 저장할 SharedPreference 선언
 
         binding = FragmentHomeBinding.inflate(layoutInflater)
@@ -69,7 +70,7 @@ class HomeFragment : Fragment() {
         )
         binding.locationTv.text = MyApplication.sharedPref.getString("location","지역")
         activityResultLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {      //액티비티 결과 콜백 지정 
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {      //액티비티 결과 콜백 지정
                 if (it.resultCode == Activity.RESULT_OK) {
                     binding.locationTv.text = it.data?.getStringExtra("locationResult")
                     initRecyclerView()
@@ -122,32 +123,28 @@ class HomeFragment : Fragment() {
         var endTimeProductList = ArrayList<ProductData>()
         var latitude = MyApplication.sharedPref.getString("latitude","0")
         var longitude = MyApplication.sharedPref.getString("longitude","0")
-        RetrofitClass.service.getNearbyDataPage("${latitude},${longitude}").enqueue(object : Callback<ProductArray> {
+        RetrofitClass.service.getProductArrayPage("${latitude},${longitude}").enqueue(object : Callback<ProductArray> {
             override fun onResponse(call: Call<ProductArray>, response: Response<ProductArray>) {
                 if (response.isSuccessful) {
+
                     // 정상적으로 통신이 성공된 경우
                     var result: ProductArray? = response.body()
                     result?.near_by?.let { nearbyProductList.addAll(it) }
                     result?.end_time?.let { endTimeProductList.addAll(it) }
+                    Log.d("product","$nearbyProductList")
+                    Log.d("product","$endTimeProductList")
                     recyclerSetData(nearbyProductList, endTimeProductList)
-                    Toast.makeText(requireContext(), "${latitude}, ${longitude}", Toast.LENGTH_SHORT).show()
 
                 } else {
                     // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
                     Log.d("retrofit", "${response.code()}")
                     Log.d("retrofit", "onResponse 실패")
-/*                    var dummyProductData = ProductData("6288e7d2e747d7702b9c4986","스누피", "경남","R.drawable.ic_map_svgrepo_com", 212,324,321,"Asd")
-                    var dummyNearbyProductData = ArrayList<ProductData>()
-                    var dummyEndTimeProductList = ArrayList<ProductData>()
-                    dummyNearbyProductData.add(dummyProductData)
-                    dummyEndTimeProductList.add(dummyProductData)*/
-                    recyclerSetData(nearbyProductList, endTimeProductList)
                 }
             }
 
             override fun onFailure(call: Call<ProductArray>, t: Throwable) {
                 // 통신 실패 (인터넷 끊킴, 예외 발생 등 시스템적인 이유)
-                Log.d("retrofit", "onFailure 에러: " + t.message.toString());
+                Log.d("retrofit", "onFailure 에러: " + t.message.toString())
             }
         })
         return binding.root

@@ -32,6 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:hint="E-mail"
+            android:fontFamily="@font/custom_font"
             android:inputType="textEmailAddress" />
 
         <EditText
@@ -40,6 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:hint="Password"
+            android:fontFamily="@font/custom_font"
             android:inputType="textPassword" />
     </LinearLayout>
 
@@ -52,28 +54,29 @@
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@+id/loginLinear">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/login_btn"
             style="@style/auth_button_style"
             android:text="로그인" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/google_login_btn"
             style="@style/auth_button_style.google"
+            android:paddingLeft="@dimen/base_padding"
             android:text="구글 로그인     "
             android:drawableLeft="@drawable/btn_google_light_normal_ldpi"
             android:textSize="20sp"
             android:gravity="center"/>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/kakao_login_btn"
             style="@style/auth_button_style.kakao"
             android:scaleType="centerCrop"
             android:drawableLeft="@drawable/kakaolink_btn_small"
             android:text="카카오 로그인     "
-            android:backgroundTint="@color/kakao" />
+            android:background="@color/kakao" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/auth_btn"
             style="@style/auth_button_style"
             android:text="회원가입"
