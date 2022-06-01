@@ -42,7 +42,9 @@ class MyApplication: MultiDexApplication() {
 
             val task = docRef.whereEqualTo("u_id", current_user_email!!).get()
             var asd = Tasks.await(task)
-            storeFavorite = asd.documents[0].data?.get("u_store_favorite") as ArrayList<String?>
+            val uStore = asd.documents[0].data?.get("u_store_favorite") as ArrayList<String?>?
+            if( uStore!= null)
+                storeFavorite = uStore
             return storeFavorite
         }
 
@@ -52,7 +54,10 @@ class MyApplication: MultiDexApplication() {
             val docRef = db.collection("profile")
             val task = docRef.whereEqualTo("u_id", current_user_email!!).get()
             var asd = Tasks.await(task)
-            productFavorite = asd.documents[0].data?.get("u_item_favorite") as ArrayList<String?>
+            val uProduct = asd.documents[0].data?.get("u_item_favorite") as ArrayList<String?>?
+            if(uProduct != null)
+                productFavorite = uProduct
+
             return productFavorite
         }
 
