@@ -7,8 +7,28 @@
     tools:context=".SearchActivity">
 
     <androidx.appcompat.widget.SearchView
+        android:id="@+id/search_search_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
+        app:queryHint="검색어를 입력하세요"
+        app:iconifiedByDefault="false"
         />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_category_recycler"
+        android:padding="@dimen/base_padding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/search_search_view"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_search_list_recycler"
+        android:layout_width="match_parent"
+        android:padding="@dimen/base_padding"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_category_recycler" />
 </androidx.constraintlayout.widget.ConstraintLayout>
