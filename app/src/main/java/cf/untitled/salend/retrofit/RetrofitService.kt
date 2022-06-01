@@ -2,8 +2,8 @@ package cf.untitled.salend.retrofit
 
 import cf.untitled.salend.model.ProductArray
 import cf.untitled.salend.model.ProductData
-import cf.untitled.salend.model.StoreArray
 import cf.untitled.salend.model.StoreData
+import cf.untitled.salend.model.StoreItamData
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -14,6 +14,9 @@ interface RetrofitService {
     //GET 예제
 /*    @GET("{page}")
     fun getProductArrayPage(@Path("page") page: String): Call<ProductArray>*/
+
+    @GET("item")
+    fun getTest2page() : Call<StoreItamData>
 
     //단일 상품
     @GET("item/{page}")
@@ -34,7 +37,7 @@ interface RetrofitService {
 //
 //
 //    //POST 예제
-//    @POST("posts")
 //    @FormUrlEncoded
+//    @POST("posts")
 //    fun getContactsObject(@Field("idx") idx: String): Call<JsonObject>
 }

@@ -18,6 +18,12 @@
         android:theme="@style/Theme.Salend"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".FavoritepageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".StoreChoiceActivity"
+            android:exported="false" />
+        <activity
             android:name=".ProductActivity"
             android:exported="false" />
         <activity
