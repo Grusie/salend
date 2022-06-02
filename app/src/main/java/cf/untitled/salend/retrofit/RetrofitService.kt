@@ -1,9 +1,6 @@
 package cf.untitled.salend.retrofit
 
-import cf.untitled.salend.model.ProductArray
-import cf.untitled.salend.model.ProductData
-import cf.untitled.salend.model.StoreData
-import cf.untitled.salend.model.StoreItamData
+import cf.untitled.salend.model.*
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -29,6 +26,9 @@ interface RetrofitService {
 
     @GET("store/test")
     fun getNearbyStorePage() : Call<StoreArray>
+
+    @GET("store/{storeId}")
+    fun getStoreFavor(@Path("storeId") storeId : String) : Call<StoreData>
 
 //    @GET("posts/1")
 //    fun getStudent(@Query("school_id") schoolId: Int,
