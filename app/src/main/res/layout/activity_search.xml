@@ -6,9 +6,46 @@
     android:layout_height="match_parent"
     tools:context=".SearchActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:id="@+id/search_toolbar"
+        app:layout_constraintTop_toTopOf="parent"
+        >
     <androidx.appcompat.widget.SearchView
+        android:id="@+id/search_search_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        app:queryHint="검색어를 입력하세요"
+        app:iconifiedByDefault="false"
         />
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_category_recycler"
+        android:padding="@dimen/base_padding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/search_toolbar"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        />
+    <TextView
+        android:id="@+id/search_exp_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="30sp"
+        android:text="검색어를 입력해주세요."
+        />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_search_list_recycler"
+        android:layout_width="match_parent"
+        android:padding="@dimen/base_padding"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_category_recycler" />
 </androidx.constraintlayout.widget.ConstraintLayout>
