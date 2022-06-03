@@ -10,6 +10,7 @@ import cf.untitled.salend.R
 import cf.untitled.salend.StoreChoiceActivity
 import cf.untitled.salend.databinding.ItemStoreItemBinding
 import cf.untitled.salend.model.ProductArray
+import cf.untitled.salend.model.StoreItamData
 import com.bumptech.glide.Glide
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
@@ -18,11 +19,11 @@ import kotlin.coroutines.coroutineContext
 
 class StoreChoiceAdapter : RecyclerView.Adapter<StoreChoiceAdapterHolder>(){
 
-    lateinit var itemList : ProductArray
+    lateinit var itemList : StoreItamData
     lateinit var binding: ItemStoreItemBinding
 
     override fun getItemCount(): Int {
-        return itemList.near_by?.size ?: 0
+        return itemList.items?.size ?: 0
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoreChoiceAdapterHolder {
@@ -31,18 +32,18 @@ class StoreChoiceAdapter : RecyclerView.Adapter<StoreChoiceAdapterHolder>(){
     }
 
     override fun onBindViewHolder(holder: StoreChoiceAdapterHolder, position: Int) {
-        val item = itemList.near_by?.get(position)
+        val item = itemList.items?.get(position)
         with(binding) {
-            val price : Int? = itemList.near_by?.get(position)?.i_price
-            val nowPrice : Int? = itemList.near_by?.get(position)?.i_now_price
-            val discount : Int?  = price?.div((price- nowPrice!!))
-            itemStoreItemName.text = item?.i_name
-            itemStoreItemPrice.text = item?.i_price.toString()
+            val price : Int? = itemList.items?.get(position)?.iPrice
+            val nowPrice : Int? = itemList.items?.get(position)?.iNowPrice
+            val discount : Int?  = ((price!! - nowPrice!!).toDouble()/price*100).toInt()
+            itemStoreItemName.text = item?.iName
+            itemStoreItemPrice.text = item?.iPrice.toString()
             itemStoreItemPrice.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG)
-            itemStoreItemNowPrice.text = item?.i_now_price.toString()
+            itemStoreItemNowPrice.text = item?.iNowPrice.toString()
             itemStoreItemDiscount.text = "${discount}% 할인!"
             Glide.with(binding.root)
-                .load(item?.i_image)
+                .load(item?.iImage)
                 .into(binding.itemStoreItemImage)
         }
     }

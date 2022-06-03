@@ -13,6 +13,7 @@ import cf.untitled.salend.databinding.ActivityStoreChoiceBinding
 import cf.untitled.salend.interface2.IStoreService
 import cf.untitled.salend.model.KategoriStore
 import cf.untitled.salend.model.ProductArray
+import cf.untitled.salend.model.StoreItamData
 import cf.untitled.salend.retrofit.RetrofitClass
 import cf.untitled.salend.retrofit.RetrofitService
 import com.bumptech.glide.Glide
@@ -31,7 +32,6 @@ import java.net.URL
 class StoreChoiceActivity : AppCompatActivity(), View.OnClickListener {
     var star = false
     val binding by lazy { ActivityStoreChoiceBinding.inflate(layoutInflater) }
-    lateinit var bitmap : Bitmap
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,15 +48,16 @@ class StoreChoiceActivity : AppCompatActivity(), View.OnClickListener {
 
 
 
-        RetrofitClass.service.getTest2page().enqueue(object : Callback<ProductArray> {
-            override fun onResponse(call: Call<ProductArray>, response: Response<ProductArray>) {
+        RetrofitClass.service.getTest2page().enqueue(object : Callback<StoreItamData> {
+            override fun onResponse(call: Call<StoreItamData>, response: Response<StoreItamData>) {
+                Log.i("sibar", response.body().toString())
                 val customAdapter = StoreChoiceAdapter()
                 binding.activityStoreRecyclerview.adapter = customAdapter
                 customAdapter.itemList = response.body()!!
                 binding.activityStoreRecyclerview.layoutManager = GridLayoutManager(this@StoreChoiceActivity,2)
             }
 
-            override fun onFailure(call: Call<ProductArray>, t: Throwable) {
+            override fun onFailure(call: Call<StoreItamData>, t: Throwable) {
                 Log.i("StoreChoiceActivity:서버통신", t.localizedMessage)
             }
         }
