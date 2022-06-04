@@ -3,10 +3,14 @@ package cf.untitled.salend.fragment
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import cf.untitled.salend.MyApplication
 import cf.untitled.salend.R
+import cf.untitled.salend.adapter.FavoriteStoreAdapter
 import cf.untitled.salend.databinding.FragmentLikeBinding
 import cf.untitled.salend.databinding.FragmentMyPageBinding
 import cf.untitled.salend.model.StoreArray
@@ -44,8 +48,31 @@ class LikeFragment : Fragment() {
             .build()
 
         val service = retrofit.create(RetrofitService::class.java)
+        val storeFavorList = arrayListOf<StoreData>()
 
+        binding.favoritePageStoreButton.setOnClickListener {
+            thread(start = true) {
+                val list = MyApplication.getStoreFavorite()
+                storeFavorList.clear()
+                for(i in 0 until list.size) {
+                    service.getStoreFavor(list[i]!!).enqueue(object : Callback<StoreData>{
+                        override fun onResponse(call: Call<StoreData>, response: Response<StoreData>) {
+                            Log.d("like", "서버통신성공")
+                            storeFavorList.add(response.body()!!)
+                        }
 
+                        override fun onFailure(call: Call<StoreData>, t: Throwable) {
+                            Log.d("like", "서버통신실패")
+                        }
+                    })
+
+                }
+            }
+            val adapter = FavoriteStoreAdapter()
+            adapter.favorStoreList = storeFavorList
+            binding.favoritePageItemRecyclerview.adapter = adapter
+            binding.favoritePageItemRecyclerview.layoutManager = GridLayoutManager(context, 2)
+        }
 
         return binding.root
     }

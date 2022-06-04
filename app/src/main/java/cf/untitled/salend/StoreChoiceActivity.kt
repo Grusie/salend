@@ -86,7 +86,7 @@ class StoreChoiceActivity : AppCompatActivity(){
         })
 
 
-        if (auth.currentUser?.uid == null) {
+        if (MyApplication.current_user_email == null) {
             binding.favoriteImageBtn.visibility = View.INVISIBLE
         } else {
             binding.favoriteImageBtn.visibility = View.VISIBLE

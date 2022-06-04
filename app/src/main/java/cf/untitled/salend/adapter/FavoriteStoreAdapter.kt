@@ -12,10 +12,10 @@ import com.bumptech.glide.Glide
 
 class FavoriteStoreAdapter : RecyclerView.Adapter<FavoriteStoreAdapter.FavoriteStoreViewHoder>() {
 
-    var favorStoreList : StoreArray? = null
+    lateinit var favorStoreList : ArrayList<StoreData>
 
     override fun getItemCount(): Int {
-        return favorStoreList?.stores?.size ?: 0
+        return favorStoreList.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteStoreViewHoder {
@@ -24,7 +24,7 @@ class FavoriteStoreAdapter : RecyclerView.Adapter<FavoriteStoreAdapter.FavoriteS
     }
 
     override fun onBindViewHolder(holder: FavoriteStoreViewHoder, position: Int) {
-        val store = favorStoreList?.stores?.get(position)
+        val store = favorStoreList.get(position)
         if (store != null) {
             holder.setStore(store)
         }
