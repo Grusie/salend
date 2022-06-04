@@ -5,11 +5,15 @@ import android.content.SharedPreferences
 import android.util.Log
 import androidx.multidex.MultiDexApplication
 import cf.untitled.salend.model.UserData
+import cf.untitled.salend.retrofit.RetrofitClass
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import io.reactivex.disposables.CompositeDisposable
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MyApplication: MultiDexApplication() {
     companion object {
@@ -21,7 +25,6 @@ class MyApplication: MultiDexApplication() {
         var email: String? = null
         lateinit var sharedPref:SharedPreferences
         lateinit var edit : SharedPreferences.Editor
-        lateinit var current_user_email : String
         var current_user_email : String? = null
         private var storeFavorite = ArrayList<String?>()
         private var productFavorite = ArrayList<String?>()
@@ -111,6 +114,5 @@ class MyApplication: MultiDexApplication() {
             db = FirebaseFirestore.getInstance()
             db.collection("profile").document(userData.u_id!!).set(userData)
         }
-
     }
 }
