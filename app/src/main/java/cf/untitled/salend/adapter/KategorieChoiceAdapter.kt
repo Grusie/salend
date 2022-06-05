@@ -35,11 +35,13 @@ class KategorieChoiceAdapter : RecyclerView.Adapter<KategorieChoiceAdapterHolder
                 val storeName = storeList?.stores?.get(adapterPosition)?.s_name ?: ""
                 val storeTime = storeList?.stores?.get(adapterPosition)?.s_time ?: ""
                 val storeImage = storeList?.stores?.get(adapterPosition)?.s_image ?: ""
+                val storeId = storeList?.stores?.get(adapterPosition)?._id ?: ""
                 val intent = Intent(parent.context, StoreChoiceActivity::class.java)
                 intent.putExtra("kategori", save)
                 intent.putExtra("name", storeName)
                 intent.putExtra("time",storeTime)
                 intent.putExtra("image",storeImage)
+                intent.putExtra("id",  storeId)
                 parent.context.startActivity(intent)
             }
 

@@ -13,10 +13,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
-import cf.untitled.salend.KategorieActivity
-import cf.untitled.salend.LocationSelectActivity
-import cf.untitled.salend.MyApplication
-import cf.untitled.salend.SearchActivity
+import cf.untitled.salend.*
 import cf.untitled.salend.adapter.NearbySaleRecyclerAdapter
 import cf.untitled.salend.customView.RectButton
 import cf.untitled.salend.databinding.FragmentHomeBinding
@@ -68,6 +65,12 @@ class HomeFragment : Fragment() {
             binding.categoryBtn6,
             binding.categoryBtn7
         )
+        val stringArray = resources.getStringArray(R.array.category)
+
+        for(i in stringArray.indices) {
+            btnList[i].text = stringArray[i]
+        }
+
         binding.locationTv.text = MyApplication.sharedPref.getString("location","지역")
         activityResultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {      //액티비티 결과 콜백 지정

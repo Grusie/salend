@@ -1,9 +1,6 @@
 package cf.untitled.salend.retrofit
 
-import cf.untitled.salend.model.ProductArray
-import cf.untitled.salend.model.ProductData
-import cf.untitled.salend.model.StoreArray
-import cf.untitled.salend.model.StoreData
+import cf.untitled.salend.model.*
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -15,6 +12,9 @@ interface RetrofitService {
 /*    @GET("{page}")
     fun getProductArrayPage(@Path("page") page: String): Call<ProductArray>*/
 
+    @GET("item")
+    fun getTest2page() : Call<StoreItamData>
+
     //단일 상품
     @GET("item/{page}")
     fun getSingleProductDataPage(@Path("page") page: String): Call<ProductData>
@@ -24,8 +24,17 @@ interface RetrofitService {
     fun getProductArrayPage(
         @Query("_loc") loc:String) : Call<ProductArray>
 
-    @GET("store/test")
+    @GET("store/")
     fun getNearbyStorePage() : Call<StoreArray>
+
+    @GET("item/search")
+    fun getProductSearchPage(@Query("query") query:String ) : Call<ProductArray2>
+
+    @GET("store/search")
+    fun getStoreSearchPage(@Query("query") query:String ) : Call<StoreArray>
+
+    @GET("store/{storeId}/")
+    fun getStoreFavor(@Path("storeId") storeId : String) : Call<StoreData>
 
 //    @GET("posts/1")
 //    fun getStudent(@Query("school_id") schoolId: Int,

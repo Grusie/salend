@@ -19,10 +19,13 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".StoreChoiceActivity"
+            android:exported="false" />
+        <activity
             android:name=".ProductActivity"
             android:exported="false" />
         <activity
             android:name=".SearchActivity"
+            android:windowSoftInputMode="adjustNothing"
             android:exported="false" />
         <activity
             android:name=".LocationSelectActivity"
@@ -56,7 +59,7 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".KategorieActivity"
             android:exported="false" />

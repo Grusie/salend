@@ -5,6 +5,6 @@ import retrofit2.Call
 import retrofit2.http.GET
 
 interface IStoreService {
-    @GET("test3.html")
+    @GET("store")
     fun stores() : Call<KategoriStore>
 }

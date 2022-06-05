@@ -29,7 +29,7 @@ class KategorieActivity : AppCompatActivity() {
 
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://salend.tk/")
+            .baseUrl("https://api.salend.tk")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
