@@ -10,4 +10,17 @@
 
     <dimen name="auth_btn_width">300dp</dimen>
     <dimen name="auth_btn_height">35dp</dimen>
+
+    <string-array name="category">
+        <item>한식</item>
+        <item>양식</item>
+        <item>중식</item>
+        <item>일식</item>
+        <item>분식</item>
+        <item>편의점</item>
+        <item>카페</item>
+        <item>베이커리</item>
+    </string-array>
+
+
 </resources>
