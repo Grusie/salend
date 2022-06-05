@@ -59,29 +59,25 @@
                     android:id="@+id/category_btn_0"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="한식" />
+                    android:layout_weight="1"/>
 
                 <cf.untitled.salend.customView.RectButton
                     android:id="@+id/category_btn_1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="양식" />
+                    android:layout_weight="1" />
 
                 <cf.untitled.salend.customView.RectButton
                     android:id="@+id/category_btn_2"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="중식" />
+                    android:layout_weight="1"/>
 
                 <cf.untitled.salend.customView.RectButton
                     android:id="@+id/category_btn_3"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="일식" />
+                    android:layout_weight="1" />
             </LinearLayout>
 
             <LinearLayout
@@ -95,29 +91,25 @@
                     android:id="@+id/category_btn_4"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="분식" />
+                    android:layout_weight="1" />
 
                 <cf.untitled.salend.customView.RectButton
                     android:id="@+id/category_btn_5"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="카페" />
+                    android:layout_weight="1" />
 
                 <cf.untitled.salend.customView.RectButton
                     android:id="@+id/category_btn_6"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="편의점" />
+                    android:layout_weight="1"/>
 
                 <cf.untitled.salend.customView.RectButton
                     android:id="@+id/category_btn_7"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="베이커리" />
+                    android:layout_weight="1"/>
             </LinearLayout>
         </LinearLayout>
 

@@ -1,11 +1,14 @@
 package cf.untitled.salend
 
 import android.annotation.SuppressLint
+import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.util.SparseBooleanArray
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,33 +21,13 @@ import cf.untitled.salend.retrofit.RetrofitClass
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
 
 class SearchActivity : AppCompatActivity() {
     lateinit var binding : ActivitySearchBinding
     var flag = 0
-    companion object{
-        fun searchCategory(position : Int){
-                var storeCategoryResult: StoreArray? = null
-                RetrofitClass.service.getStoreCategoryPage(position).enqueue(object:
-                    Callback<StoreArray> {
-                    override fun onResponse(call: Call<StoreArray>, response: Response<StoreArray>){
-                        if(response.isSuccessful) {
-                            var result: StoreArray? = response.body()
-                            storeCategoryResult = result
-                            Log.d("retrofit","$result")
-                        }
-                        else {
-                            // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
-                            Log.d("retrofit", "${response.code()}")
-                            Log.d("retrofit", "onResponse 실패")
-                        }
-                    }
-                    override fun onFailure(call: Call<StoreArray>, t: Throwable) {
-                        TODO("Not yet implemented")}
-                })
-        }
-    }
+    var productResult = ArrayList<ProductData>()
+    var storeResult = ArrayList<StoreData>()
+
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivitySearchBinding.inflate(layoutInflater)
@@ -76,10 +59,13 @@ class SearchActivity : AppCompatActivity() {
             setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     if(query != null) {
-                        if(flag == 0)
+                        if(flag == 0) {
                             searchProduct(query)
-                        else
+                        }
+                        else {
                             searchStore(query)
+                        }
+                        binding.categoryTextView.visibility = View.INVISIBLE
                     }
                     return true
                 }
@@ -90,12 +76,44 @@ class SearchActivity : AppCompatActivity() {
             })
         }
 
-        categoryArray.add(CategoryData("한식"))
-        categoryArray.add(CategoryData("양식"))
-        categoryArray.add(CategoryData("중식"))
-        Log.d("category","$categoryArray")
+        val stringArray = resources.getStringArray(R.array.category)
+
+        for( i in stringArray) {
+            categoryArray.add(CategoryData(i))
+        }
+
+        val categoryAdapter = SearchCategoryAdapter(categoryArray)
+
+        categoryAdapter.itemClick = object: SearchCategoryAdapter.ItemClick{
+            override fun onClick(view: View, position: Int, text : String){
+                if(flag == 0 ){
+                    var productCategory = ArrayList<ProductData>()
+                    for(i in productResult) {
+                        if(i.i_tag == position)
+                            productCategory.add(i)
+                    }
+                    if(productResult.size != 0) {
+                        binding.categoryTextView.text = text
+                        binding.categoryTextView.visibility = View.VISIBLE
+                    }
+                    initSearchProductRecycler(productCategory)
+                }else {
+                    var storeCategory = ArrayList<StoreData>()
+                    for(i in storeResult) {
+                        if(i.s_tag?.contains(position) == true)
+                            storeCategory.add(i)
+                    }
+                    if(storeResult.size != 0) {
+                        binding.categoryTextView.text = text
+                        binding.categoryTextView.visibility = View.VISIBLE
+                    }
+                    initSearchStoreRecycler(storeCategory)
+                }
+
+            }
+        }
         binding.searchCategoryRecycler.apply{
-            adapter = SearchCategoryAdapter(categoryArray)
+            adapter = categoryAdapter
             layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
             setHasFixedSize(true)
         }
@@ -120,7 +138,7 @@ class SearchActivity : AppCompatActivity() {
     fun initSearchStoreRecycler(storeArray: ArrayList<StoreData>) {
         binding.searchSearchListRecycler.apply {
             adapter = SearchStoreAdapter(storeArray)
-            layoutManager = GridLayoutManager(this@SearchActivity,2)
+            layoutManager = LinearLayoutManager(this@SearchActivity)
             setHasFixedSize(true)
         }
     }
@@ -136,10 +154,11 @@ class SearchActivity : AppCompatActivity() {
                     var result: ProductArray2? = response.body()
                     if (result != null && result.items.size != 0) {
                         binding.searchExpText.visibility = View.GONE
-                        Log.d("retrofit","$result")
-                        initSearchProductRecycler(result.items)
+                        productResult = result.items
+                        initSearchProductRecycler(productResult)
                     } else {
                         initSearchProductRecycler(ArrayList())
+                        binding.searchExpText.text = "\""+query+"\""+"(은)는 존재하지 않습니다."
                         binding.searchExpText.visibility = View.VISIBLE
                     }
                 }
@@ -161,9 +180,10 @@ class SearchActivity : AppCompatActivity() {
                     var result: StoreArray? = response.body()
                     if (result != null && result.stores.size != 0) {
                         binding.searchExpText.visibility = View.GONE
-                        Log.d("retrofit", "$result")
-                        initSearchStoreRecycler(result.stores)
+                        storeResult = result.stores
+                        initSearchStoreRecycler(storeResult)
                     } else {
+                        binding.searchExpText.text = "\""+query+"\""+"(은)는 존재하지 않습니다."
                         binding.searchExpText.visibility = View.VISIBLE
                         initSearchStoreRecycler(ArrayList())
                     }
