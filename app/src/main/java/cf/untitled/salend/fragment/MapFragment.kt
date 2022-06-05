@@ -152,7 +152,6 @@ class MapFragment : Fragment() {
     }
 
     private fun createMapMarker(name:String, latitude:Double, longitude:Double) {
-        Toast.makeText(requireContext(),"createMapMarker : $latitude, $longitude", Toast.LENGTH_SHORT).show()
         val marker = MapPOIItem()
         Log.d("grusie","$latitude, $longitude")
         marker.apply {
