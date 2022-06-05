@@ -124,5 +124,8 @@ class LocationSelectActivity : AppCompatActivity() {
 
         binding.locationTv.text = intent.getStringExtra("location")
 
+        binding.locationExitBtn.setOnClickListener {
+            finish()
+        }
     }
 }
