@@ -6,7 +6,7 @@
     android:layout_margin="4dp"
     android:background="#6EABDE">
         <ImageView
-            android:id="@+id/kategorie_store_image"
+            android:id="@+id/category_store_image"
             android:layout_width="180dp"
             android:layout_height="180dp"
             android:background="@color/white"
@@ -19,7 +19,7 @@
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <TextView
-            android:id="@+id/kategorie_store_name"
+            android:id="@+id/category_store_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="GS24 면목 4동점"
@@ -29,7 +29,7 @@
             android:layout_marginBottom="6dp"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/kategorie_store_image"
+            app:layout_constraintTop_toBottomOf="@id/category_store_image"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 

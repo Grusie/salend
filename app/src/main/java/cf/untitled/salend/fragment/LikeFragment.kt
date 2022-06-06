@@ -3,16 +3,11 @@ package cf.untitled.salend.fragment
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import cf.untitled.salend.MyApplication
-import cf.untitled.salend.R
 import cf.untitled.salend.adapter.FavoriteStoreAdapter
 import cf.untitled.salend.databinding.FragmentLikeBinding
-import cf.untitled.salend.databinding.FragmentMyPageBinding
 import cf.untitled.salend.model.StoreArray
 import cf.untitled.salend.model.StoreData
 import cf.untitled.salend.retrofit.RetrofitService
@@ -37,7 +32,11 @@ class LikeFragment : Fragment() {
 
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         // Inflate the layout for this cf.untitled.salend.fragment
         binding = FragmentLikeBinding.inflate(layoutInflater)
 
@@ -48,25 +47,28 @@ class LikeFragment : Fragment() {
             .build()
 
         val service = retrofit.create(RetrofitService::class.java)
-        val storeFavorList = arrayListOf<StoreData>()
+        val storeFavorList = arrayListOf<StoreArray>()
 
         binding.favoritePageStoreButton.setOnClickListener {
             thread(start = true) {
                 val list = MyApplication.getStoreFavorite()
                 storeFavorList.clear()
-                for(i in 0 until list.size) {
-                    service.getStoreFavor(list[i]!!).enqueue(object : Callback<StoreData>{
-                        override fun onResponse(call: Call<StoreData>, response: Response<StoreData>) {
-                            Log.d("like", "서버통신성공")
-                            storeFavorList.add(response.body()!!)
-                        }
+                val str = list.toString().replace("[", "").replace("]", "").replace(",", "")
+                service.getStoreFavor(
+                    str
+                ).enqueue(object : Callback<StoreArray> {
+                    override fun onResponse(
+                        call: Call<StoreArray>,
+                        response: Response<StoreArray>
+                    ) {
+                        Log.d("like", "서버통신성공")
+                        storeFavorList.add(response.body()!!)
+                    }
 
-                        override fun onFailure(call: Call<StoreData>, t: Throwable) {
-                            Log.d("like", "서버통신실패")
-                        }
-                    })
-
-                }
+                    override fun onFailure(call: Call<StoreArray>, t: Throwable) {
+                        Log.d("like", "서버통신실패")
+                    }
+                })
             }
             val adapter = FavoriteStoreAdapter()
             adapter.favorStoreList = storeFavorList
@@ -76,6 +78,4 @@ class LikeFragment : Fragment() {
 
         return binding.root
     }
-
-
 }

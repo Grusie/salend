@@ -4,33 +4,28 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import cf.untitled.salend.KategorieActivity
-import cf.untitled.salend.R
 import cf.untitled.salend.StoreChoiceActivity
-import cf.untitled.salend.databinding.ItemKategorieBinding
-import cf.untitled.salend.databinding.KategorieChoiceBinding
-import cf.untitled.salend.model.KategoriStore
-import cf.untitled.salend.model.KategoriStoreData
+import cf.untitled.salend.databinding.ItemCategoryBinding
+import cf.untitled.salend.model.CategoryStore
 import kotlinx.coroutines.*
 import java.lang.Exception
 import java.net.URL
 
-class KategorieChoiceAdapter : RecyclerView.Adapter<KategorieChoiceAdapterHolder>() {
+class CategoryChoiceAdapter : RecyclerView.Adapter<CategoryChoiceAdapterHolder>() {
 
-    var storeList: KategoriStore? = null
+    var storeList: CategoryStore? = null
     lateinit var save : String
-    lateinit var binding: ItemKategorieBinding
+    lateinit var binding: ItemCategoryBinding
 
     override fun getItemCount(): Int {
         return storeList?.stores?.size ?: 0
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): KategorieChoiceAdapterHolder {
-        binding = ItemKategorieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return KategorieChoiceAdapterHolder(binding).apply {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryChoiceAdapterHolder {
+        binding = ItemCategoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return CategoryChoiceAdapterHolder(binding).apply {
             itemView.setOnClickListener {
                 val storeName = storeList?.stores?.get(adapterPosition)?.s_name ?: ""
                 val storeTime = storeList?.stores?.get(adapterPosition)?.s_time ?: ""
@@ -48,10 +43,10 @@ class KategorieChoiceAdapter : RecyclerView.Adapter<KategorieChoiceAdapterHolder
         }
     }
 
-    override fun onBindViewHolder(holder: KategorieChoiceAdapterHolder, position: Int) {
+    override fun onBindViewHolder(holder: CategoryChoiceAdapterHolder, position: Int) {
         val store = storeList?.stores?.get(position)
         if (store != null) {
-            binding.kategorieStoreName.text = store.s_name
+            binding.categoryStoreName.text = store.s_name
             CoroutineScope(Dispatchers.Main).launch {
                 try {
                     val url = store.s_image
@@ -59,7 +54,7 @@ class KategorieChoiceAdapter : RecyclerView.Adapter<KategorieChoiceAdapterHolder
                         loadImage(url)
                     }
 
-                    binding.kategorieStoreImage.setImageBitmap(bitmap)
+                    binding.categoryStoreImage.setImageBitmap(bitmap)
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -70,7 +65,7 @@ class KategorieChoiceAdapter : RecyclerView.Adapter<KategorieChoiceAdapterHolder
 
 }
 
-class KategorieChoiceAdapterHolder(binding: ItemKategorieBinding) : RecyclerView.ViewHolder(binding.root)
+class CategoryChoiceAdapterHolder(binding: ItemCategoryBinding) : RecyclerView.ViewHolder(binding.root)
 
 suspend fun loadImage(imageUrl: String): Bitmap {
     val url = URL(imageUrl)

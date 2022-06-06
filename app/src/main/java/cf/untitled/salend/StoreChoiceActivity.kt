@@ -15,7 +15,7 @@ import cf.untitled.salend.adapter.StoreChoiceAdapter
 import cf.untitled.salend.databinding.ActivityStoreChoiceBinding
 import cf.untitled.salend.interface2.IStoreService
 import cf.untitled.salend.model.FireUserData
-import cf.untitled.salend.model.KategoriStore
+import cf.untitled.salend.model.CategoryStore
 import cf.untitled.salend.model.ProductArray
 import cf.untitled.salend.model.StoreItamData
 import cf.untitled.salend.retrofit.RetrofitClass
@@ -58,7 +58,7 @@ class StoreChoiceActivity : AppCompatActivity(){
         setSupportActionBar(binding.storeChoiceToolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        binding.kategorieChoiceToolbarText.text = intent.getStringExtra("kategori")
+        binding.categoryChoiceToolbarText.text = intent.getStringExtra("kategori")
         binding.activityStoreStoreName.text = intent.getStringExtra("name")
         binding.activityStoreTime.text = intent.getStringExtra("time")
         val storeId = intent.getStringExtra("id")
@@ -107,13 +107,13 @@ class StoreChoiceActivity : AppCompatActivity(){
         binding.favoriteImageBtn.setOnClickListener {
 
             if(star) {  //눌러져있으면
-                binding.favoriteImageBtn.setImageResource(R.drawable.favorite_off)
+                binding.favoriteImageBtn.setImageResource(R.drawable.ic_favorite_svgrepo_com)
                 thread(start = true) {
                     MyApplication.delStoreFavorite(MyApplication.current_user_email!!, storeId!!)
                 }
                 star = false
             } else {   //안눌러져있을때
-                binding.favoriteImageBtn.setImageResource(R.drawable.favorite_on)
+                binding.favoriteImageBtn.setImageResource(R.drawable.ic_favorite_selected)
                 star = true
                 thread(start=true) {
                     MyApplication.setStoreFavorite(MyApplication.current_user_email!!, storeId!!)

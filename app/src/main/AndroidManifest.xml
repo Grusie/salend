@@ -63,7 +63,7 @@
             android:name=".MainActivity"
             android:exported="true" />
         <activity
-            android:name=".KategorieActivity"
+            android:name=".CategoryActivity"
             android:exported="false" />
 
         <meta-data

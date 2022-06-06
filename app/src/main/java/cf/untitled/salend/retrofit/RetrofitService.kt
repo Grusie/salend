@@ -27,8 +27,10 @@ interface RetrofitService {
     @GET("store/test")
     fun getNearbyStorePage() : Call<StoreArray>
 
-    @GET("store/{storeId}/")
-    fun getStoreFavor(@Path("storeId") storeId : String) : Call<StoreData>
+    @GET("store/favorite")
+    fun getStoreFavor(
+        @Query("fav") fav: String
+    ) : Call<StoreArray>
 
 //    @GET("posts/1")
 //    fun getStudent(@Query("school_id") schoolId: Int,
