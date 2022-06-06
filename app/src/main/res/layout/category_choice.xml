@@ -6,14 +6,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/kategorie_choice_toolbar"
+        android:id="@+id/category_choice_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#6EABDE"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/kategorie_choice_toolbar_text"
+            android:id="@+id/category_choice_toolbar_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -24,13 +24,13 @@
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/kategorie_rv"
+        android:id="@+id/category_rv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/kategorie_choice_toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/category_choice_toolbar"
         android:layout_margin="8dp"/>
 
 
