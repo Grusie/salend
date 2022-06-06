@@ -1,44 +1,22 @@
 package cf.untitled.salend
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
 import android.view.View
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
-import cf.untitled.salend.MyApplication.Companion.db
 import cf.untitled.salend.adapter.StoreChoiceAdapter
 import cf.untitled.salend.databinding.ActivityStoreChoiceBinding
-import cf.untitled.salend.interface2.IStoreService
-import cf.untitled.salend.model.FireUserData
-import cf.untitled.salend.model.CategoryStore
-import cf.untitled.salend.model.ProductArray
-import cf.untitled.salend.model.StoreItamData
+import cf.untitled.salend.model.StoreItemData
 import cf.untitled.salend.retrofit.RetrofitClass
-import cf.untitled.salend.retrofit.RetrofitService
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ktx.database
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.io.FileNotFoundException
-import java.net.URL
 import kotlin.concurrent.thread
 
 class StoreChoiceActivity : AppCompatActivity(){
@@ -71,16 +49,15 @@ class StoreChoiceActivity : AppCompatActivity(){
 
 
 
-        RetrofitClass.service.getTest2page().enqueue(object : Callback<StoreItamData> {
-            override fun onResponse(call: Call<StoreItamData>, response: Response<StoreItamData>) {
-                Log.i("sibar", response.body().toString())
+        RetrofitClass.service.getTest2page().enqueue(object : Callback<StoreItemData> {
+            override fun onResponse(call: Call<StoreItemData>, response: Response<StoreItemData>) {
                 val customAdapter = StoreChoiceAdapter()
                 binding.activityStoreRecyclerview.adapter = customAdapter
                 customAdapter.itemList = response.body()!!
                 binding.activityStoreRecyclerview.layoutManager = GridLayoutManager(this@StoreChoiceActivity,2)
             }
 
-            override fun onFailure(call: Call<StoreItamData>, t: Throwable) {
+            override fun onFailure(call: Call<StoreItemData>, t: Throwable) {
                 Log.i("StoreChoiceActivity:서버통신", t.localizedMessage)
             }
         })
