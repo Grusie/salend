@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide
 
 class FavoriteStoreAdapter : RecyclerView.Adapter<FavoriteStoreAdapter.FavoriteStoreViewHoder>() {
 
-    lateinit var favorStoreList : ArrayList<StoreArray>
+    lateinit var favorStoreList : ArrayList<StoreData>
 
     override fun getItemCount(): Int {
         return favorStoreList.size
@@ -24,7 +24,7 @@ class FavoriteStoreAdapter : RecyclerView.Adapter<FavoriteStoreAdapter.FavoriteS
     }
 
     override fun onBindViewHolder(holder: FavoriteStoreViewHoder, position: Int) {
-        val store = favorStoreList[position].stores.get(position)
+        val store = favorStoreList.get(position)
         if (store != null) {
             holder.setStore(store)
         }
