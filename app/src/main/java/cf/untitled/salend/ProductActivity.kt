@@ -41,16 +41,9 @@ class ProductActivity : AppCompatActivity() {
 
         setContentView(binding.root)
         var client: WebViewClient = object : WebViewClient() {
-            @TargetApi(Build.VERSION_CODES.N)
-/*            override fun shouldOverrideUrlLoading(
-                view: WebView?,
-                request: WebResourceRequest?
-            ): Boolean {
-                return super.shouldOverrideUrlLoading(view,binding.payWebView.url)
-            }*/
 
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-                Log.d("grusie", "$url")
+                Log.e("grusie", "$url")
                 if (url != null && url.startsWith("intent://")) {
                     try {
                         val intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME)
@@ -89,21 +82,38 @@ class ProductActivity : AppCompatActivity() {
 
         class WebViewData {
             @JavascriptInterface
-            fun getResult(Success: Boolean, productName: String?, payId: String?, price: Int?, err : String?) {
-                    try{
+            fun getResult(
+                success: Boolean,
+                productName: String?,
+                payId: String?,
+                price: Int?,
+                err: String?
+            ) {
+                try {
                     CoroutineScope(Dispatchers.Default).launch {
                         withContext(CoroutineScope(Dispatchers.Main).coroutineContext) {
-                            Log.d("grusie","success")
+                            if(success){
+                                Log.e("PA", "getResult: 결제 완료" )
+                                Toast.makeText(baseContext, "결제가 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                                binding.payWebView.visibility = View.GONE
+                                // 여기다 구현하시면 됩니다 ^^
+                                // finish()
+                            } else {
+                                Log.e("PA", "getResult: 결제 실패" )
+                                binding.payWebView.visibility = View.GONE
+                                // finish()
+                            }
+
                         }
                     }
-                }catch (e:Exception){
+                } catch (e: Exception) {
                     Log.d("locationSelectError", "$e")
                 }
             }
         }
 
         initProduct(productId)
-        binding.payWebView.apply{
+        binding.payWebView.apply {
             settings.javaScriptEnabled = true
             settings.javaScriptCanOpenWindowsAutomatically = true
             addJavascriptInterface(WebViewData(), "Leaf")
@@ -112,7 +122,7 @@ class ProductActivity : AppCompatActivity() {
             settings.useWideViewPort = true
             settings.loadWithOverviewMode = true
             webViewClient = client
-            webChromeClient = object: WebChromeClient(){
+            webChromeClient = object : WebChromeClient() {
                 override fun onCreateWindow(
                     view: WebView?,
                     isDialog: Boolean,
@@ -121,11 +131,11 @@ class ProductActivity : AppCompatActivity() {
                 ): Boolean {
                     val newWebView = WebView(this@ProductActivity)
                     newWebView.settings.javaScriptEnabled = true
-                    val dialog = Dialog(this@ProductActivity).apply{
+                    val dialog = Dialog(this@ProductActivity).apply {
                         setContentView(newWebView)
                     }
                     dialog.show()
-                    val lp = WindowManager.LayoutParams().apply{
+                    val lp = WindowManager.LayoutParams().apply {
                         copyFrom(dialog.window!!.attributes)
                         width = WindowManager.LayoutParams.MATCH_PARENT
                         height = WindowManager.LayoutParams.MATCH_PARENT
@@ -138,7 +148,7 @@ class ProductActivity : AppCompatActivity() {
                         }
                     }
                     (resultMsg.obj as WebView.WebViewTransport).webView = newWebView
-                    resultMsg.sendToTarget ()
+                    resultMsg.sendToTarget()
                     return true
                 }
             }

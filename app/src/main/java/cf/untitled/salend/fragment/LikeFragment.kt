@@ -108,19 +108,7 @@ class LikeFragment : Fragment() {
 
         val service = retrofit.create(RetrofitService::class.java)
         val str = favArray.toString().replace("[", "").replace("]", "").replace(",", "")
-        if(str.trim() == "") return
-        service.getStoreFavor(str).enqueue(object : Callback<StoreArray> {
-            override fun onResponse(call: Call<StoreArray>, response: Response<StoreArray>) {
-                // 서버에 요청을 해서 성공한 경우
-                favorStoreList2 = response.body()!!.stores
-                Log.e("LF", "onResponse: " + response.body()!!.stores[0].s_name )
-            }
 
-            override fun onFailure(call: Call<StoreArray>, t: Throwable) {
-                t.printStackTrace()
-                Log.d("like", "서버통신실패")
-            }
-        })
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
