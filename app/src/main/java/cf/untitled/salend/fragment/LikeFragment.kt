@@ -12,6 +12,8 @@ import cf.untitled.salend.databinding.FragmentLikeBinding
 import cf.untitled.salend.model.StoreArray
 import cf.untitled.salend.model.StoreData
 import cf.untitled.salend.retrofit.RetrofitService
+import com.kakao.sdk.auth.AuthApiClient
+import com.kakao.sdk.user.UserApiClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -50,7 +52,7 @@ class LikeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        f = FragmentLikeBinding.inflate(layoutInflater)
+        f = FragmentLikeBinding.bind(view)
         val TAG = "LF";
 
         val thread = Thread {
@@ -65,9 +67,10 @@ class LikeFragment : Fragment() {
         }
 
         f.favoritePageStoreButton.setOnClickListener {
-            adapter.favorStoreList = favorStoreList2
+            Log.d("grusie","${ MyApplication.current_user_email}")
+/*            adapter.favorStoreList = favorStoreList2
             f.favoritePageItemRecyclerview.adapter = adapter
-            f.favoritePageItemRecyclerview.layoutManager = GridLayoutManager(context, 2)
+            f.favoritePageItemRecyclerview.layoutManager = GridLayoutManager(context, 2)*/
         }
 
         if (thread.state == Thread.State.NEW)
@@ -76,6 +79,19 @@ class LikeFragment : Fragment() {
     }
 
     fun refreshList() {
+        if (AuthApiClient.instance.hasToken()) {
+            UserApiClient.instance.me { user, error ->
+                if(error != null){
+                    Log.e("grusie", "사용자 정보 요청 실패", error)
+                }
+                else if(user != null){
+                    MyApplication.current_user_email = user.id.toString()
+                    favArray = MyApplication.getStoreFavorite()
+                    getRequest()    // 파이어베이스에서 꺼낸 값을 서버로 요청을 보냄
+                }
+            }
+            return
+        }
         if (MyApplication.setStatus()) {
             favArray = MyApplication.getStoreFavorite()
             getRequest()    // 파이어베이스에서 꺼낸 값을 서버로 요청을 보냄
@@ -92,13 +108,12 @@ class LikeFragment : Fragment() {
 
         val service = retrofit.create(RetrofitService::class.java)
         val str = favArray.toString().replace("[", "").replace("]", "").replace(",", "")
+        if(str.trim() == "") return
         service.getStoreFavor(str).enqueue(object : Callback<StoreArray> {
             override fun onResponse(call: Call<StoreArray>, response: Response<StoreArray>) {
                 // 서버에 요청을 해서 성공한 경우
                 favorStoreList2 = response.body()!!.stores
                 Log.e("LF", "onResponse: " + response.body()!!.stores[0].s_name )
-
-
             }
 
             override fun onFailure(call: Call<StoreArray>, t: Throwable) {
