@@ -18,6 +18,8 @@ import retrofit2.Response
 class MyApplication: MultiDexApplication() {
     companion object {
 
+        private var status: Boolean = false
+
         val auth = Firebase.auth
         @SuppressLint("StaticFieldLeak")
         lateinit var db: FirebaseFirestore
@@ -28,6 +30,18 @@ class MyApplication: MultiDexApplication() {
         var current_user_email : String? = null
         private var storeFavorite = ArrayList<String?>()
         private var productFavorite = ArrayList<String?>()
+
+        fun getStatus(): Boolean {
+            return status
+        }
+
+        fun setStatus(): Boolean {
+
+            this.status = checkAuth()
+            if(this.status)
+                this.current_user_email = auth.currentUser?.email
+            return this.status
+        }
 
         fun checkAuth(): Boolean {     //이메일 인증 완료해야만 true 반환
             val currentUser = auth.currentUser

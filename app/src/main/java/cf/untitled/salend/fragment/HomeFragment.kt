@@ -9,11 +9,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
-import cf.untitled.salend.*
+import cf.untitled.salend.CategoryActivity
+import cf.untitled.salend.LocationSelectActivity
+import cf.untitled.salend.MyApplication
+import cf.untitled.salend.SearchActivity
 import cf.untitled.salend.adapter.NearbySaleRecyclerAdapter
 import cf.untitled.salend.customView.RectButton
 import cf.untitled.salend.databinding.FragmentHomeBinding
@@ -92,7 +94,7 @@ class HomeFragment : Fragment() {
 
         for(i: Int in btnList.indices){
             btnList[i].setOnClickListener {
-                val intent01 = Intent(this.context, KategorieActivity::class.java)
+                val intent01 = Intent(this.context, CategoryActivity::class.java)
                 intent01.putExtra("storeName", btnList[i].text.toString())
                 startActivity(intent01)
             }
