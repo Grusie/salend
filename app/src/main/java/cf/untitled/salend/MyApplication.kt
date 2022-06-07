@@ -51,6 +51,7 @@ class MyApplication: MultiDexApplication() {
             } ?: let{
                 false
             }
+            if(current_user_email != null) return true
         }
 
         @JvmName("getStoreFavorite1")
