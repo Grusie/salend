@@ -10,6 +10,8 @@ import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import com.kakao.sdk.auth.AuthApiClient
+import com.kakao.sdk.user.UserApiClient
 import io.reactivex.disposables.CompositeDisposable
 import retrofit2.Call
 import retrofit2.Callback
@@ -36,7 +38,6 @@ class MyApplication: MultiDexApplication() {
         }
 
         fun setStatus(): Boolean {
-
             this.status = checkAuth()
             if(this.status)
                 this.current_user_email = auth.currentUser?.email
@@ -51,8 +52,8 @@ class MyApplication: MultiDexApplication() {
             } ?: let{
                 false
             }
-            if(current_user_email != null) return true
         }
+
 
         @JvmName("getStoreFavorite1")
         fun getStoreFavorite() : ArrayList<String?>{

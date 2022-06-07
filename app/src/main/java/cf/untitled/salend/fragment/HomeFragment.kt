@@ -12,10 +12,7 @@ import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
-import cf.untitled.salend.CategoryActivity
-import cf.untitled.salend.LocationSelectActivity
-import cf.untitled.salend.MyApplication
-import cf.untitled.salend.SearchActivity
+import cf.untitled.salend.*
 import cf.untitled.salend.adapter.NearbySaleRecyclerAdapter
 import cf.untitled.salend.customView.RectButton
 import cf.untitled.salend.databinding.FragmentHomeBinding
