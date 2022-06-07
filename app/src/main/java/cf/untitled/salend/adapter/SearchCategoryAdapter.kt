@@ -12,6 +12,7 @@ import cf.untitled.salend.MyApplication
 import cf.untitled.salend.R
 import cf.untitled.salend.SearchActivity
 import cf.untitled.salend.databinding.ItemCategoryBinding
+import cf.untitled.salend.databinding.ItemSearchCategoryBinding
 import cf.untitled.salend.model.CategoryData
 import kotlin.concurrent.thread
 
@@ -21,7 +22,7 @@ class SearchCategoryAdapter(private var data: ArrayList<CategoryData>) :
         fun onClick(view : View, position : Int, text: String)
     }
     var itemClick : ItemClick? = null
-    class SearchCategoryViewHolder(binding: ItemCategoryBinding) :
+    class SearchCategoryViewHolder(binding: ItemSearchCategoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
         var category = binding.searchCategory
     }
@@ -36,7 +37,7 @@ class SearchCategoryAdapter(private var data: ArrayList<CategoryData>) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchCategoryAdapter.SearchCategoryViewHolder {
-        val view = ItemCategoryBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val view = ItemSearchCategoryBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return SearchCategoryAdapter.SearchCategoryViewHolder(view)
     }
 
