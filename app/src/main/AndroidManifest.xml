@@ -18,9 +18,6 @@
         android:theme="@style/Theme.Salend"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".FavoritepageActivity"
-            android:exported="false" />
-        <activity
             android:name=".StoreChoiceActivity"
             android:exported="false" />
         <activity
@@ -28,6 +25,7 @@
             android:exported="false" />
         <activity
             android:name=".SearchActivity"
+            android:windowSoftInputMode="adjustNothing"
             android:exported="false" />
         <activity
             android:name=".LocationSelectActivity"

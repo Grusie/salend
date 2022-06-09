@@ -1,15 +1,19 @@
 package cf.untitled.salend
 
+import android.annotation.TargetApi
 import android.app.Activity
+import android.app.Dialog
+import android.content.Intent
 import android.graphics.drawable.Drawable
+import android.net.Uri
+import android.os.*
 import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.os.Message
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.view.WindowManager
+import android.webkit.*
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
@@ -17,28 +21,156 @@ import cf.untitled.salend.databinding.ActivityProductBinding
 import cf.untitled.salend.model.ProductData
 import cf.untitled.salend.retrofit.RetrofitClass
 import com.bumptech.glide.Glide
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.net.URISyntaxException
 import kotlin.concurrent.thread
 
 class ProductActivity : AppCompatActivity() {
     lateinit var binding: ActivityProductBinding
-    var favoriteFlag = false
     lateinit var productId: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         productId = intent.getStringExtra("product_id")!!
         binding = ActivityProductBinding.inflate(layoutInflater)
+        setSupportActionBar(binding.productToolbar)
+
         setContentView(binding.root)
+        var client: WebViewClient = object : WebViewClient() {
+
+            override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+                Log.e("grusie", "$url")
+                if (url != null && url.startsWith("intent://")) {
+                    try {
+                        val intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME)
+                        val existPackage =
+                            packageManager.getLaunchIntentForPackage(intent.getPackage()!!)
+                        if (existPackage != null) {
+                            startActivity(intent)
+                        } else {
+                            val marketIntent = Intent(Intent.ACTION_VIEW)
+                            marketIntent.data =
+                                Uri.parse("market://details?id=" + intent.getPackage()!!)
+                            startActivity(marketIntent)
+                        }
+                        return true
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+
+                } else if (url != null && url.startsWith("market://")) {
+                    try {
+                        val intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME)
+                        if (intent != null) {
+                            startActivity(intent)
+                        }
+                        return true
+                    } catch (e: URISyntaxException) {
+                        e.printStackTrace()
+                    }
+
+                }
+                view?.loadUrl(url!!)
+                return false
+            }
+
+        }
+
+        class WebViewData {
+            @JavascriptInterface
+            fun getResult(
+                success: Boolean,
+                productName: String?,
+                payId: String?,
+                price: Int?,
+                err: String?
+            ) {
+                try {
+                    CoroutineScope(Dispatchers.Default).launch {
+                        withContext(CoroutineScope(Dispatchers.Main).coroutineContext) {
+                            if(success){
+                                Log.e("PA", "getResult: 결제 완료" )
+                                Toast.makeText(baseContext, "결제가 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                                binding.payWebView.visibility = View.GONE
+                                // 여기다 구현하시면 됩니다 ^^
+                                thread(start=true) {
+                                    MyApplication.setPayList(
+                                        MyApplication.current_user_email!!,
+                                        payId!!
+                                    )
+                                    Log.d("grusie", "결제 완료 : $payId")
+                                }
+                                // finish()
+                            } else {
+                                Log.e("PA", "getResult: 결제 실패" )
+                                binding.payWebView.visibility = View.GONE
+                                // finish()
+                            }
+
+                        }
+                    }
+                } catch (e: Exception) {
+                    Log.d("locationSelectError", "$e")
+                }
+            }
+        }
 
         initProduct(productId)
-        setSupportActionBar(binding.productToolbar)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
+        binding.payWebView.apply {
+            settings.javaScriptEnabled = true
+            settings.javaScriptCanOpenWindowsAutomatically = true
+            addJavascriptInterface(WebViewData(), "Leaf")
+            settings.setDomStorageEnabled(true)
+            settings.setSupportMultipleWindows(true)
+            settings.useWideViewPort = true
+            settings.loadWithOverviewMode = true
+            webViewClient = client
+            webChromeClient = object : WebChromeClient() {
+                override fun onCreateWindow(
+                    view: WebView?,
+                    isDialog: Boolean,
+                    isUserGesture: Boolean,
+                    resultMsg: Message
+                ): Boolean {
+                    val newWebView = WebView(this@ProductActivity)
+                    newWebView.settings.javaScriptEnabled = true
+                    val dialog = Dialog(this@ProductActivity).apply {
+                        setContentView(newWebView)
+                    }
+                    dialog.show()
+                    val lp = WindowManager.LayoutParams().apply {
+                        copyFrom(dialog.window!!.attributes)
+                        width = WindowManager.LayoutParams.MATCH_PARENT
+                        height = WindowManager.LayoutParams.MATCH_PARENT
+                    }
+                    dialog.window!!.attributes = lp
+                    newWebView.webChromeClient = object :
+                        WebChromeClient() {
+                        override fun onCloseWindow(window: WebView) {
+                            dialog.dismiss()
+                        }
+                    }
+                    (resultMsg.obj as WebView.WebViewTransport).webView = newWebView
+                    resultMsg.sendToTarget()
+                    return true
+                }
+            }
+        }
+
+        binding.payTab.setOnClickListener {
+            binding.payWebView.loadUrl("https://api.salend.tk/pay/debug/${productId}")
+            Log.d("grusie", "url ${binding.payWebView.url}")
+            binding.payWebView.visibility = View.VISIBLE
+        }
 
     }
 
-    private fun initProduct(productId : String?){
+    private fun initProduct(productId: String?) {
         RetrofitClass.service.getSingleProductDataPage("$productId").enqueue(object :
             Callback<ProductData> {
             override fun onResponse(call: Call<ProductData>, response: Response<ProductData>) {
@@ -46,8 +178,9 @@ class ProductActivity : AppCompatActivity() {
                     var saleRate = 0
                     // 정상적으로 통신이 성공된 경우
                     var result: ProductData? = response.body()
-                    saleRate = 100 - ((result?.i_now_price!!.toDouble() / result?.i_price!!.toDouble()) * 100).toInt()
-                    Log.d("productInfo", "${result?.i_now_price}" )
+                    saleRate =
+                        100 - ((result?.i_now_price!!.toDouble() / result?.i_price!!.toDouble()) * 100).toInt()
+                    Log.d("productInfo", "${result?.i_now_price}")
                     Log.d("productInfo", "${result?.i_price}")
                     Log.d("productInfo", "${saleRate}")
                     binding.apply {
@@ -57,7 +190,8 @@ class ProductActivity : AppCompatActivity() {
                             .into(productInfoImg)
                         productInfoName.text = result?.i_name
 
-                        productInfoPrice.text = result?.i_price.toString() + " -> " + result?.i_now_price.toString() +"("+ saleRate +"%할인!)"
+                        productInfoPrice.text =
+                            result?.i_price.toString() + " -> " + result?.i_now_price.toString() + "(" + saleRate + "%할인!)"
                         productInfoExp.text = result?.i_exp
                     }
                 } else {
@@ -76,69 +210,48 @@ class ProductActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.product_menu, menu)
-        if(MyApplication.current_user_email != null && MyApplication.current_user_email != "") {
-            thread(start = true){
+        if (MyApplication.current_user_email != null && MyApplication.current_user_email != "") {
+            thread(start = true) {
                 val flag = MyApplication.checkProductFavorite(productId)
                 runOnUiThread {
-                    if(flag) {
-                        menu?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_selected)
+                    if (flag) {
+                        menu?.getItem(0)?.icon =
+                            ContextCompat.getDrawable(this, R.drawable.ic_favorite_selected)
                         menu?.getItem(0)?.setChecked(true)
-                    }
-                    else {
-                        menu?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_svgrepo_com)
+                    } else {
+                        menu?.getItem(0)?.icon =
+                            ContextCompat.getDrawable(this, R.drawable.ic_favorite_svgrepo_com)
                         menu?.getItem(0)?.setChecked(false)
                     }
                 }
             }
             menu?.getItem(0)?.setVisible(true)
-        }
-        else menu?.getItem(0)?.setVisible(false)
-
-
-        if(MyApplication.current_user_email != null && MyApplication.current_user_email != "") {
-            thread(start = true){
-                val flag = MyApplication.checkProductFavorite(productId)
-                runOnUiThread {
-                    if(flag) {
-                        menu?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_selected)
-                        menu?.getItem(0)?.setChecked(true)
-                    }
-                    else {
-                        menu?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_svgrepo_com)
-                        menu?.getItem(0)?.setChecked(false)
-                    }
-                }
-            }
-            menu?.getItem(0)?.setVisible(true)
-        }
-        else menu?.getItem(0)?.setVisible(false)
-
+        } else menu?.getItem(0)?.setVisible(false)
 
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == R.id.favorite_menu){
-            if(item.isChecked){
+        if (item.itemId == R.id.favorite_menu) {
+            if (item.isChecked) {
                 changeFavorite(item, false)
-            }
-            else {
+            } else {
                 changeFavorite(item, true)
             }
         }
         return super.onOptionsItemSelected(item)
     }
-    fun changeFavorite(item: MenuItem, flag : Boolean){
-        if(flag) {
+
+    fun changeFavorite(item: MenuItem, flag: Boolean) {
+        if (flag) {
             item.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_selected)
-            thread(start=true) {
+            thread(start = true) {
                 MyApplication.setProductFavorite(MyApplication.current_user_email!!, productId)
             }
             item.setChecked(true)
-        }
-        else {
+        } else {
             item.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_svgrepo_com)
-            thread(start=true) {
+            thread(start = true) {
                 MyApplication.delProductFavorite(MyApplication.current_user_email!!, productId)
             }
             item.setChecked(false)

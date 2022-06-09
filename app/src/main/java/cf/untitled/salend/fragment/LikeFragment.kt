@@ -12,6 +12,8 @@ import cf.untitled.salend.adapter.FavoriteStoreAdapter
 import cf.untitled.salend.databinding.FragmentLikeBinding
 import cf.untitled.salend.model.*
 import cf.untitled.salend.retrofit.RetrofitService
+import com.kakao.sdk.auth.AuthApiClient
+import com.kakao.sdk.user.UserApiClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -94,6 +96,19 @@ class LikeFragment : Fragment() {
     }
 
     fun refreshList() {
+        if (AuthApiClient.instance.hasToken()) {
+            UserApiClient.instance.me { user, error ->
+                if(error != null){
+                    Log.e("grusie", "사용자 정보 요청 실패", error)
+                }
+                else if(user != null){
+                    MyApplication.current_user_email = user.id.toString()
+                    favArray = MyApplication.getStoreFavorite()
+                    getRequest()    // 파이어베이스에서 꺼낸 값을 서버로 요청을 보냄
+                }
+            }
+            return
+        }
         if (MyApplication.setStatus()) {
             favArray = MyApplication.getStoreFavorite()
             favItemArray = MyApplication.getProductFavorite()
@@ -140,6 +155,7 @@ class LikeFragment : Fragment() {
         val service = retrofit.create(RetrofitService::class.java)
 
         val str = favArray.toString().replace("[", "").replace("]", "").replace(",", "")
+
         if (str.trim() == "") {
             favorStoreList2 = ArrayList()
             return
@@ -156,8 +172,6 @@ class LikeFragment : Fragment() {
                 Log.d("like", "서버통신실패")
             }
         })
-
-
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {

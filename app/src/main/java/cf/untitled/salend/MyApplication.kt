@@ -5,11 +5,17 @@ import android.content.SharedPreferences
 import android.util.Log
 import androidx.multidex.MultiDexApplication
 import cf.untitled.salend.model.UserData
+import cf.untitled.salend.retrofit.RetrofitClass
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import com.kakao.sdk.auth.AuthApiClient
+import com.kakao.sdk.user.UserApiClient
 import io.reactivex.disposables.CompositeDisposable
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MyApplication: MultiDexApplication() {
     companion object {
@@ -26,13 +32,13 @@ class MyApplication: MultiDexApplication() {
         var current_user_email : String? = null
         private var storeFavorite = ArrayList<String?>()
         private var productFavorite = ArrayList<String?>()
+        private var payList = ArrayList<String?>()
 
         fun getStatus(): Boolean {
             return status
         }
 
         fun setStatus(): Boolean {
-
             this.status = checkAuth()
             if(this.status)
                 this.current_user_email = auth.currentUser?.email
@@ -48,6 +54,7 @@ class MyApplication: MultiDexApplication() {
                 false
             }
         }
+
 
         @JvmName("getStoreFavorite1")
         fun getStoreFavorite() : ArrayList<String?>{
@@ -79,16 +86,39 @@ class MyApplication: MultiDexApplication() {
             db = FirebaseFirestore.getInstance()
             var lastStoreFavorite = getStoreFavorite()
             lastStoreFavorite.add(productId)
-            db.collection("profile").document(userId).update("u_store_favorite", lastStoreFavorite)
+            updateStoreFavorite(userId, lastStoreFavorite)
         }
 
         fun setProductFavorite(userId : String, productId : String) {
             db = FirebaseFirestore.getInstance()
             var lastProductFavorite = getProductFavorite()
             lastProductFavorite.add(productId)
-            db.collection("profile").document(userId).update("u_item_favorite", lastProductFavorite)
+            updateProductFavorite(userId, lastProductFavorite)
         }
 
+        fun getPayList(userId : String): ArrayList<String?>{
+            db = FirebaseFirestore.getInstance()
+            val docRef = db.collection("profile")
+
+            val task = docRef.whereEqualTo("u_id", current_user_email!!).get()
+            var asd = Tasks.await(task)
+            val uPay = asd.documents[0].data?.get("u_pay_list") as ArrayList<String?>?
+            if( uPay!= null)
+                payList = uPay
+            return payList
+        }
+
+        fun setPayList(userId : String, payId : String){
+            db = FirebaseFirestore.getInstance()
+            var lastPayList = getPayList(userId)
+            lastPayList.add(payId)
+            updatePayList(userId, lastPayList)
+        }
+
+        fun updatePayList(userId : String, payList : ArrayList<String?>){
+            db = FirebaseFirestore.getInstance()
+            db.collection("profile").document(userId).update("u_pay_list",payList)
+        }
         fun updateStoreFavorite(userId: String, storeFavorite: ArrayList<String?>){
             db = FirebaseFirestore.getInstance()
             db.collection("profile").document(userId).update("u_store_favorite",storeFavorite)
@@ -123,6 +153,5 @@ class MyApplication: MultiDexApplication() {
             db = FirebaseFirestore.getInstance()
             db.collection("profile").document(userData.u_id!!).set(userData)
         }
-
     }
 }

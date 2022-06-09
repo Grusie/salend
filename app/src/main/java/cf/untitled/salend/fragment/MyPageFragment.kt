@@ -91,7 +91,7 @@ class MyPageFragment : Fragment() {
     private fun changeLoginStatus(status: String) {
         if(status == "LogIn"){
             binding.apply{
-                if(MyApplication.auth.currentUser?.email != null)
+                if(MyApplication.checkAuth())
                     MyApplication.current_user_email = MyApplication.auth.currentUser?.email!!
 
                 MyApplication.db = FirebaseFirestore.getInstance()
