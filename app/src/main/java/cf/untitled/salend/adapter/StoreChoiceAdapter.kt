@@ -1,25 +1,16 @@
 package cf.untitled.salend.adapter
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import cf.untitled.salend.R
-import cf.untitled.salend.StoreChoiceActivity
 import cf.untitled.salend.databinding.ItemStoreItemBinding
-import cf.untitled.salend.model.ProductArray
-import cf.untitled.salend.model.StoreItamData
+import cf.untitled.salend.model.StoreItemData
 import com.bumptech.glide.Glide
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import java.net.URL
-import kotlin.coroutines.coroutineContext
 
 class StoreChoiceAdapter : RecyclerView.Adapter<StoreChoiceAdapterHolder>(){
 
-    lateinit var itemList : StoreItamData
+    lateinit var itemList : StoreItemData
     lateinit var binding: ItemStoreItemBinding
 
     override fun getItemCount(): Int {

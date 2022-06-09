@@ -22,7 +22,7 @@
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/favorite_page_store_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/favoritePage_toolbar" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/favorite_page_item_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
