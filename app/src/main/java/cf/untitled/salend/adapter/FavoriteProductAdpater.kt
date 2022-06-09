@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 
 class FavoriteProductAdpater : RecyclerView.Adapter<FavoriteProductAdpater.Holder>() {
 
-    lateinit var productArray : ArrayList<ProductData>
+    var productArray : ArrayList<ProductData> = ArrayList()
 
     override fun getItemCount(): Int {
         return productArray.size

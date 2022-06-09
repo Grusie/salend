@@ -8,6 +8,7 @@ import cf.untitled.salend.adapter.CategoryChoiceAdapter
 import cf.untitled.salend.databinding.CategoryChoiceBinding
 import cf.untitled.salend.interface2.IStoreService
 import cf.untitled.salend.model.CategoryStore
+import cf.untitled.salend.retrofit.RetrofitService
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -26,18 +27,15 @@ class CategoryActivity : AppCompatActivity() {
 
         save = storeName.toString()
 
-
-
         val retrofit = Retrofit.Builder()
             .baseUrl("https://api.salend.tk")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        val service = retrofit.create(IStoreService::class.java)
+        val service = retrofit.create(RetrofitService::class.java)
 
-        service.stores().enqueue(object : Callback<CategoryStore> {
+        service.getStores().enqueue(object : Callback<CategoryStore> {
             override fun onResponse(call: Call<CategoryStore>, response: Response<CategoryStore>) {
-
                 val customAdapter = CategoryChoiceAdapter()
                 binding.categoryRv.adapter = customAdapter
                 val result = response.body()

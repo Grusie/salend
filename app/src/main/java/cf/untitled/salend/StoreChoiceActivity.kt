@@ -12,17 +12,16 @@ import cf.untitled.salend.retrofit.RetrofitClass
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import kotlin.concurrent.thread
 
-class StoreChoiceActivity : AppCompatActivity(){
+class StoreChoiceActivity : AppCompatActivity() {
     var star = false
     val binding by lazy { ActivityStoreChoiceBinding.inflate(layoutInflater) }
-    private lateinit var auth : FirebaseAuth
+    private lateinit var auth: FirebaseAuth
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,29 +30,28 @@ class StoreChoiceActivity : AppCompatActivity(){
 
         auth = Firebase.auth
 
-
         setSupportActionBar(binding.storeChoiceToolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         binding.categoryChoiceToolbarText.text = intent.getStringExtra("category")
         binding.activityStoreStoreName.text = intent.getStringExtra("name")
         binding.activityStoreTime.text = intent.getStringExtra("time")
+
         val storeId = intent.getStringExtra("id")
-        Log.d("sang", storeId.toString())
+        Log.e("SCA", "onCreate: ${storeId}" )
 
         Glide.with(this)
             .load(intent.getStringExtra("image"))
             .error("https://media.vlpt.us/images/sasy0113/post/f7085683-1a62-4ce7-9f7f-e8fd2f3ec825/Android%20Kotlin.jpg")
-            .into(binding.activityStoreImage)
+            .into(binding.activityStoreImage)   // 에러시 error 이미지
 
-
-
-        RetrofitClass.service.getTest2page().enqueue(object : Callback<StoreItemData> {
+        RetrofitClass.service.getStoreItem(storeId!!).enqueue(object : Callback<StoreItemData> {
             override fun onResponse(call: Call<StoreItemData>, response: Response<StoreItemData>) {
                 val customAdapter = StoreChoiceAdapter()
                 binding.activityStoreRecyclerview.adapter = customAdapter
                 customAdapter.itemList = response.body()!!
-                binding.activityStoreRecyclerview.layoutManager = GridLayoutManager(this@StoreChoiceActivity,2)
+                binding.activityStoreRecyclerview.layoutManager =
+                    GridLayoutManager(this@StoreChoiceActivity, 2)
             }
 
             override fun onFailure(call: Call<StoreItemData>, t: Throwable) {
@@ -61,14 +59,11 @@ class StoreChoiceActivity : AppCompatActivity(){
             }
         })
 
-
         if (MyApplication.current_user_email == null) {
             binding.favoriteImageBtn.visibility = View.INVISIBLE
         } else {
             binding.favoriteImageBtn.visibility = View.VISIBLE
         }
-
-
 
         Thread() {
             run {
@@ -82,11 +77,8 @@ class StoreChoiceActivity : AppCompatActivity(){
             }
         }.start()
 
-
-
         binding.favoriteImageBtn.setOnClickListener {
-
-            if(star) {  //눌러져있으면
+            if (star) {  //눌러져있으면
                 binding.favoriteImageBtn.setImageResource(R.drawable.ic_favorite_svgrepo_com)
                 thread(start = true) {
                     MyApplication.delStoreFavorite(MyApplication.current_user_email!!, storeId!!)
@@ -95,7 +87,7 @@ class StoreChoiceActivity : AppCompatActivity(){
             } else {   //안눌러져있을때
                 binding.favoriteImageBtn.setImageResource(R.drawable.ic_favorite_selected)
                 star = true
-                thread(start=true) {
+                thread(start = true) {
                     MyApplication.setStoreFavorite(MyApplication.current_user_email!!, storeId!!)
                 }
             }
