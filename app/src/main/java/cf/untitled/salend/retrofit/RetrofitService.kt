@@ -13,7 +13,7 @@ interface RetrofitService {
     fun getProductArrayPage(@Path("page") page: String): Call<ProductArray>*/
 
     @GET("item")
-    fun getTest2page() : Call<StoreItamData>
+    fun getTest2page() : Call<StoreItemData>
 
     //단일 상품
     @GET("item/{page}")
@@ -33,8 +33,10 @@ interface RetrofitService {
     @GET("store/search")
     fun getStoreSearchPage(@Query("query") query:String ) : Call<StoreArray>
 
-    @GET("store/{storeId}/")
-    fun getStoreFavor(@Path("storeId") storeId : String) : Call<StoreData>
+    @GET("store/favorite/")
+    fun getStoreFavor(
+        @Query("fav") fav: String
+    ) : Call<StoreArray>
 
 //    @GET("posts/1")
 //    fun getStudent(@Query("school_id") schoolId: Int,
@@ -43,7 +45,7 @@ interface RetrofitService {
 //
 //
 //    //POST 예제
-//    @POST("posts")
 //    @FormUrlEncoded
+//    @POST("posts")
 //    fun getContactsObject(@Field("idx") idx: String): Call<JsonObject>
 }

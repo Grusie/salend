@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -92,7 +91,7 @@ class HomeFragment : Fragment() {
 
         for(i: Int in btnList.indices){
             btnList[i].setOnClickListener {
-                val intent01 = Intent(this.context, KategorieActivity::class.java)
+                val intent01 = Intent(this.context, CategoryActivity::class.java)
                 intent01.putExtra("storeName", btnList[i].text.toString())
                 startActivity(intent01)
             }
