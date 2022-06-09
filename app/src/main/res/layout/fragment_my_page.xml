@@ -60,7 +60,7 @@
                 android:id="@+id/horizon"
                 app:layout_constraintBottom_toTopOf="@id/logout_btn"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
+                android:layout_height="1dp"
                 android:background="@color/light_gray"
                 android:visibility="gone"/>
             <ImageView
@@ -83,7 +83,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
+    <!--<LinearLayout
         android:id="@+id/service_linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -107,11 +107,18 @@
             android:layout_margin="@dimen/base_margin"
             android:textColor="@color/black"
             android:text="포인트"/>
-    </LinearLayout>
+    </LinearLayout>-->
+    <View
+        android:id="@+id/horizon4"
+        app:layout_constraintBottom_toTopOf="@id/service_linear"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/light_gray" />
     <LinearLayout
+        android:id="@+id/service_linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/service_linear"
+        app:layout_constraintTop_toBottomOf="@id/auth_linear"
         android:orientation="vertical"
         android:layout_margin="@dimen/base_margin">
 
