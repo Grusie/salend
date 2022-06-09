@@ -30,13 +30,12 @@ class StoreChoiceActivity : AppCompatActivity(){
         setContentView(binding.root)
 
         auth = Firebase.auth
-        val store = Firebase.firestore
 
 
         setSupportActionBar(binding.storeChoiceToolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        binding.categoryChoiceToolbarText.text = intent.getStringExtra("kategori")
+        binding.categoryChoiceToolbarText.text = intent.getStringExtra("category")
         binding.activityStoreStoreName.text = intent.getStringExtra("name")
         binding.activityStoreTime.text = intent.getStringExtra("time")
         val storeId = intent.getStringExtra("id")
@@ -69,16 +68,20 @@ class StoreChoiceActivity : AppCompatActivity(){
             binding.favoriteImageBtn.visibility = View.VISIBLE
         }
 
-        thread(start = true) {
-            val storeFavorList = MyApplication.getStoreFavorite()
 
-            for (i in 0..storeFavorList.size-1) {
-                if(storeId == storeFavorList[i]) {
-                    binding.favoriteImageBtn.setImageResource(R.drawable.favorite_on)
-                    star = true
+
+        Thread() {
+            run {
+                val check = MyApplication.checkStoreFavorite(storeId!!)
+                if (check) {
+                    runOnUiThread {
+                        binding.favoriteImageBtn.setImageResource(R.drawable.favorite_on)
+                        star = true
+                    }
                 }
             }
-        }
+        }.start()
+
 
 
         binding.favoriteImageBtn.setOnClickListener {

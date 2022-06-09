@@ -71,12 +71,15 @@
         <entry key="..\:/ksh/study/and/salend/app/src/main/res/drawable/ic_map_selected.xml" value="0.1245" />
         <entry key="..\:/ksh/study/and/salend/app/src/main/res/drawable/ic_pin_svgrepo_com.xml" value="0.1245" />
         <entry key="..\:/ksh/study/and/salend/app/src/main/res/layout/activity_favoritepage.xml" value="0.22826086956521738" />
+        <entry key="..\:/ksh/study/and/salend/app/src/main/res/layout/activity_login.xml" value="0.25364583333333335" />
         <entry key="..\:/ksh/study/and/salend/app/src/main/res/layout/activity_main.xml" value="0.22826086956521738" />
         <entry key="..\:/ksh/study/and/salend/app/src/main/res/layout/activity_product.xml" value="0.22826086956521738" />
         <entry key="..\:/ksh/study/and/salend/app/src/main/res/layout/activity_store_choice.xml" value="0.25364583333333335" />
         <entry key="..\:/ksh/study/and/salend/app/src/main/res/layout/bottom_navigation_tab.xml" value="0.22826086956521738" />
         <entry key="..\:/ksh/study/and/salend/app/src/main/res/layout/fragment_home.xml" value="0.22826086956521738" />
         <entry key="..\:/ksh/study/and/salend/app/src/main/res/layout/fragment_like.xml" value="0.22826086956521738" />
+        <entry key="..\:/ksh/study/and/salend/app/src/main/res/layout/fragment_map.xml" value="0.25364583333333335" />
+        <entry key="..\:/ksh/study/and/salend/app/src/main/res/layout/fragment_my_page.xml" value="0.25364583333333335" />
         <entry key="..\:/ksh/study/and/salend/app/src/main/res/layout/fragment_pay_list.xml" value="0.22826086956521738" />
         <entry key="..\:/ksh/study/and/salend/app/src/main/res/layout/item_kategorie.xml" value="0.25364583333333335" />
         <entry key="..\:/ksh/study/and/salend/app/src/main/res/layout/item_nearby_sale.xml" value="0.22826086956521738" />
