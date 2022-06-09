@@ -39,7 +39,6 @@ class CategoryChoiceAdapter : RecyclerView.Adapter<CategoryChoiceAdapterHolder>(
                 intent.putExtra("id",  storeId)
                 parent.context.startActivity(intent)
             }
-
         }
     }
 
