@@ -38,6 +38,11 @@ interface RetrofitService {
         @Query("fav") fav: String
     ) : Call<StoreArray>
 
+    @GET("item/favorite")
+    fun getItemFavor(
+        @Query("fav") fav : String
+    ) : Call<ProductArray2>
+
 //    @GET("posts/1")
 //    fun getStudent(@Query("school_id") schoolId: Int,
 //                   @Query("grade") grade: Int,
