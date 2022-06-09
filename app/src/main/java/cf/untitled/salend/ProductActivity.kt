@@ -38,6 +38,7 @@ class ProductActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         productId = intent.getStringExtra("product_id")!!
         binding = ActivityProductBinding.inflate(layoutInflater)
+        setSupportActionBar(binding.productToolbar)
 
         setContentView(binding.root)
         var client: WebViewClient = object : WebViewClient() {
@@ -97,6 +98,13 @@ class ProductActivity : AppCompatActivity() {
                                 Toast.makeText(baseContext, "결제가 완료되었습니다.", Toast.LENGTH_SHORT).show()
                                 binding.payWebView.visibility = View.GONE
                                 // 여기다 구현하시면 됩니다 ^^
+                                thread(start=true) {
+                                    MyApplication.setPayList(
+                                        MyApplication.current_user_email!!,
+                                        payId!!
+                                    )
+                                    Log.d("grusie", "결제 완료 : $payId")
+                                }
                                 // finish()
                             } else {
                                 Log.e("PA", "getResult: 결제 실패" )
@@ -219,26 +227,6 @@ class ProductActivity : AppCompatActivity() {
             }
             menu?.getItem(0)?.setVisible(true)
         } else menu?.getItem(0)?.setVisible(false)
-
-
-        if (MyApplication.current_user_email != null && MyApplication.current_user_email != "") {
-            thread(start = true) {
-                val flag = MyApplication.checkProductFavorite(productId)
-                runOnUiThread {
-                    if (flag) {
-                        menu?.getItem(0)?.icon =
-                            ContextCompat.getDrawable(this, R.drawable.ic_favorite_selected)
-                        menu?.getItem(0)?.setChecked(true)
-                    } else {
-                        menu?.getItem(0)?.icon =
-                            ContextCompat.getDrawable(this, R.drawable.ic_favorite_svgrepo_com)
-                        menu?.getItem(0)?.setChecked(false)
-                    }
-                }
-            }
-            menu?.getItem(0)?.setVisible(true)
-        } else menu?.getItem(0)?.setVisible(false)
-
 
         return super.onCreateOptionsMenu(menu)
     }

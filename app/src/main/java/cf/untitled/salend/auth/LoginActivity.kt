@@ -56,7 +56,7 @@ class LoginActivity : AppCompatActivity() {
                             MyApplication.db.collection("profile").document(userId).addSnapshotListener { snapshot, e ->
                                 if (snapshot?.exists() == false) {
                                     val userData = UserData(
-                                        userId, userName, ArrayList(), ArrayList()
+                                        userId, userName, ArrayList(), ArrayList(), ArrayList()
                                     )
                                     MyApplication.saveUser(userData)
                                 }
@@ -131,7 +131,7 @@ class LoginActivity : AppCompatActivity() {
                 MyApplication.db.collection("profile").document(userId!!).addSnapshotListener { snapshot, e ->
                     if (snapshot?.exists() == false) {
                         val userData = UserData(
-                            userId, userId, ArrayList(),ArrayList()
+                            userId, userId, ArrayList(),ArrayList(), ArrayList()
                         )
                         MyApplication.saveUser(userData)
                     }
