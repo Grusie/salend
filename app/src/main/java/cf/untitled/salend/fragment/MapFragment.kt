@@ -1,21 +1,23 @@
 package cf.untitled.salend.fragment
 
 import android.Manifest
-import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.location.Location
 import android.os.Bundle
-import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import cf.untitled.salend.MyApplication
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import cf.untitled.salend.MainActivity
 import cf.untitled.salend.R
 import cf.untitled.salend.databinding.FragmentMapBinding
 import cf.untitled.salend.model.StoreArray
@@ -23,9 +25,7 @@ import cf.untitled.salend.model.StoreData
 import cf.untitled.salend.retrofit.RetrofitClass
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import net.daum.mf.map.api.MapPOIItem
-import net.daum.mf.map.api.MapPoint
-import net.daum.mf.map.api.MapView
+import net.daum.mf.map.api.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -49,7 +49,7 @@ class MapFragment : Fragment() {
     private lateinit var binding: FragmentMapBinding
     private var latitude by Delegates.notNull<Double>()
     private var longitude by Delegates.notNull<Double>()
-
+    var nearbyStoreList = ArrayList<StoreData>()
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -74,8 +74,8 @@ class MapFragment : Fragment() {
         val mapViewContainer = binding.mapView as ViewGroup
         mapViewContainer.addView(mapView)
         setCurrentLocationTrackingMode(true)
+        mapView.setCalloutBalloonAdapter(CustomBalloonAdapter(layoutInflater))
 
-        var nearbyStoreList = ArrayList<StoreData>()
         RetrofitClass.service.getNearbyStorePage().enqueue(object :
             Callback<StoreArray> {
             override fun onResponse(call: Call<StoreArray>, response: Response<StoreArray>) {
@@ -85,7 +85,7 @@ class MapFragment : Fragment() {
                     result?.stores?.let { nearbyStoreList.addAll(it) }
 
                     for (i in 0 until nearbyStoreList.size) {
-                        nearbyStoreList[i].s_name?.let {
+                        nearbyStoreList[i]._id?.let {
                             nearbyStoreList[i].s_lat?.let {it1 ->
                                 nearbyStoreList[i].s_lng?.let { it2 ->
                                     createMapMarker(
@@ -111,7 +111,6 @@ class MapFragment : Fragment() {
             }
         })
 
-        //createMapMarker(latitude, longitude)
         binding.targetBtn.setOnClickListener {
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
             if (ActivityCompat.checkSelfPermission(
@@ -155,19 +154,38 @@ class MapFragment : Fragment() {
         }
     }
 
-    private fun createMapMarker(name:String, latitude:Double, longitude:Double) {
-        Toast.makeText(requireContext(),"createMapMarker : $latitude, $longitude", Toast.LENGTH_SHORT).show()
+    private fun createMapMarker(id:String, latitude:Double, longitude:Double) {
         val marker = MapPOIItem()
-        Log.d("grusie","$latitude, $longitude")
         marker.apply {
-            itemName = name   // 마커 이름
+            for (i in 0 until nearbyStoreList.size){
+                if(nearbyStoreList[i]._id == id)
+                    itemName = nearbyStoreList[i].s_name
+            }
             mapPoint = MapPoint.mapPointWithGeoCoord(latitude, longitude)   // 좌표
-            marker.markerType = MapPOIItem.MarkerType.BluePin
-            marker.selectedMarkerType = MapPOIItem.MarkerType.RedPin
+            markerType = MapPOIItem.MarkerType.BluePin
+            selectedMarkerType = MapPOIItem.MarkerType.RedPin
         }
         mapView.addPOIItem(marker)
     }
+    class CustomBalloonAdapter(inflater: LayoutInflater): CalloutBalloonAdapter {
+        val mCalloutBalloon: View = inflater.inflate(R.layout.item_map_info, null)
+        val name: TextView = mCalloutBalloon.findViewById(R.id.map_store_name)
+        val time: TextView = mCalloutBalloon.findViewById(R.id.map_store_time)
+        //val img: TextView = mCalloutBalloon.findViewById(R.id.map_store_image)
 
+        override fun getCalloutBalloon(poiItem: MapPOIItem?): View {
+            // 마커 클릭 시 나오는 말풍선
+            name.text = poiItem?.itemName
+            time.text = "정보"
+            return mCalloutBalloon
+        }
+
+        override fun getPressedCalloutBalloon(poiItem: MapPOIItem?): View {
+            // 말풍선 클릭 시
+            time.text = "정보"
+            return mCalloutBalloon
+        }
+    }
     companion object {
         /**
          * Use this factory method to create a new instance of

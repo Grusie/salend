@@ -24,8 +24,14 @@ interface RetrofitService {
     fun getProductArrayPage(
         @Query("_loc") loc:String) : Call<ProductArray>
 
-    @GET("store/test")
+    @GET("store/")
     fun getNearbyStorePage() : Call<StoreArray>
+
+    @GET("item/search")
+    fun getProductSearchPage(@Query("query") query:String ) : Call<ProductArray2>
+
+    @GET("store/search")
+    fun getStoreSearchPage(@Query("query") query:String ) : Call<StoreArray>
 
     @GET("store/favorite/")
     fun getStoreFavor(

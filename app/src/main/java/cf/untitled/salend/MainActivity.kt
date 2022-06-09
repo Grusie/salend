@@ -17,6 +17,10 @@ import cf.untitled.salend.databinding.ActivityMainBinding
 import cf.untitled.salend.databinding.BottomNavigationTabBinding
 import cf.untitled.salend.databinding.FragmentHomeBinding
 import com.kakao.sdk.common.util.Utility
+import com.kakao.sdk.user.UserApiClient
+import com.kakao.sdk.user.rx
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import java.security.MessageDigest
 import java.util.*
 
