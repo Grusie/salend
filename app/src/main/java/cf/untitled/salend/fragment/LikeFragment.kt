@@ -22,19 +22,24 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
-private lateinit var favArray: ArrayList<String?>
-private lateinit var favItemArray : ArrayList<String?>
-private var initFlag = false
-private var itemInit = false
 
 class LikeFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var f: FragmentLikeBinding
+
     val storeAdapter = FavoriteStoreAdapter()
-    val itemAdpater = FavoriteProductAdpater()
-    lateinit var favorStoreList2: ArrayList<StoreData>
-    lateinit var favorItemList : ArrayList<ProductData>
+    val itemAdapter = FavoriteProductAdpater()
+
+    private lateinit var favStoreStrArray: ArrayList<String?>
+    private lateinit var favItemStrArray: ArrayList<String?>
+    lateinit var favorStoreList: ArrayList<StoreData>
+    lateinit var favorItemList: ArrayList<ProductData>
+
+    private var TAG = "LF";
+    private var mode = "Store"
+
+    private var initFlag = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +50,11 @@ class LikeFragment : Fragment() {
         initFlag = true;
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         // Inflate the layout for this cf.untitled.salend.fragment
         return inflater.inflate(R.layout.fragment_like, container, false)
     }
@@ -58,65 +67,93 @@ class LikeFragment : Fragment() {
 
         val thread = Thread {
             run {
-                Log.e(TAG, "onViewCreated: " + MyApplication.setStatus())
-                if (MyApplication.setStatus()) {
-                    favArray = MyApplication.getStoreFavorite()
-                    favItemArray = MyApplication.getProductFavorite()
-                    getRequest()
-                    Log.e("like", favArray.toString())
-                }
+                Log.e(TAG, "onViewCreated: RUN?" )
+                favStoreStrArray = ArrayList()
+                favItemStrArray = ArrayList()
+                favorStoreList = ArrayList()
+                favorItemList = ArrayList()
+                refreshList()
             }
         }
 
-            f.favoritePageStoreButton.setOnClickListener {
-                getRequest()
-                storeAdapter.favorStoreList = favorStoreList2
-                f.favoritePageItemRecyclerview.adapter = storeAdapter
-                f.favoritePageItemRecyclerview.layoutManager = GridLayoutManager(context, 2)
-            }
+        f.favoritePageStoreButton.setOnClickListener {
+            setMode("Store")
+            getRequest()
+        }
 
         f.favoritePageItemButton.setOnClickListener {
-            if(itemInit) {
-                getRequest2()
-                itemAdpater.productArray = favorItemList
-                f.favoritePageItemRecyclerview.adapter = itemAdpater
-                f.favoritePageItemRecyclerview.layoutManager = GridLayoutManager(context, 2)
-            }
+            setMode("Item")
+            getRequest2()
         }
 
-        favorStoreList2 = ArrayList()
-        storeAdapter.favorStoreList = favorStoreList2
-        f.favoritePageItemRecyclerview.adapter = storeAdapter
+        storeAdapter.favorStoreList = ArrayList()
+        setMode("Store")
         f.favoritePageItemRecyclerview.layoutManager = GridLayoutManager(context, 2)
-
 
         if (thread.state == Thread.State.NEW)
             thread.start()
 
+        initFlag = true
     }
 
     fun refreshList() {
         if (AuthApiClient.instance.hasToken()) {
             UserApiClient.instance.me { user, error ->
-                if(error != null){
+                if (error != null) {
                     Log.e("grusie", "사용자 정보 요청 실패", error)
-                }
-                else if(user != null){
+                } else if (user != null) {
                     MyApplication.current_user_email = user.id.toString()
-                    favArray = MyApplication.getStoreFavorite()
-                    getRequest()    // 파이어베이스에서 꺼낸 값을 서버로 요청을 보냄
+
+                    Thread() {
+                        run {
+                            Log.e(TAG, "refreshList: KakaoRefresh" )
+                            favStoreStrArray = MyApplication.getStoreFavorite()
+                            favItemStrArray = MyApplication.getProductFavorite()
+                            getRequest()    // 파이어베이스에서 꺼낸 값을 서버로 요청을 보냄
+                        }
+                    }.start()
                 }
             }
             return
         }
         if (MyApplication.setStatus()) {
-            favArray = MyApplication.getStoreFavorite()
-            favItemArray = MyApplication.getProductFavorite()
+            Log.e(TAG, "refreshList: GRefresh" )
+            favStoreStrArray = MyApplication.getStoreFavorite()
+            favItemStrArray = MyApplication.getProductFavorite()
             getRequest()   // 파이어베이스에서 꺼낸 값을 서버로 요청을 보냄
-            getRequest2()
-            val TAG = "LF"
-            Log.e(TAG, "refreshList: " + favArray.toString())
         }
+    }
+
+
+    fun getRequest() {
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://api.salend.tk")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        val service = retrofit.create(RetrofitService::class.java)
+
+        val str = favStoreStrArray.toString().replace("[", "").replace("]", "").replace(",", "")
+
+        if (str.trim() == "") {
+            favorStoreList = ArrayList()
+            return
+        }
+
+        service.getStoreFavor(str).enqueue(object : Callback<StoreArray> {
+            override fun onResponse(call: Call<StoreArray>, response: Response<StoreArray>) {
+                // 서버에 요청을 해서 성공한 경우
+                favorStoreList = response.body()!!.stores
+                Log.e(TAG, "onResponse: stores ${favorStoreList.size}" )
+                storeAdapter.favorStoreList = favorStoreList
+                setMode("Store")
+            }
+
+            override fun onFailure(call: Call<StoreArray>, t: Throwable) {
+                t.printStackTrace()
+                Log.d("like", "서버통신실패")
+            }
+        })
     }
 
     fun getRequest2() {
@@ -127,15 +164,18 @@ class LikeFragment : Fragment() {
 
         val service = retrofit.create(RetrofitService::class.java)
 
-        val itemRetrofit = favItemArray.toString().replace("[", "").replace("]", "").replace(",", "")
-        if(itemRetrofit.trim() == ""){
+        val itemRetrofit =
+            favItemStrArray.toString().replace("[", "").replace("]", "").replace(",", "")
+        if (itemRetrofit.trim() == "") {
             favorItemList = ArrayList()
             return
         }
         service.getItemFavor(itemRetrofit).enqueue(object : Callback<ProductArray2> {
             override fun onResponse(call: Call<ProductArray2>, response: Response<ProductArray2>) {
                 favorItemList = response.body()!!.items
-                itemInit = true
+                Log.e(TAG, "onResponse: Item ${favorItemList.size}" )
+                itemAdapter.productArray = favorItemList
+                setMode("Item")
             }
 
             override fun onFailure(call: Call<ProductArray2>, t: Throwable) {
@@ -143,39 +183,21 @@ class LikeFragment : Fragment() {
                 Log.d("like2", "서버통신실패")
             }
         })
-
     }
 
-    fun getRequest() {
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://api.salend.tk")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        val service = retrofit.create(RetrofitService::class.java)
-
-        val str = favArray.toString().replace("[", "").replace("]", "").replace(",", "")
-
-        if (str.trim() == "") {
-            favorStoreList2 = ArrayList()
-            return
+    private fun setMode(txt: String) {
+        this.mode = txt
+        if(mode == "Store"){
+            f.favoritePageItemRecyclerview.adapter = storeAdapter
         }
-        service.getStoreFavor(str).enqueue(object : Callback<StoreArray> {
-            override fun onResponse(call: Call<StoreArray>, response: Response<StoreArray>) {
-                // 서버에 요청을 해서 성공한 경우
-                favorStoreList2 = response.body()!!.stores
-                Log.e("LF", "onResponse: " + response.body()!!.stores[0].s_name)
-            }
-
-            override fun onFailure(call: Call<StoreArray>, t: Throwable) {
-                t.printStackTrace()
-                Log.d("like", "서버통신실패")
-            }
-        })
+        else if(mode == "Item") {
+            f.favoritePageItemRecyclerview.adapter = itemAdapter
+        }
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
+        Log.e(TAG, "setUserVisibleHint: initFlag ${initFlag}" )
         if (initFlag) {
             Thread {
                 run {
