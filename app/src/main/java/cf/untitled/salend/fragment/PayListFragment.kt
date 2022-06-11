@@ -24,8 +24,8 @@ class PayListFragment : Fragment() {
         // Inflate the layout for this cf.untitled.salend.fragment
         binding = FragmentPayListBinding.inflate(inflater)
 
-        val adpater = PayAdapter()
-        binding.payListRv.adapter = adpater
+        val adapter = PayAdapter()
+        binding.payListRv.adapter = adapter
         binding.payListRv.layoutManager = LinearLayoutManager(context)
 
         return binding.root

@@ -39,6 +39,7 @@ class ProductActivity : AppCompatActivity() {
         productId = intent.getStringExtra("product_id")!!
         binding = ActivityProductBinding.inflate(layoutInflater)
         setSupportActionBar(binding.productToolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         setContentView(binding.root)
         var client: WebViewClient = object : WebViewClient() {

@@ -44,6 +44,17 @@ class SearchStoreAdapter(private var data: ArrayList<StoreData>) :
                     .into(storeImg)
 
                 storeName.text = data[evenPosition].s_name
+                holderLeft.setOnClickListener{
+                    val intent = Intent(itemView.context, StoreChoiceActivity::class.java)
+                    data[evenPosition].apply {
+                        intent.putExtra("category", "")
+                        intent.putExtra("name", s_name)
+                        intent.putExtra("time", s_time)
+                        intent.putExtra("image", s_image)
+                        intent.putExtra("id", _id)
+                        ContextCompat.startActivity(holder.itemView.context, intent, null)
+                    }
+                }
             }
             if (data.size % 2 == 1 && evenPosition == data.size - 1) {
                 holderRight.visibility = View.INVISIBLE
@@ -55,6 +66,17 @@ class SearchStoreAdapter(private var data: ArrayList<StoreData>) :
                     .into(rightStoreImg)
 
                 rightStoreName.text = data[oddPosition].s_name
+                holderRight.setOnClickListener{
+                    val intent = Intent(itemView.context, StoreChoiceActivity::class.java)
+                    data[oddPosition].apply {
+                        intent.putExtra("category", "")
+                        intent.putExtra("name", s_name)
+                        intent.putExtra("time", s_time)
+                        intent.putExtra("image", s_image)
+                        intent.putExtra("id", _id)
+                        ContextCompat.startActivity(holder.itemView.context, intent, null)
+                    }
+                }
             }
         }
     }
