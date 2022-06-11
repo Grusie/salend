@@ -67,7 +67,11 @@ class StoreChoiceActivity : AppCompatActivity() {
 
         Thread() {
             run {
-                val check = MyApplication.checkStoreFavorite(storeId!!)
+                var check = false
+                if(MyApplication.current_user_email != null) {
+                    check = MyApplication.checkStoreFavorite(storeId!!)
+                }
+
                 if (check) {
                     runOnUiThread {
                         binding.favoriteImageBtn.setImageResource(R.drawable.favorite_on)
