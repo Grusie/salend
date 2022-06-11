@@ -133,7 +133,7 @@
                 android:padding="@dimen/base_padding"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="내 주변 할인매장" />
+                android:text="내 주변 할인상품" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/nearby_sale_recyclerview"

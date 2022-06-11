@@ -74,7 +74,7 @@ class StoreChoiceActivity : AppCompatActivity() {
 
                 if (check) {
                     runOnUiThread {
-                        binding.favoriteImageBtn.setImageResource(R.drawable.favorite_on)
+                        binding.favoriteImageBtn.setImageResource(R.drawable.ic_favorite_selected)
                         star = true
                     }
                 }
