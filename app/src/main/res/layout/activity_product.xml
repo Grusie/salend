@@ -32,8 +32,7 @@
             android:layout_weight="5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="#548f43fe">
+            android:orientation="vertical">
         <ImageView
             android:id="@+id/product_info_img"
             android:layout_weight="4"
@@ -48,6 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="상품명"
+                android:textSize="@dimen/title_text_size"
                 app:layout_constraintTop_toBottomOf="@id/product_info_img" />
 
             <TextView
@@ -56,14 +56,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="가격"
+                android:textSize="@dimen/title_text_size"
                 app:layout_constraintTop_toBottomOf="@+id/product_info_name" />
         </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/light_gray"/>
         <TextView
             android:id="@+id/product_info_exp"
             android:padding="@dimen/base_padding"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="유통기한"
+            android:textSize="@dimen/title_text_size"
             android:layout_weight="5"
             app:layout_constraintTop_toBottomOf="@+id/product_info_price" />
     </LinearLayout>

@@ -20,7 +20,7 @@
         android:id="@+id/product_img"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:scaleType="centerInside"
+        android:scaleType="fitCenter"
         android:layout_gravity="center"
         tools:srcCompat="@tools:sample/avatars" />
 
@@ -70,7 +70,7 @@
             android:id="@+id/product_img2"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:scaleType="centerInside"
+            android:scaleType="fitCenter"
             tools:srcCompat="@tools:sample/avatars"
             android:layout_gravity="center"/>
 
