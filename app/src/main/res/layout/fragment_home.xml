@@ -59,25 +59,30 @@
                     android:id="@+id/category_btn_0"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:drawableTop="@drawable/icons8_bibimbap_64"
                     android:layout_weight="1"/>
 
                 <cf.untitled.salend.customView.RectButton
                     android:id="@+id/category_btn_1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/icons8_pasta_64"/>
 
                 <cf.untitled.salend.customView.RectButton
                     android:id="@+id/category_btn_2"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/icons8_bowl_64"/>
 
                 <cf.untitled.salend.customView.RectButton
                     android:id="@+id/category_btn_3"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/icons8_sushi_65"
+                    />
             </LinearLayout>
 
             <LinearLayout
@@ -91,25 +96,29 @@
                     android:id="@+id/category_btn_4"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/icons8_tteok_64"/>
 
                 <cf.untitled.salend.customView.RectButton
                     android:id="@+id/category_btn_5"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/icons8_shop_64" />
 
                 <cf.untitled.salend.customView.RectButton
                     android:id="@+id/category_btn_6"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/icons8_cafe_64"/>
 
                 <cf.untitled.salend.customView.RectButton
                     android:id="@+id/category_btn_7"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/icons8_kawaii_bread_64"/>
             </LinearLayout>
         </LinearLayout>
 

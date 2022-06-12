@@ -13,8 +13,11 @@ import kotlinx.coroutines.*
 import java.lang.Exception
 import java.net.URL
 
-class CategoryChoiceAdapter : RecyclerView.Adapter<CategoryChoiceAdapterHolder>() {
+class CategoryChoiceAdapter : RecyclerView.Adapter<CategoryChoiceAdapter.CategoryChoiceAdapterHolder>() {
 
+    class CategoryChoiceAdapterHolder(binding: ItemCategoryBinding) : RecyclerView.ViewHolder(binding.root){
+        val storeImg = binding.categoryStoreImage
+    }
     var storeList: CategoryStore? = null
     lateinit var save : String
     lateinit var binding: ItemCategoryBinding
@@ -25,6 +28,7 @@ class CategoryChoiceAdapter : RecyclerView.Adapter<CategoryChoiceAdapterHolder>(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryChoiceAdapterHolder {
         binding = ItemCategoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val storeImg = binding.categoryStoreImage
         return CategoryChoiceAdapterHolder(binding).apply {
             itemView.setOnClickListener {
                 val storeName = storeList?.stores?.get(adapterPosition)?.s_name ?: ""
@@ -53,7 +57,7 @@ class CategoryChoiceAdapter : RecyclerView.Adapter<CategoryChoiceAdapterHolder>(
                         loadImage(url)
                     }
 
-                    binding.categoryStoreImage.setImageBitmap(bitmap)
+                    holder.storeImg.setImageBitmap(bitmap)
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -64,7 +68,6 @@ class CategoryChoiceAdapter : RecyclerView.Adapter<CategoryChoiceAdapterHolder>(
 
 }
 
-class CategoryChoiceAdapterHolder(binding: ItemCategoryBinding) : RecyclerView.ViewHolder(binding.root)
 
 suspend fun loadImage(imageUrl: String): Bitmap {
     val url = URL(imageUrl)
