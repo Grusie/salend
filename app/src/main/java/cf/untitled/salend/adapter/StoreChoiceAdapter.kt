@@ -1,9 +1,12 @@
 package cf.untitled.salend.adapter
 
+import android.content.Intent
 import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import cf.untitled.salend.ProductActivity
 import cf.untitled.salend.databinding.ItemStoreItemBinding
 import cf.untitled.salend.model.StoreItemData
 import com.bumptech.glide.Glide
@@ -36,6 +39,11 @@ class StoreChoiceAdapter : RecyclerView.Adapter<StoreChoiceAdapterHolder>(){
             Glide.with(binding.root)
                 .load(item?.iImage)
                 .into(binding.itemStoreItemImage)
+        }
+        holder.itemView.setOnClickListener {
+            val intent = Intent(holder.itemView.context, ProductActivity::class.java)
+            intent.putExtra("product_id", itemList.items?.get(position)?.id)
+            ContextCompat.startActivity(holder.itemView.context, intent, null)
         }
     }
 }

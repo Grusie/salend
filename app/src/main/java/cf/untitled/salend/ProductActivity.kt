@@ -193,7 +193,7 @@ class ProductActivity : AppCompatActivity() {
 
                         productInfoPrice.text =
                             result?.i_price.toString() + " -> " + result?.i_now_price.toString() + "(" + saleRate + "%할인!)"
-                        productInfoExp.text = result?.i_exp
+                        productInfoExp.text = "유통기한 : ${result?.i_exp}"
                     }
                 } else {
                     // 통신이 실패한 경우(응답코드 3xx, 4xx 등)

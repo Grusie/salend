@@ -26,67 +26,82 @@
             android:id="@+id/favorite_image_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_favorite_svgrepo_com"
-            android:background="#6EABDE"
             android:layout_gravity="end"
+            android:layout_marginEnd="10dp"
+            android:background="#6EABDE"
             android:scaleX="1.5"
             android:scaleY="1.5"
-            android:layout_marginEnd="10dp"/>
-
+            android:src="@drawable/ic_favorite_svgrepo_com" />
 
 
     </androidx.appcompat.widget.Toolbar>
 
-    <LinearLayout
-        android:id="@+id/activity_store_linearLayout"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestScrollView"
         android:layout_width="match_parent"
-        android:layout_height="190dp"
-        android:layout_marginTop="10dp"
-        android:orientation="vertical"
-        android:background="#DBE1E7"
+        android:layout_height="0dp"
+        android:fillViewport="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/storeChoiceToolbar">
 
-        <ImageView
-            android:id="@+id/activity_store_image"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/white"
-            android:scaleX="3.0"
-            app:srcCompat="@drawable/shopping_selector" />
-        <TextView
-            android:id="@+id/activity_store_storeName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="가게 이름"
-            android:layout_gravity="center"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:textColor="@color/black"/>
-        <TextView
-            android:id="@+id/activity_store_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="운영 시간"
-            android:layout_gravity="center"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:textColor="@color/black"
-            android:layout_marginTop="3dp"/>
-    </LinearLayout>
+            android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/activity_store_recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_store_linearLayout" />
+            <LinearLayout
+                android:id="@+id/activity_store_linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="#DBE1E7"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent">
 
+                <ImageView
+                    android:id="@+id/activity_store_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/shopping_selector" />
+
+                <TextView
+                    android:id="@+id/activity_store_storeName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="가게 이름"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/activity_store_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="3dp"
+                    android:text="운영 시간"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/activity_store_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/activity_store_linearLayout" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

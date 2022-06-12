@@ -16,9 +16,9 @@
 
         <ImageView
             android:id="@+id/item_search_store_image"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:scaleType="centerCrop"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:scaleType="fitCenter"
             android:layout_gravity="center"
             tools:srcCompat="@tools:sample/avatars" />
 
@@ -39,9 +39,9 @@
 
         <ImageView
             android:id="@+id/right_item_search_store_image"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:scaleType="centerCrop"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:scaleType="fitCenter"
             android:layout_gravity="center"
             tools:srcCompat="@tools:sample/avatars" />
 
