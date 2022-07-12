@@ -12,7 +12,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:windowBackground">@color/salend_background</item>
+        <item name="android:windowBackground">@color/white</item>
         <!-- Customize your theme here. -->
         <!--custom font-family 적용-->
         <item name="android:textViewStyle">@style/customTextViewFontStyle</item>
@@ -27,6 +27,13 @@
         <item name="android:textSize">@dimen/title_text_size</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/black</item>
+    </style>
+
+    <!--middle_title-->
+    <style name="middle_title_text_style">
+        <item name="android:textSize">@dimen/title_text_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/text_green_color</item>
     </style>
 
     <!--navigation-->

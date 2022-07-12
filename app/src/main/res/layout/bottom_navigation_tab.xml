@@ -13,10 +13,18 @@
         android:layout_weight="1">
 
         <ImageView
+            android:id="@+id/bottom_navigation_home_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@drawable/home_seletor" />
+            android:src="@drawable/home_selector" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/bottom_navigation_home_icon"
+            android:layout_centerHorizontal="true"
+            android:text="홈" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -26,10 +34,18 @@
         android:layout_weight="1">
 
         <ImageView
+            android:id="@+id/bottom_navigation_favorite_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:src="@drawable/favorite_seletor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/bottom_navigation_favorite_icon"
+            android:layout_centerHorizontal="true"
+            android:text="찜" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -39,10 +55,18 @@
         android:layout_weight="1">
 
         <ImageView
+            android:id="@+id/bottom_navigation_map_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:src="@drawable/map_selector" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/bottom_navigation_map_icon"
+            android:layout_centerHorizontal="true"
+            android:text="지도" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -51,10 +75,18 @@
         android:layout_height="match_parent"
         android:layout_weight="1">
         <ImageView
+            android:id="@+id/bottom_navigation_payList_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:src="@drawable/shopping_selector" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/bottom_navigation_payList_icon"
+            android:layout_centerHorizontal="true"
+            android:text="결제 내역" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -63,10 +95,17 @@
         android:layout_height="match_parent"
         android:layout_weight="1">
         <ImageView
+            android:id="@+id/bottom_navigation_myPage_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:src="@drawable/person_selector" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/bottom_navigation_myPage_icon"
+            android:layout_centerHorizontal="true"
+            android:text="MY" />
     </RelativeLayout>
 
 </LinearLayout>

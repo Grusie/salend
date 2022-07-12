@@ -70,17 +70,17 @@ class HomeFragment : Fragment() {
             btnList[i].text = stringArray[i]
         }
 
-        binding.locationTv.text = MyApplication.sharedPref.getString("location","지역")
+        binding.locationInfo.text = MyApplication.sharedPref.getString("location","지역")
         activityResultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {      //액티비티 결과 콜백 지정
                 if (it.resultCode == Activity.RESULT_OK) {
-                    binding.locationTv.text = it.data?.getStringExtra("locationResult")
+                    binding.locationInfo.text = it.data?.getStringExtra("locationResult")
                     initRecyclerView()
                 }
             }
-        binding.locationTv.setOnClickListener {     //지역 텍스트 뷰 클릭 시 LocationSelectActivity 실행
+        binding.locationTargetBtn.setOnClickListener {     //지역 버튼 클릭 시 LocationSelectActivity 실행
             val intent = Intent(this.context, LocationSelectActivity::class.java)
-            intent.putExtra("location", binding.locationTv.text.toString())
+            intent.putExtra("location", binding.locationInfo.text.toString())
             activityResultLauncher.launch(intent)
         }
 

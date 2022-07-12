@@ -28,6 +28,13 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <!--middle_title-->
+    <style name="middle_title_text_style">
+        <item name="android:textSize">@dimen/title_text_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
     <!--navigation-->
     <style name = "navigation_bottom_style">
         <item name="android:background">@color/black</item>
