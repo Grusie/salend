@@ -41,10 +41,6 @@
         <item name="android:background">@color/light_salend_backgroud</item>
         <item name="tabIndicatorColor">@color/light_salend_backgroud</item>
     </style>
-    
-    <style name="navigation_bottom_item_style">
-        <item name="tint">@color/black</item>
-    </style>
 
     <!--auth-->
     <style name="auth_button_style">
