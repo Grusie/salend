@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:drawable="@drawable/ic_home_svgrepo_com__1_"
-        android:state_selected="false"/>
+        android:drawable="@drawable/ic_home"
+        android:state_selected="false"
+        />
     <item
-        android:drawable="@drawable/ic_home_seleted"
+        android:drawable="@drawable/ic_home_selected"
         android:state_selected="true"/>
 </selector>
