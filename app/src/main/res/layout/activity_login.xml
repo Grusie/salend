@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/loginTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="로그인"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/loginLinear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginTextView">
+
+        <EditText
+            android:id="@+id/authEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:hint="E-mail"
+            android:fontFamily="@font/custom_font"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/authPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="Password"
+            android:fontFamily="@font/custom_font"
+            android:inputType="textPassword" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/btnLinear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/loginLinear"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/loginLinear">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/login_btn"
+            style="@style/auth_button_style"
+            android:text="로그인" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/google_login_btn"
+            style="@style/auth_button_style.google"
+            android:paddingLeft="@dimen/base_padding"
+            android:text="구글 로그인     "
+            android:drawableLeft="@drawable/btn_google_light_normal_ldpi"
+            android:textSize="20sp"
+            android:gravity="center"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/kakao_login_btn"
+            style="@style/auth_button_style.kakao"
+            android:scaleType="centerCrop"
+            android:drawableLeft="@drawable/kakaolink_btn_small"
+            android:text="카카오 로그인     "
+            android:background="@color/kakao" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/auth_btn"
+            style="@style/auth_button_style"
+            android:text="회원가입"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
