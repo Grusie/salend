@@ -3,8 +3,13 @@
     <dimen name="title_text_size">24sp</dimen>
 
     <dimen name="base_text_size">12sp</dimen>
+    <dimen name="quarter_padding">4dp</dimen>
+    <dimen name="quarter_margin">4dp</dimen>
+    <dimen name="half_padding">8dp</dimen>
+    <dimen name="half_margin">8dp</dimen>
     <dimen name="base_padding">16dp</dimen>
     <dimen name="base_margin">16dp</dimen>
+    <dimen name="navigation_bar_icons_size">24dp</dimen>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

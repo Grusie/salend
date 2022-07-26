@@ -99,7 +99,6 @@ class MyPageFragment : Fragment() {
                 authInfo.visibility = View.VISIBLE
                 logoutBtn.visibility = View.VISIBLE
                 authTextView.visibility = View.GONE
-                horizon.visibility = View.VISIBLE
 
                 profileImg.setImageResource(R.drawable.ic_search)
                 val docRef = MyApplication.db.collection("profile")
@@ -122,8 +121,6 @@ class MyPageFragment : Fragment() {
                 authInfo.visibility = View.GONE
                 logoutBtn.visibility = View.GONE
                 authTextView.visibility = View.VISIBLE
-                horizon.visibility = View.GONE
-
                 MyApplication.current_user_email = null
                 authInfo.text = ""
             }
@@ -136,7 +133,6 @@ class MyPageFragment : Fragment() {
                 authInfo.visibility = View.VISIBLE
                 logoutBtn.visibility = View.VISIBLE
                 authTextView.visibility = View.GONE
-                horizon.visibility = View.VISIBLE
 
                 // 사용자 정보 요청 (기본)
                 UserApiClient.instance.me { user, error ->
@@ -155,7 +151,7 @@ class MyPageFragment : Fragment() {
                         docRef.whereEqualTo("u_id", MyApplication.current_user_email).get()
                             .addOnSuccessListener { document ->
                                 for (fields in document) {
-                                    authInfo.text = fields["u_name"] as String + "님 반갑습니다."
+                                    authInfo.text = "안녕하세요 " + fields["u_name"] as String + "님!"
                                 }
                             }.addOnFailureListener{ exception ->
                                 Log.d("grusie", "get failed with ", exception)
