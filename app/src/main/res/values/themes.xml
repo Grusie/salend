@@ -38,8 +38,8 @@
 
     <!--navigation-->
     <style name = "navigation_bottom_style">
-        <item name="android:background">@color/light_salend_backgroud</item>
-        <item name="tabIndicatorColor">@color/light_salend_backgroud</item>
+        <item name="android:background">@color/white</item>
+        <item name="tabIndicatorColor">@color/white</item>
     </style>
 
     <!--auth-->
