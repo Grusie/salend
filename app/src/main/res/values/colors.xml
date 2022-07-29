@@ -12,6 +12,7 @@
     <color name="light_white">#F6F6F6</color>
     <color name="light_gray">#FAFAFA</color>
     <color name="gray">#A2A2A2</color>
+    <color name="border_color">#E4E4E4</color>
     <color name="kakao">#FFEB00</color>
     <color name="google_dark">#4285F4</color>
     <color name="red">#ff0000</color>

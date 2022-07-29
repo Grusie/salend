@@ -73,6 +73,15 @@
     <style name="better_light_black_style">
     </style>
 
+    <style name="left_item_view_style">
+        <item name="android:paddingRight">@dimen/half_padding</item>
+        <item name="android:paddingLeft">@dimen/base_padding</item>
+    </style>
+
+    <style name="right_item_view_style">
+        <item name="android:paddingRight">@dimen/base_padding</item>
+        <item name="android:paddingLeft">@dimen/half_padding</item>
+    </style>
     <!-- Custom font 적용 -->
     <style name="customTextViewFontStyle" parent="@android:style/Widget.DeviceDefault.TextView">
         <item name="android:fontFamily">@font/custom_font_family</item>

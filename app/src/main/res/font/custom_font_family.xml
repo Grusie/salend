@@ -14,12 +14,12 @@
 
     <!--bold-->
     <font
-        android:font="@font/custom_font"
+        android:font="@font/custom_font_bold"
         android:fontStyle="normal"
         android:fontWeight="700"
         app:font="@font/custom_font"
         app:fontStyle="normal"
-        app:fontWeight="1000" />
+        app:fontWeight="700" />
 
 
 </font-family>

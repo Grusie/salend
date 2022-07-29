@@ -1,6 +1,7 @@
 package cf.untitled.salend.adapter
 
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +24,8 @@ class SearchStoreAdapter(private var data: ArrayList<StoreData>) :
         var storeImg = binding.itemSearchStoreImage
         var rightStoreName = binding.rightItemSearchStoreName
         var rightStoreImg = binding.rightItemSearchStoreImage
+        var storeAddress = binding.itemSearchStoreAddress
+        var rightStoreAddress = binding.rightItemSearchStoreAddress
 
     }
     override fun onCreateViewHolder(
@@ -44,6 +47,11 @@ class SearchStoreAdapter(private var data: ArrayList<StoreData>) :
                     .into(storeImg)
 
                 storeName.text = data[evenPosition].s_name
+                if(data[evenPosition].s_address!=null) {
+                    val list = data[evenPosition].s_address!!.split(" ")
+                    storeAddress.text ="${list[0] + " " + list[1] + " " + list[2]}"
+                }
+
                 holderLeft.setOnClickListener{
                     val intent = Intent(itemView.context, StoreChoiceActivity::class.java)
                     data[evenPosition].apply {
@@ -66,6 +74,10 @@ class SearchStoreAdapter(private var data: ArrayList<StoreData>) :
                     .into(rightStoreImg)
 
                 rightStoreName.text = data[oddPosition].s_name
+                if(data[oddPosition].s_address!=null) {
+                    val list = data[oddPosition].s_address!!.split(" ")
+                    rightStoreAddress.text ="${list[0] + " " + list[1] + " " + list[2]}"
+                }
                 holderRight.setOnClickListener{
                     val intent = Intent(itemView.context, StoreChoiceActivity::class.java)
                     data[oddPosition].apply {
