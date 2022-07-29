@@ -25,13 +25,13 @@ class NearbySaleRecyclerAdapter(private var data: ArrayList<ProductData>) :
         val leftHolder = binding.leftItemView
         val rightHolder = binding.rightItemView
         val img = binding.productImg
-        val shop = binding.shopName
+        val store = binding.storeName
         val name = binding.productName
         val price = binding.productPrice
         val nowPrice = binding.productNowPrice
 
         val img2 = binding.productImg2
-        val shop2 = binding.shopName2
+        val store2 = binding.storeName2
         val name2 = binding.productName2
         val price2 = binding.productPrice2
         val nowPrice2 = binding.productNowPrice2
@@ -48,7 +48,7 @@ class NearbySaleRecyclerAdapter(private var data: ArrayList<ProductData>) :
                     .error(R.drawable.ic_map_svgrepo_com)
                     .into(img)
                 val product_id = data[evenPosition]._id
-                shop.text = data[evenPosition].i_store_name
+                store.text = data[evenPosition].i_store_name
                 name.text = data[evenPosition].i_name
                 price.text = data[evenPosition].i_price.toString()
                 price.paintFlags = price.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
@@ -68,7 +68,7 @@ class NearbySaleRecyclerAdapter(private var data: ArrayList<ProductData>) :
                     .load(data[oddPosition].i_image).error(R.drawable.ic_map_svgrepo_com)
                     .into(img2)
                 val product_id = data[oddPosition]._id
-                shop2.text = data[oddPosition].i_store_name
+                store2.text = data[oddPosition].i_store_name
                 name2.text = data[oddPosition].i_name
                 price2.text = data[oddPosition].i_price.toString()
                 price2.paintFlags = price.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG

@@ -3,6 +3,7 @@
     <dimen name="title_text_size">24sp</dimen>
 
     <dimen name="base_text_size">12sp</dimen>
+    <dimen name="large_text_size">16sp</dimen>
     <dimen name="quarter_padding">4dp</dimen>
     <dimen name="quarter_margin">4dp</dimen>
     <dimen name="half_padding">8dp</dimen>

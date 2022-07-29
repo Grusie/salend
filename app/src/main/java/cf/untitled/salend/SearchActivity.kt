@@ -36,21 +36,23 @@ class SearchActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.searchToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        binding.productTabBtn.isSelected = true
         var categoryArray = ArrayList<CategoryData>()
 
         binding.productTabBtn.setOnClickListener{
             if(flag == 1) {
                 flag = 0
-                binding.productTabBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.light_gray))
-                binding.storeTabBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.salend_background))
+                binding.productTabBtn.isSelected = true
+                binding.storeTabBtn.isSelected = false
                 binding.searchSearchView.setQuery(binding.searchSearchView.query, true)
             }
         }
         binding.storeTabBtn.setOnClickListener {
             if(flag == 0){
                 flag = 1
-                binding.storeTabBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.light_gray))
-                binding.productTabBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.salend_background))
+                binding.productTabBtn.isSelected = false
+                binding.storeTabBtn.isSelected = true
                 binding.searchSearchView.setQuery(binding.searchSearchView.query, true)
             }
         }
@@ -65,7 +67,7 @@ class SearchActivity : AppCompatActivity() {
                         else {
                             searchStore(query)
                         }
-                        binding.categoryTextView.visibility = View.INVISIBLE
+                        binding.categoryTextView.visibility = View.GONE
                     }
                     return true
                 }
