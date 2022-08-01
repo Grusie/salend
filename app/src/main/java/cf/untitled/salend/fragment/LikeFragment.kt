@@ -39,7 +39,7 @@ class LikeFragment : Fragment() {
     lateinit var favorStoreList: ArrayList<StoreData>
     lateinit var favorItemList: ArrayList<ProductData>
 
-    private val binding by lazy { FragmentLikeBinding.inflate(layoutInflater) }
+    private lateinit var binding: FragmentLikeBinding
 
     private var TAG = "LF";
     private var mode = "Store"
@@ -62,7 +62,8 @@ class LikeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this cf.untitled.salend.fragment
         initFlag = true;
-        return inflater.inflate(R.layout.fragment_like, container, false)
+        binding = FragmentLikeBinding.inflate(layoutInflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -83,22 +84,18 @@ class LikeFragment : Fragment() {
         }
 
         f.favoritePageStoreButton.setOnClickListener {
-
             getRequest()
-            setMode("Store")
 
         }
 
         f.favoritePageItemButton.setOnClickListener {
-
             getRequest2()
-            setMode("Item")
+
         }
 
         storeAdapter.favorStoreList = ArrayList()
         setMode("Store")
         f.favoritePageItemRecyclerview.layoutManager = GridLayoutManager(context, 2)
-
 
         if (thread.state == Thread.State.NEW)
             thread.start()
@@ -158,6 +155,10 @@ class LikeFragment : Fragment() {
                 favorStoreList = response.body()!!.stores
                 Log.e(TAG, "onResponse: stores ${favorStoreList.size}" )
                 storeAdapter.favorStoreList = favorStoreList
+                binding.liketextlist.text = "${favorStoreList.size}개의 찜 목록"
+                binding.favoritePageStoreButton.setTextColor(Color.parseColor("#6BD089"))
+                binding.favoritePageItemButton.setTextColor(Color.parseColor("#000000"))
+
                 setMode("Store")
             }
 
@@ -188,6 +189,9 @@ class LikeFragment : Fragment() {
                 favorItemList = response.body()!!.items
                 Log.e(TAG, "onResponse: Item ${favorItemList.size}" )
                 itemAdapter.productArray = favorItemList
+                binding.liketextlist.text = "${favorItemList.size}개의 찜 목록"
+                binding.favoritePageItemButton.setTextColor(Color.parseColor("#6BD089"))
+                binding.favoritePageStoreButton.setTextColor(Color.parseColor("#000000"))
                 setMode("Item")
             }
 
@@ -202,9 +206,11 @@ class LikeFragment : Fragment() {
         this.mode = txt
         if(mode == "Store"){
             f.favoritePageItemRecyclerview.adapter = storeAdapter
+
         }
         else if(mode == "Item") {
             f.favoritePageItemRecyclerview.adapter = itemAdapter
+
         }
     }
 
