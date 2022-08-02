@@ -4,6 +4,7 @@ import android.annotation.TargetApi
 import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.Paint
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.*
@@ -40,6 +41,7 @@ class ProductActivity : AppCompatActivity() {
         binding = ActivityProductBinding.inflate(layoutInflater)
         setSupportActionBar(binding.productToolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         setContentView(binding.root)
         var client: WebViewClient = object : WebViewClient() {
@@ -163,7 +165,7 @@ class ProductActivity : AppCompatActivity() {
             }
         }
 
-        binding.payTab.setOnClickListener {
+        binding.payButton.setOnClickListener {
             binding.payWebView.loadUrl("https://api.salend.tk/pay/debug/${productId}")
             Log.d("grusie", "url ${binding.payWebView.url}")
             binding.payWebView.visibility = View.VISIBLE
@@ -181,19 +183,18 @@ class ProductActivity : AppCompatActivity() {
                     var result: ProductData? = response.body()
                     saleRate =
                         100 - ((result?.i_now_price!!.toDouble() / result?.i_price!!.toDouble()) * 100).toInt()
-                    Log.d("productInfo", "${result?.i_now_price}")
-                    Log.d("productInfo", "${result?.i_price}")
-                    Log.d("productInfo", "${saleRate}")
                     binding.apply {
                         Glide.with(this@ProductActivity)
                             .load(result?.i_image)
                             .error(R.drawable.ic_map_svgrepo_com)
                             .into(productInfoImg)
                         productInfoName.text = result?.i_name
-
-                        productInfoPrice.text =
-                            result?.i_price.toString() + " -> " + result?.i_now_price.toString() + "(" + saleRate + "%할인!)"
+                        productInfoPrice.text = result?.i_price.toString() + "￦"
+                        productInfoPrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+                        productInfoNowPrice.text = result?.i_now_price.toString() + "￦"
+                        productInfoRate.text = "${saleRate}% 할인 가격"
                         productInfoExp.text = "유통기한 : ${result?.i_exp}"
+                        productInfoExp.text = result?.i_store_name + " / 유통기한 : ${result?.i_exp}"
                     }
                 } else {
                     // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
@@ -217,11 +218,11 @@ class ProductActivity : AppCompatActivity() {
                 runOnUiThread {
                     if (flag) {
                         menu?.getItem(0)?.icon =
-                            ContextCompat.getDrawable(this, R.drawable.ic_favorite_selected)
+                            ContextCompat.getDrawable(this, R.drawable.ic_star_selected)
                         menu?.getItem(0)?.setChecked(true)
                     } else {
                         menu?.getItem(0)?.icon =
-                            ContextCompat.getDrawable(this, R.drawable.ic_favorite_svgrepo_com)
+                            ContextCompat.getDrawable(this, R.drawable.ic_star)
                         menu?.getItem(0)?.setChecked(false)
                     }
                 }
@@ -240,18 +241,22 @@ class ProductActivity : AppCompatActivity() {
                 changeFavorite(item, true)
             }
         }
+        if(item.itemId == android.R.id.home){
+            finish()
+            return true
+        }
         return super.onOptionsItemSelected(item)
     }
 
     fun changeFavorite(item: MenuItem, flag: Boolean) {
         if (flag) {
-            item.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_selected)
+            item.icon = ContextCompat.getDrawable(this, R.drawable.ic_star_selected)
             thread(start = true) {
                 MyApplication.setProductFavorite(MyApplication.current_user_email!!, productId)
             }
             item.setChecked(true)
         } else {
-            item.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_svgrepo_com)
+            item.icon = ContextCompat.getDrawable(this, R.drawable.ic_star)
             thread(start = true) {
                 MyApplication.delProductFavorite(MyApplication.current_user_email!!, productId)
             }

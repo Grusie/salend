@@ -50,9 +50,9 @@ class NearbySaleRecyclerAdapter(private var data: ArrayList<ProductData>) :
                 val product_id = data[evenPosition]._id
                 store.text = data[evenPosition].i_store_name
                 name.text = data[evenPosition].i_name
-                price.text = data[evenPosition].i_price.toString()
+                price.text = data[evenPosition].i_price.toString() + "￦"
                 price.paintFlags = price.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-                nowPrice.text = data[evenPosition].i_now_price.toString()
+                nowPrice.text = data[evenPosition].i_now_price.toString() + "￦"
                 leftHolder.setOnClickListener{
                     val intent = Intent(holder.itemView.context, ProductActivity::class.java)
                     intent.putExtra("product_id", "$product_id")
@@ -70,9 +70,9 @@ class NearbySaleRecyclerAdapter(private var data: ArrayList<ProductData>) :
                 val product_id = data[oddPosition]._id
                 store2.text = data[oddPosition].i_store_name
                 name2.text = data[oddPosition].i_name
-                price2.text = data[oddPosition].i_price.toString()
+                price2.text = data[oddPosition].i_price.toString() + "￦"
                 price2.paintFlags = price.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-                nowPrice2.text = data[oddPosition].i_now_price.toString()
+                nowPrice2.text = data[oddPosition].i_now_price.toString() + "￦"
                 rightHolder.setOnClickListener {
                     val intent = Intent(holder.itemView.context, ProductActivity::class.java)
                     intent.putExtra("product_id", "$product_id")
