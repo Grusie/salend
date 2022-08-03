@@ -230,6 +230,7 @@ class ProductActivity : AppCompatActivity() {
             menu?.getItem(0)?.setVisible(true)
         } else menu?.getItem(0)?.setVisible(false)
 
+
         return super.onCreateOptionsMenu(menu)
     }
 
