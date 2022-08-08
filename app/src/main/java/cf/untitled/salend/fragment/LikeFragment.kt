@@ -1,8 +1,11 @@
 package cf.untitled.salend.fragment
 
+import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import cf.untitled.salend.MyApplication
@@ -36,6 +39,8 @@ class LikeFragment : Fragment() {
     lateinit var favorStoreList: ArrayList<StoreData>
     lateinit var favorItemList: ArrayList<ProductData>
 
+    private lateinit var binding: FragmentLikeBinding
+
     private var TAG = "LF";
     private var mode = "Store"
 
@@ -47,7 +52,7 @@ class LikeFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-        initFlag = true;
+
     }
 
     override fun onCreateView(
@@ -56,7 +61,9 @@ class LikeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this cf.untitled.salend.fragment
-        return inflater.inflate(R.layout.fragment_like, container, false)
+        initFlag = true;
+        binding = FragmentLikeBinding.inflate(layoutInflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -77,13 +84,13 @@ class LikeFragment : Fragment() {
         }
 
         f.favoritePageStoreButton.setOnClickListener {
-            setMode("Store")
             getRequest()
+
         }
 
         f.favoritePageItemButton.setOnClickListener {
-            setMode("Item")
             getRequest2()
+
         }
 
         storeAdapter.favorStoreList = ArrayList()
@@ -95,6 +102,7 @@ class LikeFragment : Fragment() {
 
         initFlag = true
     }
+
 
     fun refreshList() {
         if (AuthApiClient.instance.hasToken()) {
@@ -137,6 +145,7 @@ class LikeFragment : Fragment() {
 
         if (str.trim() == "") {
             favorStoreList = ArrayList()
+            storeAdapter.favorStoreList =  favorStoreList
             return
         }
 
@@ -146,6 +155,10 @@ class LikeFragment : Fragment() {
                 favorStoreList = response.body()!!.stores
                 Log.e(TAG, "onResponse: stores ${favorStoreList.size}" )
                 storeAdapter.favorStoreList = favorStoreList
+                binding.liketextlist.text = "${favorStoreList.size}개의 찜 목록"
+                binding.favoritePageStoreButton.setTextColor(Color.parseColor("#6BD089"))
+                binding.favoritePageItemButton.setTextColor(Color.parseColor("#808080"))
+
                 setMode("Store")
             }
 
@@ -168,6 +181,7 @@ class LikeFragment : Fragment() {
             favItemStrArray.toString().replace("[", "").replace("]", "").replace(",", "")
         if (itemRetrofit.trim() == "") {
             favorItemList = ArrayList()
+            itemAdapter.productArray = favorItemList
             return
         }
         service.getItemFavor(itemRetrofit).enqueue(object : Callback<ProductArray2> {
@@ -175,6 +189,9 @@ class LikeFragment : Fragment() {
                 favorItemList = response.body()!!.items
                 Log.e(TAG, "onResponse: Item ${favorItemList.size}" )
                 itemAdapter.productArray = favorItemList
+                binding.liketextlist.text = "${favorItemList.size}개의 찜 목록"
+                binding.favoritePageItemButton.setTextColor(Color.parseColor("#6BD089"))
+                binding.favoritePageStoreButton.setTextColor(Color.parseColor("#808080"))
                 setMode("Item")
             }
 
@@ -189,9 +206,11 @@ class LikeFragment : Fragment() {
         this.mode = txt
         if(mode == "Store"){
             f.favoritePageItemRecyclerview.adapter = storeAdapter
+
         }
         else if(mode == "Item") {
             f.favoritePageItemRecyclerview.adapter = itemAdapter
+
         }
     }
 
