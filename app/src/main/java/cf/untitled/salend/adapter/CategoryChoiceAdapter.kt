@@ -35,12 +35,14 @@ class CategoryChoiceAdapter : RecyclerView.Adapter<CategoryChoiceAdapter.Categor
                 val storeTime = storeList?.stores?.get(adapterPosition)?.s_time ?: ""
                 val storeImage = storeList?.stores?.get(adapterPosition)?.s_image ?: ""
                 val storeId = storeList?.stores?.get(adapterPosition)?._id ?: ""
+                val storeArea = storeList?.stores?.get(adapterPosition)?.s_address ?: ""
                 val intent = Intent(parent.context, StoreChoiceActivity::class.java)
                 intent.putExtra("category", save)
                 intent.putExtra("name", storeName)
                 intent.putExtra("time",storeTime)
                 intent.putExtra("image",storeImage)
                 intent.putExtra("id",  storeId)
+                intent.putExtra("area", storeArea)
                 parent.context.startActivity(intent)
             }
         }

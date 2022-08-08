@@ -30,12 +30,11 @@ class StoreChoiceAdapter : RecyclerView.Adapter<StoreChoiceAdapterHolder>(){
         with(binding) {
             val price : Int? = itemList.items?.get(position)?.iPrice
             val nowPrice : Int? = itemList.items?.get(position)?.iNowPrice
-            val discount : Int?  = ((price!! - nowPrice!!).toDouble()/price*100).toInt()
+//            val discount : Int?  = ((price!! - nowPrice!!).toDouble()/price*100).toInt()
             itemStoreItemName.text = item?.iName
-            itemStoreItemPrice.text = item?.iPrice.toString()
+            itemStoreItemPrice.text = (item?.iPrice.toString()+"￦")
             itemStoreItemPrice.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG)
-            itemStoreItemNowPrice.text = item?.iNowPrice.toString()
-            itemStoreItemDiscount.text = "${discount}% 할인!"
+            itemStoreItemNowPrice.text = (item?.iNowPrice.toString()+"￦")
             Glide.with(binding.root)
                 .load(item?.iImage)
                 .into(binding.itemStoreItemImage)
