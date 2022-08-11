@@ -2,6 +2,7 @@ package cf.untitled.salend.auth
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Paint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -32,7 +33,11 @@ class LoginActivity : AppCompatActivity() {
         MyApplication.db = FirebaseFirestore.getInstance()
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setSupportActionBar(binding.loginToolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        binding.authBtn.paintFlags = Paint.UNDERLINE_TEXT_FLAG
         binding.authBtn.setOnClickListener {
             val intent = Intent(this, AuthActivity::class.java)
             startActivity(intent)

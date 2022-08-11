@@ -42,7 +42,6 @@
         android:layout_marginTop="30dp">
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/authBtn"
-            style="@style/auth_button_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="회원가입" />
