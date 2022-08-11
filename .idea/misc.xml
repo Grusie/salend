@@ -65,6 +65,7 @@
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/drawable/border_bottom_color.xml" value="0.137" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/drawable/border_nothing.xml" value="0.137" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/drawable/border_radius.xml" value="0.1115" />
+        <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/drawable/border_radius_solid_blakc.xml" value="0.1115" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/drawable/border_round.xml" value="0.1115" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/drawable/border_round_color.xml" value="0.1" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/drawable/border_selector.xml" value="0.137" />
@@ -81,9 +82,11 @@
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/drawable/ic_account_circle.xml" value="0.124" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/drawable/ic_android_black_24dp.xml" value="0.1115" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/drawable/ic_auto_awesome.xml" value="0.124" />
+        <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/drawable/ic_bakery_icon.xml" value="0.1115" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/drawable/ic_credit_card.xml" value="0.137" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/drawable/ic_favorite_selected.xml" value="0.1115" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/drawable/ic_favorite_svgrepo_com.xml" value="0.124" />
+        <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/drawable/ic_g_translate.xml" value="0.137" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/drawable/ic_home.xml" value="0.124" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/drawable/ic_home_selected.xml" value="0.124" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/drawable/ic_home_seleted.xml" value="0.124" />
@@ -106,6 +109,7 @@
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/drawable/ic_symbol.xml" value="0.124" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/drawable/ic_target_aim_svgrepo_com.xml" value="0.1115" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/drawable/ic_thumbnails.xml" value="0.124" />
+        <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/drawable/ic_western_food_icon.xml" value="0.1115" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/drawable/japanese_icon_resize.xml" value="0.1115" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/drawable/korean_food_resize.xml" value="0.1115" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/drawable/map_selector.xml" value="0.1115" />
@@ -119,7 +123,8 @@
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/drawable/western_icon_resize.xml" value="0.124" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/drawable/western_size_resize.xml" value="0.1115" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/font/custom_font_family.xml" value="0.2537037037037037" />
-        <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/layout/activity_login.xml" value="0.2" />
+        <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/layout/activity_auth.xml" value="0.13125" />
+        <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/layout/activity_main.xml" value="0.12" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/layout/activity_product.xml" value="0.264" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/layout/activity_search.xml" value="0.152" />

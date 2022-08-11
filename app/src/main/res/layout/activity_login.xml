@@ -5,16 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/login_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/loginTextView"
+        style="@style/title_text_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_margin="@dimen/base_margin"
         android:text="로그인"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/login_toolbar" />
+
+    <TextView
+        android:id="@+id/welcome_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/base_margin"
+        android:text="SALEND에 오신 것을 환영합니다!"
+        app:layout_constraintTop_toBottomOf="@+id/loginTextView" />
 
     <LinearLayout
         android:id="@+id/loginLinear"
@@ -24,31 +37,63 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginTextView">
+        app:layout_constraintTop_toBottomOf="@+id/welcome_textView">
 
-        <EditText
-            android:id="@+id/authEmail"
+        <LinearLayout
+            android:id="@+id/email_linear"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:hint="E-mail"
-            android:fontFamily="@font/custom_font"
-            android:inputType="textEmailAddress" />
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/base_margin"
+            android:background="@drawable/border_radius_solid_black"
+            android:orientation="vertical"
+            android:padding="@dimen/base_padding">
 
-        <EditText
-            android:id="@+id/authPassword"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="이메일"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/authEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/custom_font"
+                android:hint="salend@email.com"
+                android:inputType="textEmailAddress"
+                android:textSize="@dimen/base_text_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/password_linear"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:hint="Password"
-            android:fontFamily="@font/custom_font"
-            android:inputType="textPassword" />
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="@dimen/base_margin"
+            android:background="@drawable/border_radius_solid_black"
+            android:padding="@dimen/base_padding"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="비밀번호"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/authPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/custom_font"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:textSize="@dimen/base_text_size" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/btnLinear"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_below="@+id/loginLinear"
         android:layout_marginTop="30dp"
         android:orientation="vertical"
@@ -56,31 +101,68 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/login_btn"
-            style="@style/auth_button_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/middle_text_size"
+            android:background="@drawable/border_radius"
+            android:backgroundTint="@color/text_green_color"
+            android:layout_margin="@dimen/base_margin"
+            android:textColor="@color/white"
+            android:textStyle="bold"
             android:text="로그인" />
+
+        <LinearLayout
+            android:id="@+id/social_login_linear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/google_login_btn"
-            style="@style/auth_button_style.google"
-            android:paddingLeft="@dimen/base_padding"
-            android:text="구글 로그인     "
-            android:drawableLeft="@drawable/btn_google_light_normal_ldpi"
-            android:textSize="20sp"
-            android:gravity="center"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_g_translate"
+            android:layout_marginLeft="@dimen/base_margin"
+            android:layout_marginRight="@dimen/half_margin"
+            android:paddingHorizontal="@dimen/base_padding"
+            android:textAllCaps="false"
+            android:text="Google로그인"
+            android:textColor="@color/google_text_color"
+            android:textStyle="bold"
+            android:backgroundTint="@color/google_background_color"
+            android:background="@drawable/border_radius"
+            android:layout_weight="1"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/kakao_login_btn"
-            style="@style/auth_button_style.kakao"
-            android:scaleType="centerCrop"
-            android:drawableLeft="@drawable/kakaolink_btn_small"
-            android:text="카카오 로그인     "
-            android:background="@color/kakao" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/auth_btn"
-            style="@style/auth_button_style"
-            android:text="회원가입"
-            android:textSize="20sp" />
-
+            android:layout_width="match_parent"
+            android:layout_marginRight="@dimen/base_margin"
+            android:layout_marginLeft="@dimen/half_margin"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_radius"
+            android:backgroundTint="@color/kakao"
+            android:drawableLeft="@drawable/kakao_ic"
+            android:textStyle="bold"
+            android:textColor="@color/kakao_text_color"
+            android:paddingHorizontal="@dimen/base_padding"
+            android:text="카카오로 로그인"/>
+        </LinearLayout>
     </LinearLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="@dimen/base_margin"
+        android:id="@+id/auth_btn"
+        android:text="회원가입"
+        android:textSize="@dimen/large_text_size"
+        android:textColor="@color/text_green_color"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
