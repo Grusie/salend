@@ -6,53 +6,62 @@
     android:layout_height="match_parent"
     tools:context="cf.untitled.salend.fragment.LikeFragment">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/favoritePage_toolbar"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/like_tv"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#6EABDE"
-        app:layout_constraintTop_toTopOf="parent">
+        android:text="찜"
+        android:textColor="#A6A6A6"
+        android:paddingStart="10dp"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        tools:ignore="MissingConstraints" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="즐겨찾기"
-            android:textColor="@color/black"
-            android:textSize="28sp"
-            android:textStyle="bold" />
-    </androidx.appcompat.widget.Toolbar>
+    <TextView
+        android:id="@+id/liketextlist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0개의 찜 목록"
+        android:textColor="@color/black"
+        android:paddingStart="10dp"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/like_tv"
+        tools:ignore="MissingConstraints" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/favorite_page_store_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
-        android:paddingTop="11dp"
-        android:paddingBottom="11dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
         android:text="가게"
+        android:textColor="#808080"
         android:textSize="24sp"
         app:layout_constraintEnd_toStartOf="@+id/favorite_page_gline"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/favoritePage_toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/liketextlist" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/favorite_page_item_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
-        android:paddingTop="11dp"
-        android:paddingBottom="11dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
         android:text="상품"
+        android:textColor="#808080"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/favorite_page_gline"
-        app:layout_constraintTop_toBottomOf="@+id/favoritePage_toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/liketextlist" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/favorite_page_gline"
@@ -73,6 +82,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/favorite_page_store_button" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

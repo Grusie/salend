@@ -3,6 +3,7 @@ package cf.untitled.salend
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import cf.untitled.salend.adapter.StoreChoiceAdapter
@@ -32,10 +33,11 @@ class StoreChoiceActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.storeChoiceToolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        binding.categoryChoiceToolbarText.text = intent.getStringExtra("category")
         binding.activityStoreStoreName.text = intent.getStringExtra("name")
         binding.activityStoreTime.text = intent.getStringExtra("time")
+        binding.activityStoreArea.text = intent.getStringExtra("area")
 
         val storeId = intent.getStringExtra("id")
         Log.e("SCA", "onCreate: ${storeId}" )
@@ -96,6 +98,17 @@ class StoreChoiceActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
+        when (id) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 

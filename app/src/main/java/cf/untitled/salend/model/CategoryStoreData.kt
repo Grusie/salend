@@ -4,7 +4,8 @@ data class CategoryStoreData(
     val _id : String,
     val s_name : String,
     val s_time : String,
-    val s_image : String
+    val s_image : String,
+    val s_address : String
 )
 
 data class CategoryStore(

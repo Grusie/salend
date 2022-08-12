@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="#DBE1E7"
-    android:layout_marginBottom="10dp">
+    android:paddingBottom="20dp">
 
     <ImageView
         android:id="@+id/item_store_item_image"
@@ -13,6 +12,7 @@
         android:layout_height="121dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
+        android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.455"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +35,7 @@
 
     <TextView
         android:id="@+id/item_store_item_price"
-        android:layout_width="78dp"
+        android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
@@ -52,23 +52,9 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
         android:text="TextView"
-        android:textColor="@color/black"
+        android:textColor="#39D698"
         android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/item_store_item_price"
         app:layout_constraintTop_toBottomOf="@+id/item_store_item_name" />
 
-    <TextView
-        android:id="@+id/item_store_item_discount"
-        android:layout_width="94dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:gravity="center_vertical"
-        android:text="TextView"
-        android:textColor="@color/red"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/item_store_item_price" />
 </androidx.constraintlayout.widget.ConstraintLayout>
