@@ -1,36 +1,43 @@
 package cf.untitled.salend.fragment
 
 import android.Manifest
-import android.content.Context
+import android.content.ClipData
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
+import android.graphics.Bitmap
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.view.drawToBitmap
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
-import cf.untitled.salend.MainActivity
+import cf.untitled.salend.CategoryActivity
 import cf.untitled.salend.R
+import cf.untitled.salend.StoreChoiceActivity
 import cf.untitled.salend.databinding.FragmentMapBinding
+import cf.untitled.salend.databinding.ItemMapInfoBinding
 import cf.untitled.salend.model.StoreArray
 import cf.untitled.salend.model.StoreData
 import cf.untitled.salend.retrofit.RetrofitClass
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import net.daum.mf.map.api.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.text.DecimalFormat
-import kotlin.math.log
 import kotlin.properties.Delegates
 
 
@@ -53,11 +60,13 @@ class MapFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var mCalloutBalloon : View
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = FragmentMapBinding.inflate(layoutInflater)
+        mCalloutBalloon = layoutInflater.inflate(R.layout.item_map_info, null)
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
@@ -74,7 +83,7 @@ class MapFragment : Fragment() {
         val mapViewContainer = binding.mapView as ViewGroup
         mapViewContainer.addView(mapView)
         setCurrentLocationTrackingMode(true)
-        mapView.setCalloutBalloonAdapter(CustomBalloonAdapter(layoutInflater))
+        mapView.setCalloutBalloonAdapter(CustomBalloonAdapter(layoutInflater, mCalloutBalloon))
 
         RetrofitClass.service.getNearbyStorePage().enqueue(object :
             Callback<StoreArray> {
@@ -146,11 +155,9 @@ class MapFragment : Fragment() {
         if (tracking) {
             mapView.currentLocationTrackingMode =
                 MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading
-            binding.targetBtn.setColorFilter(Color.parseColor("#0000FF"))
         } else {
             mapView.currentLocationTrackingMode =
                 MapView.CurrentLocationTrackingMode.TrackingModeOff
-            binding.targetBtn.setColorFilter(Color.parseColor("#FF000000"))
         }
     }
 
@@ -158,8 +165,41 @@ class MapFragment : Fragment() {
         val marker = MapPOIItem()
         marker.apply {
             for (i in 0 until nearbyStoreList.size){
-                if(nearbyStoreList[i]._id == id)
-                    itemName = nearbyStoreList[i].s_name
+                if(nearbyStoreList[i]._id == id) {
+                    nearbyStoreList[i].apply {
+                        itemName = s_name
+                        //userObject = listOf(_id, s_name, s_time, s_image, s_address)
+
+                        Glide.with(this@MapFragment)
+                            .asBitmap().load(s_image)
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .skipMemoryCache(true)
+                            .listener(object : RequestListener<Bitmap?> {
+                                override fun onLoadFailed(
+                                    e: GlideException?,
+                                    model: Any?,
+                                    target: Target<Bitmap?>?,
+                                    isFirstResource: Boolean
+                                ): Boolean {
+                                    return false
+                                }
+
+                                override fun onResourceReady(
+                                    resource: Bitmap?,
+                                    model: Any?,
+                                    target: Target<Bitmap?>?,
+                                    dataSource: DataSource?,
+                                    isFirstResource: Boolean
+                                ): Boolean {
+                                    if (resource != null) {
+                                        customImageBitmap = resource
+                                    }
+                                    return false
+                                }
+                            }
+                            ).submit()
+                    }
+                }
             }
             mapPoint = MapPoint.mapPointWithGeoCoord(latitude, longitude)   // 좌표
             markerType = MapPOIItem.MarkerType.BluePin
@@ -167,23 +207,23 @@ class MapFragment : Fragment() {
         }
         mapView.addPOIItem(marker)
     }
-    class CustomBalloonAdapter(inflater: LayoutInflater): CalloutBalloonAdapter {
-        val mCalloutBalloon: View = inflater.inflate(R.layout.item_map_info, null)
-        val name: TextView = mCalloutBalloon.findViewById(R.id.map_store_name)
-        val time: TextView = mCalloutBalloon.findViewById(R.id.map_store_time)
-        //val img: TextView = mCalloutBalloon.findViewById(R.id.map_store_image)
+
+    class CustomBalloonAdapter(inflater: LayoutInflater, mCalloutBalloon: View): CalloutBalloonAdapter {
+        private val mCalloutBalloon2 = mCalloutBalloon
+        val name: TextView = mCalloutBalloon2.findViewById(R.id.map_store_name)
+        private val img: ImageView = mCalloutBalloon2.findViewById(R.id.map_store_image)
 
         override fun getCalloutBalloon(poiItem: MapPOIItem?): View {
             // 마커 클릭 시 나오는 말풍선
             name.text = poiItem?.itemName
-            time.text = "정보"
-            return mCalloutBalloon
-        }
+            if (poiItem?.customImageBitmap != null) {
+                img.setImageBitmap(poiItem?.customImageBitmap)
+            }
 
+            return mCalloutBalloon2
+        }
         override fun getPressedCalloutBalloon(poiItem: MapPOIItem?): View {
-            // 말풍선 클릭 시
-            time.text = "정보"
-            return mCalloutBalloon
+            return mCalloutBalloon2
         }
     }
     companion object {
