@@ -46,11 +46,11 @@
 
                 <ImageButton
                     android:id="@+id/location_target_btn"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:background="#00ff0000"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/target_location_icon"
+                    android:src="@drawable/ic_my_location"
                     app:layout_constraintBottom_toBottomOf="@id/location_info"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/location_info" />
