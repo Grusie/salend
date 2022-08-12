@@ -6,6 +6,7 @@ import android.graphics.Paint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.widget.Toast
 import cf.untitled.salend.MyApplication
 import cf.untitled.salend.R
@@ -114,6 +115,14 @@ class LoginActivity : AppCompatActivity() {
             .build()
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == android.R.id.home){
+            finish()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun firebaseSignIn() {
