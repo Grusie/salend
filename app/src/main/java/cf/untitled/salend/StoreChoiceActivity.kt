@@ -18,6 +18,8 @@ import com.google.firebase.ktx.Firebase
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.http.Url
+import java.net.URLEncoder
 import kotlin.concurrent.thread
 
 class StoreChoiceActivity : AppCompatActivity() {
