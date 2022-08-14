@@ -93,10 +93,10 @@
                     <ImageView
                         android:id="@+id/activity_store_image"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="200dp"
                         android:layout_weight="1"
                         android:background="@color/white"
-                        android:scaleType="fitCenter"
+                        android:scaleType="fitXY"
                         app:srcCompat="@drawable/shopping_selector" />
                 </androidx.cardview.widget.CardView>
 
