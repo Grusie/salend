@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -96,6 +97,8 @@ class LikeFragment : Fragment() {
         storeAdapter.favorStoreList = ArrayList()
         setMode("Store")
         f.favoritePageItemRecyclerview.layoutManager = GridLayoutManager(context, 2)
+
+
 
         if (thread.state == Thread.State.NEW)
             thread.start()
