@@ -33,7 +33,6 @@ class FavoriteStoreAdapter : RecyclerView.Adapter<FavoriteStoreAdapter.FavoriteS
                 val intent = Intent(parent.context, StoreChoiceActivity::class.java)
                 intent.apply {
                     putExtra("id", store._id)
-                    putExtra("image", store.s_image)
                 }
                 ContextCompat.startActivity(parent.context, intent, null)
             }

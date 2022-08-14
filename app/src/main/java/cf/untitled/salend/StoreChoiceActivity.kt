@@ -44,11 +44,6 @@ class StoreChoiceActivity : AppCompatActivity() {
         Log.e("SCA", "onCreate: ${storeId}" )
 
 
-        Glide.with(this)
-            .load(intent.getStringExtra("image"))
-            .error("https://media.vlpt.us/images/sasy0113/post/f7085683-1a62-4ce7-9f7f-e8fd2f3ec825/Android%20Kotlin.jpg")
-            .into(binding.activityStoreImage)   // 에러시 error 이미지
-
         RetrofitClass.service.getStores().enqueue(object : Callback<CategoryStore> {
             override fun onResponse(call: Call<CategoryStore>, response: Response<CategoryStore>) {
                 for(i in 0..(response.body()?.stores?.size ?: 0)) {
@@ -57,6 +52,10 @@ class StoreChoiceActivity : AppCompatActivity() {
                             response.body()?.stores?.get((i))?.s_name ?: "noName"
                         binding.activityStoreTime.text = response.body()?.stores?.get(i)?.s_time ?: "noTime"
                         binding.activityStoreArea.text = response.body()?.stores?.get(i)?.s_address ?: "noAddress"
+                        Glide.with(baseContext)
+                            .load(response.body()?.stores?.get(i)?.s_image)
+                            .error("https://media.vlpt.us/images/sasy0113/post/f7085683-1a62-4ce7-9f7f-e8fd2f3ec825/Android%20Kotlin.jpg")
+                            .into(binding.activityStoreImage)
                         break
                     }
                 }
