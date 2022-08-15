@@ -1,7 +1,9 @@
 package cf.untitled.salend.fragment
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.ClipData
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -16,6 +18,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.drawToBitmap
 import androidx.fragment.app.Fragment
 import cf.untitled.salend.CategoryActivity
@@ -61,9 +64,10 @@ class MapFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var mCalloutBalloon : View
-
+    private lateinit var listener : MarkerEventListener
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
+    @SuppressLint("UseRequireInsteadOfGet")
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = FragmentMapBinding.inflate(layoutInflater)
         mCalloutBalloon = layoutInflater.inflate(R.layout.item_map_info, null)
@@ -72,6 +76,7 @@ class MapFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+        listener = this.context?.let { MarkerEventListener(it) }!!
     }
 
     override fun onCreateView(
@@ -84,6 +89,7 @@ class MapFragment : Fragment() {
         mapViewContainer.addView(mapView)
         setCurrentLocationTrackingMode(true)
         mapView.setCalloutBalloonAdapter(CustomBalloonAdapter(layoutInflater, mCalloutBalloon))
+        mapView.setPOIItemEventListener(listener)
 
         RetrofitClass.service.getNearbyStorePage().enqueue(object :
             Callback<StoreArray> {
@@ -168,7 +174,7 @@ class MapFragment : Fragment() {
                 if(nearbyStoreList[i]._id == id) {
                     nearbyStoreList[i].apply {
                         itemName = s_name
-                        //userObject = listOf(_id, s_name, s_time, s_image, s_address)
+                        userObject = _id
 
                         Glide.with(this@MapFragment)
                             .asBitmap().load(s_image)
@@ -245,4 +251,29 @@ class MapFragment : Fragment() {
                 }
             }
     }
+}
+
+class MarkerEventListener(val context: Context) : MapView.POIItemEventListener {
+    override fun onPOIItemSelected(p0: MapView?, p1: MapPOIItem?) {
+        return
+    }
+
+    override fun onCalloutBalloonOfPOIItemTouched(p0: MapView?, p1: MapPOIItem?) {
+        return
+    }
+
+    override fun onCalloutBalloonOfPOIItemTouched(
+        p0: MapView?,
+        p1: MapPOIItem?,
+        p2: MapPOIItem.CalloutBalloonButtonType?
+    ) {
+        var intent = Intent(context, StoreChoiceActivity::class.java)
+        intent.putExtra("id", p1?.userObject.toString())
+        ContextCompat.startActivity(context, intent, null)
+    }
+
+    override fun onDraggablePOIItemMoved(p0: MapView?, p1: MapPOIItem?, p2: MapPoint?) {
+        TODO("Not yet implemented")
+    }
+
 }
