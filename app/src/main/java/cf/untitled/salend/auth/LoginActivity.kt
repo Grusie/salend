@@ -2,9 +2,11 @@ package cf.untitled.salend.auth
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Paint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.widget.Toast
 import cf.untitled.salend.MyApplication
 import cf.untitled.salend.R
@@ -32,7 +34,11 @@ class LoginActivity : AppCompatActivity() {
         MyApplication.db = FirebaseFirestore.getInstance()
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setSupportActionBar(binding.loginToolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        binding.authBtn.paintFlags = Paint.UNDERLINE_TEXT_FLAG
         binding.authBtn.setOnClickListener {
             val intent = Intent(this, AuthActivity::class.java)
             startActivity(intent)
@@ -109,6 +115,14 @@ class LoginActivity : AppCompatActivity() {
             .build()
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == android.R.id.home){
+            finish()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun firebaseSignIn() {

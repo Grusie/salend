@@ -21,4 +21,7 @@
     <color name="text_gray_color">#3D000000</color>
     <color name="text_green_color">#4AC49F</color>
     <color name="text_background_red_color">#FF7C32</color>
+    <color name="kakao_text_color">#664C4C</color>
+    <color name="google_text_color">#646464</color>
+    <color name="google_background_color">#F2F2F2</color>
 </resources>
