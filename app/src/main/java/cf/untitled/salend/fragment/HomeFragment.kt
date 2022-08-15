@@ -9,16 +9,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import cf.untitled.salend.*
 import cf.untitled.salend.adapter.NearbySaleRecyclerAdapter
-import cf.untitled.salend.customView.RectButton
 import cf.untitled.salend.databinding.FragmentHomeBinding
 import cf.untitled.salend.model.ProductArray
 import cf.untitled.salend.model.ProductData
-import cf.untitled.salend.model.StoreArray
 import cf.untitled.salend.retrofit.RetrofitClass
 import retrofit2.Call
 import retrofit2.Callback
@@ -54,7 +54,17 @@ class HomeFragment : Fragment() {
         MyApplication.edit = MyApplication.sharedPref.edit()        //Location을 저장할 SharedPreference 선언
 
         binding = FragmentHomeBinding.inflate(layoutInflater)
-        val btnList: Array<RectButton> = arrayOf(        //카테고리 버튼 배열
+        val textViewList: Array<TextView> = arrayOf(        //카테고리 버튼 배열
+            binding.categoryText1,
+            binding.categoryText2,
+            binding.categoryText3,
+            binding.categoryText4,
+            binding.categoryText5,
+            binding.categoryText6,
+            binding.categoryText7,
+            binding.categoryText8
+        )
+        val btnList: Array<CardView> = arrayOf(        //카테고리 버튼 배열
             binding.categoryBtn0,
             binding.categoryBtn1,
             binding.categoryBtn2,
@@ -67,7 +77,7 @@ class HomeFragment : Fragment() {
         val stringArray = resources.getStringArray(R.array.category)
 
         for(i in stringArray.indices) {
-            btnList[i].text = stringArray[i]
+            textViewList[i].text = stringArray[i]
         }
 
         binding.locationInfo.text = MyApplication.sharedPref.getString("location","지역")
@@ -92,7 +102,7 @@ class HomeFragment : Fragment() {
         for(i: Int in btnList.indices){
             btnList[i].setOnClickListener {
                 val intent01 = Intent(this.context, CategoryActivity::class.java)
-                intent01.putExtra("storeName", btnList[i].text.toString())
+                intent01.putExtra("storeName", textViewList[i].text.toString())
                 startActivity(intent01)
             }
         }

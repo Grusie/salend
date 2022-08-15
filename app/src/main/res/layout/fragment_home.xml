@@ -46,11 +46,11 @@
 
                 <ImageButton
                     android:id="@+id/location_target_btn"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:background="#00ff0000"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/target_location_icon"
+                    android:src="@drawable/ic_my_location"
                     app:layout_constraintBottom_toBottomOf="@id/location_info"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/location_info" />
@@ -95,34 +95,98 @@
                 android:orientation="horizontal"
                 android:weightSum="4">
 
-                <cf.untitled.salend.customView.RectButton
+                <cf.untitled.salend.customView.CustomCardView
                     android:id="@+id/category_btn_0"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:drawableTop="@drawable/korean_food_resize"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:clickable="true">
 
-                <cf.untitled.salend.customView.RectButton
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:src="@drawable/korean_food_icon"
+                        android:padding="@dimen/half_padding"></ImageView>
+
+                    <TextView
+                        android:id="@+id/category_text_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:textAlignment="center"
+                        tools:ignore="RtlCompat"
+                        android:layout_marginTop="@dimen/half_margin"/>
+                </cf.untitled.salend.customView.CustomCardView>
+
+                <cf.untitled.salend.customView.CustomCardView
                     android:id="@+id/category_btn_1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:drawableTop="@drawable/western_icon_resize"/>
+                    android:layout_weight="1">
 
-                <cf.untitled.salend.customView.RectButton
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:src="@drawable/western_food_icon"
+                        android:padding="@dimen/half_padding"></ImageView>
+
+                    <TextView
+                        android:id="@+id/category_text_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:textAlignment="center"
+                        tools:ignore="RtlCompat"
+                        android:layout_marginTop="@dimen/half_margin"/>
+                </cf.untitled.salend.customView.CustomCardView>
+
+                <cf.untitled.salend.customView.CustomCardView
                     android:id="@+id/category_btn_2"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:drawableTop="@drawable/chinese_icon_resize"/>
+                    android:layout_weight="1">
 
-                <cf.untitled.salend.customView.RectButton
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:src="@drawable/chinese_food_icon"
+                        android:padding="@dimen/half_padding"></ImageView>
+
+                    <TextView
+                        android:id="@+id/category_text_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:textAlignment="center"
+                        tools:ignore="RtlCompat"
+                        android:layout_marginTop="@dimen/half_margin"/>
+                </cf.untitled.salend.customView.CustomCardView>
+
+                <cf.untitled.salend.customView.CustomCardView
                     android:id="@+id/category_btn_3"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:drawableTop="@drawable/japanese_icon_resize"
-                    />
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:src="@drawable/japanese_food_icon"
+                        android:padding="@dimen/half_padding"></ImageView>
+
+                    <TextView
+                        android:id="@+id/category_text_4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:textAlignment="center"
+                        tools:ignore="RtlCompat"
+                        android:layout_marginTop="@dimen/half_margin"/>
+                </cf.untitled.salend.customView.CustomCardView>
             </LinearLayout>
 
             <LinearLayout
@@ -132,41 +196,106 @@
                 android:orientation="horizontal"
                 android:weightSum="4">
 
-                <cf.untitled.salend.customView.RectButton
+                <cf.untitled.salend.customView.CustomCardView
                     android:id="@+id/category_btn_4"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:drawableTop="@drawable/snack_icon_resize"/>
+                    android:layout_weight="1">
 
-                <cf.untitled.salend.customView.RectButton
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:src="@drawable/snack_food_icon"
+                        android:padding="@dimen/half_padding"></ImageView>
+
+                    <TextView
+                        android:id="@+id/category_text_5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:textAlignment="center"
+                        tools:ignore="RtlCompat"
+                        android:layout_marginTop="@dimen/half_margin"/>
+                </cf.untitled.salend.customView.CustomCardView>
+
+                <cf.untitled.salend.customView.CustomCardView
                     android:id="@+id/category_btn_5"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:drawableTop="@drawable/convenience_icon_resize" />
+                    android:layout_weight="1">
 
-                <cf.untitled.salend.customView.RectButton
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:src="@drawable/convenience_store_icon"
+                        android:padding="@dimen/half_padding"></ImageView>
+
+                    <TextView
+                        android:id="@+id/category_text_6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:textAlignment="center"
+                        android:layout_marginTop="@dimen/half_margin"
+                        tools:ignore="RtlCompat" />
+                </cf.untitled.salend.customView.CustomCardView>
+
+                <cf.untitled.salend.customView.CustomCardView
                     android:id="@+id/category_btn_6"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:drawableTop="@drawable/cafe_icon_resize"/>
+                    android:layout_weight="1">
 
-                <cf.untitled.salend.customView.RectButton
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:src="@drawable/cafe_icon"
+                        android:padding="@dimen/half_padding"></ImageView>
+
+                    <TextView
+                        android:id="@+id/category_text_7"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:textAlignment="center"
+                        tools:ignore="RtlCompat"
+                        android:layout_marginTop="@dimen/half_margin"/>
+                </cf.untitled.salend.customView.CustomCardView>
+
+                <cf.untitled.salend.customView.CustomCardView
                     android:id="@+id/category_btn_7"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:drawableTop="@drawable/bakery_icon_resize"/>
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:src="@drawable/bakery_icon"
+                        android:padding="@dimen/half_padding"></ImageView>
+
+                    <TextView
+                        android:id="@+id/category_text_8"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:textAlignment="center"
+                        tools:ignore="RtlCompat" />
+                </cf.untitled.salend.customView.CustomCardView>
             </LinearLayout>
         </LinearLayout>
 
         <View
+            android:id="@+id/end_category_line"
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="@color/light_gray"
-            app:layout_constraintTop_toTopOf="@id/nearby_sale_tab"
+            app:layout_constraintTop_toBottomOf="@id/category_linear"
+            app:layout_constraintBottom_toTopOf="@id/nearby_sale_tab"
             />
 
 
@@ -176,7 +305,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/category_linear">
+            app:layout_constraintTop_toBottomOf="@+id/category_linear"
+            app:layout_constraintBottom_toTopOf="@+id/endTime_sale_tab">
 
             <TextView
                 style="@style/middle_title_text_style"
@@ -204,7 +334,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/nearby_sale_tab">
+            app:layout_constraintTop_toBottomOf="@+id/nearby_sale_tab"
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <TextView
                 style="@style/middle_title_text_style"
@@ -216,7 +347,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/deadline_sale_recyclerview"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false" />
 
             <LinearLayout
