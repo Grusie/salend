@@ -8,6 +8,7 @@ import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import cf.untitled.salend.adapter.StoreChoiceAdapter
 import cf.untitled.salend.databinding.ActivityStoreChoiceBinding
+import cf.untitled.salend.model.CategoryStore
 import cf.untitled.salend.model.StoreItemData
 import cf.untitled.salend.retrofit.RetrofitClass
 import com.bumptech.glide.Glide
@@ -17,6 +18,8 @@ import com.google.firebase.ktx.Firebase
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.http.Url
+import java.net.URLEncoder
 import kotlin.concurrent.thread
 
 class StoreChoiceActivity : AppCompatActivity() {
@@ -35,20 +38,39 @@ class StoreChoiceActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        binding.activityStoreStoreName.text = intent.getStringExtra("name")
-        binding.activityStoreTime.text = intent.getStringExtra("time")
-        binding.activityStoreArea.text = intent.getStringExtra("area")
+
 
         val storeId = intent.getStringExtra("id")
         Log.e("SCA", "onCreate: ${storeId}" )
 
-        Glide.with(this)
-            .load(intent.getStringExtra("image"))
-            .error("https://media.vlpt.us/images/sasy0113/post/f7085683-1a62-4ce7-9f7f-e8fd2f3ec825/Android%20Kotlin.jpg")
-            .into(binding.activityStoreImage)   // 에러시 error 이미지
+
+        RetrofitClass.service.getStores().enqueue(object : Callback<CategoryStore> {
+            override fun onResponse(call: Call<CategoryStore>, response: Response<CategoryStore>) {
+                for(i in 0..(response.body()?.stores?.size ?: 0)) {
+                    if(storeId == response.body()?.stores?.get(i)?._id) {
+                        binding.activityStoreStoreName.text =
+                            response.body()?.stores?.get((i))?.s_name ?: "noName"
+                        binding.activityStoreTime.text = response.body()?.stores?.get(i)?.s_time ?: "noTime"
+                        binding.activityStoreArea.text = response.body()?.stores?.get(i)?.s_address ?: "noAddress"
+                        Glide.with(baseContext)
+                            .load(response.body()?.stores?.get(i)?.s_image)
+                            .error("https://media.vlpt.us/images/sasy0113/post/f7085683-1a62-4ce7-9f7f-e8fd2f3ec825/Android%20Kotlin.jpg")
+                            .into(binding.activityStoreImage)
+                        break
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<CategoryStore>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
 
         RetrofitClass.service.getStoreItem(storeId!!).enqueue(object : Callback<StoreItemData> {
             override fun onResponse(call: Call<StoreItemData>, response: Response<StoreItemData>) {
+
                 val customAdapter = StoreChoiceAdapter()
                 binding.activityStoreRecyclerview.adapter = customAdapter
                 customAdapter.itemList = response.body()!!
