@@ -33,6 +33,11 @@ class SearchActivity : AppCompatActivity() {
         binding = ActivitySearchBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        var categoryName = intent.getStringExtra("categoryName")?.toInt()
+        Log.d("categoryTest", "$categoryName")
+        if (categoryName != null) {
+            initAllProducts(categoryName)
+        }
 
         setSupportActionBar(binding.searchToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -46,6 +51,9 @@ class SearchActivity : AppCompatActivity() {
                 binding.productTabBtn.isSelected = true
                 binding.storeTabBtn.isSelected = false
                 binding.searchSearchView.setQuery(binding.searchSearchView.query, true)
+                if (categoryName != null) {
+                    initAllProducts(categoryName)
+                }
             }
         }
         binding.storeTabBtn.setOnClickListener {
@@ -54,6 +62,11 @@ class SearchActivity : AppCompatActivity() {
                 binding.productTabBtn.isSelected = false
                 binding.storeTabBtn.isSelected = true
                 binding.searchSearchView.setQuery(binding.searchSearchView.query, true)
+                Log.d("category", "${binding.searchSearchView.query}")
+                if (binding.searchSearchView.query.isEmpty()) {
+                    if (categoryName != null)
+                        initAllStores(categoryName)
+                }
             }
         }
         binding.searchSearchView.apply{
@@ -68,6 +81,12 @@ class SearchActivity : AppCompatActivity() {
                             searchStore(query)
                         }
                         binding.categoryTextView.visibility = View.GONE
+                    }
+                    if (query == null && categoryName != null){
+                        if (flag == 0){
+                            initAllProducts(categoryName)
+                        }
+                        else initAllStores(categoryName)
                     }
                     return true
                 }
@@ -145,6 +164,75 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
+    private fun initAllProducts(categoryName : Int){
+        RetrofitClass.service.getProducts().enqueue(object: Callback<ProductArray2>{
+            override fun onResponse(
+                call: Call<ProductArray2>,
+                response: Response<ProductArray2>
+            ) {
+                var result = response.body()
+                var categoryProduct = ArrayList<ProductData>()
+                if (result != null && result.items.size != 0){
+                    for(i in result.items){
+                        if(i.i_tag == categoryName){
+                            categoryProduct.add(i)
+                        }
+                    }
+                    productResult = result.items
+                    viewVisibility(true)
+                    binding.categoryTextView.text = resources.getStringArray(R.array.category)[categoryName]
+                    binding.categoryTextView.visibility = View.VISIBLE
+                    initSearchProductRecycler(categoryProduct)
+                    Log.d("categoryTest", "category : $categoryName, product : $categoryProduct")
+                }
+                else{
+                    initSearchProductRecycler(ArrayList())
+                    viewVisibility(false)
+                    binding.searchExpText.text = "상품이 존재하지 않습니다."
+                }
+            }
+
+            override fun onFailure(call: Call<ProductArray2>, t: Throwable) {
+                Log.d("throwable", "$t")
+            }
+        })
+    }
+    fun initAllStores(categoryName: Int){
+        RetrofitClass.service.getStores().enqueue(object: Callback<StoreArray>{
+            override fun onResponse(call: Call<StoreArray>, response: Response<StoreArray>) {
+                if(response.isSuccessful){
+                    var result = response.body()
+                    var categoryStore = ArrayList<StoreData>()
+                    if (result != null && result.stores.size != 0){
+                        for (i in result.stores){
+                            if(i.s_tag?.contains(categoryName) == true)
+                                categoryStore.add(i)
+                        }
+                        storeResult = result.stores
+                        viewVisibility(true)
+                        binding.categoryTextView.text = resources.getStringArray(R.array.category)[categoryName]
+                        binding.categoryTextView.visibility = View.VISIBLE
+                    }
+                    else{
+                        initSearchStoreRecycler(ArrayList())
+                        binding.searchExpText.text = "가게가 존재하지 않습니다."
+                        viewVisibility(false)
+                    }
+                    initSearchStoreRecycler(categoryStore)
+                }
+                else {
+                    // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
+                    Log.d("retrofit", "${response.code()}")
+                    Log.d("retrofit", "onResponse 실패")
+                }
+            }
+
+            override fun onFailure(call: Call<StoreArray>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
     fun searchProduct(query : String){
         RetrofitClass.service.getProductSearchPage(query).enqueue(object:
             Callback<ProductArray2>{
@@ -155,14 +243,14 @@ class SearchActivity : AppCompatActivity() {
                 if(response.isSuccessful) {
                     var result: ProductArray2? = response.body()
                     if (result != null && result.items.size != 0) {
-                        binding.searchExpText.visibility = View.GONE
                         productResult = result.items
                         initSearchProductRecycler(productResult)
+                        viewVisibility(true)
                     } else {
                         initSearchProductRecycler(ArrayList())
                         binding.searchExpText.text = "\""+query+"\""+"(은)는 존재하지 않습니다."
-                        binding.searchExpText.visibility = View.VISIBLE
-                    }
+                        viewVisibility(false)
+                      }
                 }
                 else {
                     // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
@@ -181,12 +269,12 @@ class SearchActivity : AppCompatActivity() {
                 if(response.isSuccessful) {
                     var result: StoreArray? = response.body()
                     if (result != null && result.stores.size != 0) {
-                        binding.searchExpText.visibility = View.GONE
                         storeResult = result.stores
                         initSearchStoreRecycler(storeResult)
+                        viewVisibility(true)
                     } else {
                         binding.searchExpText.text = "\""+query+"\""+"(은)는 존재하지 않습니다."
-                        binding.searchExpText.visibility = View.VISIBLE
+                        viewVisibility(false)
                         initSearchStoreRecycler(ArrayList())
                     }
                 }
@@ -197,5 +285,14 @@ class SearchActivity : AppCompatActivity() {
             }
 
         })
+    }
+
+    fun viewVisibility(flag : Boolean){
+        if(flag) {
+            binding.searchExpText.visibility = View.GONE
+            binding.searchCategoryRecycler.visibility = View.VISIBLE
+        }else {
+            binding.searchExpText.visibility = View.VISIBLE
+        }
     }
 }

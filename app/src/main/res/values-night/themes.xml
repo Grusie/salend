@@ -31,7 +31,7 @@
     <!--middle_title-->
     <style name="middle_title_text_style">
         <item name="android:textSize">@dimen/title_text_size</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/custom_font_bold</item>
         <item name="android:textColor">@color/white</item>
     </style>
 

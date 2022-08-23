@@ -2,6 +2,7 @@ package cf.untitled.salend.adapter
 
 import android.content.Intent
 import android.graphics.Paint
+import android.text.TextUtils.substring
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import cf.untitled.salend.databinding.FragmentHomeBinding
 import cf.untitled.salend.databinding.ItemNearbySaleBinding
 import cf.untitled.salend.fragment.HomeFragment
 import cf.untitled.salend.model.ProductData
+import cf.untitled.salend.retrofit.RetrofitClass
 import com.bumptech.glide.Glide
 import java.util.*
 
@@ -39,23 +41,24 @@ class NearbySaleRecyclerAdapter(private var data: ArrayList<ProductData>) :
 
     override fun onBindViewHolder(holder: NearbySaleViewHolder, position: Int) {
         holder.apply {
+            var baseUrl = RetrofitClass.retrofit.baseUrl().toString()
             val evenPosition = position * 2
             val oddPosition = position * 2 + 1
 
             if (evenPosition <= data.size - 1) {
                 Glide.with(img.context)
-                    .load(data[evenPosition].i_image)
-                    .error(R.drawable.ic_map_svgrepo_com)
+                    .load(baseUrl + data[evenPosition].i_image) //TODO baseUrl 포함 image 처리
+                    .error(R.drawable.ic_no_image_svgrepo_com)
                     .into(img)
-                val product_id = data[evenPosition]._id
+                val productId = data[evenPosition]._id
                 store.text = data[evenPosition].i_store_name
                 name.text = data[evenPosition].i_name
                 price.text = data[evenPosition].i_price.toString() + "￦"
                 price.paintFlags = price.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                 nowPrice.text = data[evenPosition].i_now_price.toString() + "￦"
-                leftHolder.setOnClickListener{
+                leftHolder.setOnClickListener {
                     val intent = Intent(holder.itemView.context, ProductActivity::class.java)
-                    intent.putExtra("product_id", "$product_id")
+                    intent.putExtra("product_id", "$productId")
                     ContextCompat.startActivity(holder.itemView.context, intent, null)
                 }
             }
@@ -65,7 +68,8 @@ class NearbySaleRecyclerAdapter(private var data: ArrayList<ProductData>) :
 
             if (oddPosition <= data.size - 1) {
                 Glide.with(img2.context)
-                    .load(data[oddPosition].i_image).error(R.drawable.ic_map_svgrepo_com)
+                    .load(baseUrl+ data[oddPosition].i_image)       //TODO baseUrl 포함 image 처리
+                    .error(R.drawable.ic_no_image_svgrepo_com)
                     .into(img2)
                 val product_id = data[oddPosition]._id
                 store2.text = data[oddPosition].i_store_name

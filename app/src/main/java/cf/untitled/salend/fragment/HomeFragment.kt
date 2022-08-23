@@ -101,9 +101,11 @@ class HomeFragment : Fragment() {
 
         for(i: Int in btnList.indices){
             btnList[i].setOnClickListener {
-                val intent01 = Intent(this.context, CategoryActivity::class.java)
-                intent01.putExtra("storeName", textViewList[i].text.toString())
-                startActivity(intent01)
+                /*val intent01 = Intent(this.context, CategoryActivity::class.java)
+                intent01.putExtra("storeName", textViewList[i].text.toString())*/
+                val intent = Intent(this.context, SearchActivity::class.java)
+                intent.putExtra("categoryName", "$i")
+                startActivity(intent)
             }
         }
 

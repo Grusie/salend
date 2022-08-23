@@ -19,16 +19,19 @@ interface RetrofitService {
     @GET("item/{page}")
     fun getSingleProductDataPage(@Path("page") page: String): Call<ProductData>
 
-    //상품 전체
+    //주변 상품
     @GET("item/nearby/")
     fun getProductArrayPage(
         @Query("_loc") loc:String) : Call<ProductArray>
+
+    @GET("item")
+    fun getProducts() : Call<ProductArray2>
 
     @GET("store/")
     fun getNearbyStorePage() : Call<StoreArray>
 
     @GET("store")
-    fun getStores() : Call<CategoryStore>
+    fun getStores() : Call<StoreArray>
 
     @GET("item/search")
     fun getProductSearchPage(@Query("query") query:String ) : Call<ProductArray2>

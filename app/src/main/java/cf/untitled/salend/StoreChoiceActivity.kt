@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import cf.untitled.salend.adapter.StoreChoiceAdapter
 import cf.untitled.salend.databinding.ActivityStoreChoiceBinding
 import cf.untitled.salend.model.CategoryStore
+import cf.untitled.salend.model.StoreArray
 import cf.untitled.salend.model.StoreItemData
 import cf.untitled.salend.retrofit.RetrofitClass
 import com.bumptech.glide.Glide
@@ -44,8 +45,8 @@ class StoreChoiceActivity : AppCompatActivity() {
         Log.e("SCA", "onCreate: ${storeId}" )
 
 
-        RetrofitClass.service.getStores().enqueue(object : Callback<CategoryStore> {
-            override fun onResponse(call: Call<CategoryStore>, response: Response<CategoryStore>) {
+        RetrofitClass.service.getStores().enqueue(object : Callback<StoreArray> {
+            override fun onResponse(call: Call<StoreArray>, response: Response<StoreArray>) {
                 for(i in 0..(response.body()?.stores?.size ?: 0)) {
                     if(storeId == response.body()?.stores?.get(i)?._id) {
                         binding.activityStoreStoreName.text =
@@ -54,14 +55,13 @@ class StoreChoiceActivity : AppCompatActivity() {
                         binding.activityStoreArea.text = response.body()?.stores?.get(i)?.s_address ?: "noAddress"
                         Glide.with(baseContext)
                             .load(response.body()?.stores?.get(i)?.s_image)
-                            .error("https://media.vlpt.us/images/sasy0113/post/f7085683-1a62-4ce7-9f7f-e8fd2f3ec825/Android%20Kotlin.jpg")
+                            .error(R.drawable.ic_no_image_svgrepo_com)
                             .into(binding.activityStoreImage)
-                        break
                     }
                 }
             }
 
-            override fun onFailure(call: Call<CategoryStore>, t: Throwable) {
+            override fun onFailure(call: Call<StoreArray>, t: Throwable) {
                 TODO("Not yet implemented")
             }
 

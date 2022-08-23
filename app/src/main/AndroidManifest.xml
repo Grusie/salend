@@ -60,9 +60,6 @@
         <activity
             android:name=".MainActivity"
             android:exported="true" />
-        <activity
-            android:name=".CategoryActivity"
-            android:exported="false" />
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"

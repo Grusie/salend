@@ -6,9 +6,12 @@ import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import cf.untitled.salend.R
 import cf.untitled.salend.StoreChoiceActivity
 import cf.untitled.salend.databinding.ItemCategoryBinding
 import cf.untitled.salend.model.CategoryStore
+import cf.untitled.salend.model.StoreArray
+import com.bumptech.glide.Glide
 import kotlinx.coroutines.*
 import java.lang.Exception
 import java.net.URL
@@ -18,7 +21,7 @@ class CategoryChoiceAdapter : RecyclerView.Adapter<CategoryChoiceAdapter.Categor
     class CategoryChoiceAdapterHolder(binding: ItemCategoryBinding) : RecyclerView.ViewHolder(binding.root){
         val storeImg = binding.categoryStoreImage
     }
-    var storeList: CategoryStore? = null
+    var storeList: StoreArray? = null
     lateinit var save : String
     lateinit var binding: ItemCategoryBinding
 
@@ -52,7 +55,11 @@ class CategoryChoiceAdapter : RecyclerView.Adapter<CategoryChoiceAdapter.Categor
         val store = storeList?.stores?.get(position)
         if (store != null) {
             binding.categoryStoreName.text = store.s_name
-            CoroutineScope(Dispatchers.Main).launch {
+            Glide.with(holder.storeImg.context)
+                .load(store.s_image)       //TODO baseUrl 포함 image 처리
+                .error(R.drawable.ic_no_image_svgrepo_com)
+                .into(holder.storeImg)
+            /*CoroutineScope(Dispatchers.Main).launch {
                 try {
                     val url = store.s_image
                     val bitmap = withContext(Dispatchers.IO) {
@@ -63,18 +70,18 @@ class CategoryChoiceAdapter : RecyclerView.Adapter<CategoryChoiceAdapter.Categor
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
-            }
+            }*/
         }
 
     }
 
 }
-
+/*
 
 suspend fun loadImage(imageUrl: String): Bitmap {
     val url = URL(imageUrl)
     val stream = url.openStream()
     return BitmapFactory.decodeStream(stream)
-}
+}*/
 
 

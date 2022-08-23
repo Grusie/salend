@@ -186,7 +186,7 @@ class ProductActivity : AppCompatActivity() {
                     binding.apply {
                         Glide.with(this@ProductActivity)
                             .load(result?.i_image)
-                            .error(R.drawable.ic_map_svgrepo_com)
+                            .error(R.drawable.ic_no_image_svgrepo_com)
                             .into(productInfoImg)
                         productInfoName.text = result?.i_name
                         productInfoPrice.text = result?.i_price.toString() + "￦"
