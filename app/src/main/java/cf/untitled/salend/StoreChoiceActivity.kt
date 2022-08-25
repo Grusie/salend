@@ -47,16 +47,20 @@ class StoreChoiceActivity : AppCompatActivity() {
 
         RetrofitClass.service.getStores().enqueue(object : Callback<StoreArray> {
             override fun onResponse(call: Call<StoreArray>, response: Response<StoreArray>) {
-                for(i in 0..(response.body()?.stores?.size ?: 0)) {
-                    if(storeId == response.body()?.stores?.get(i)?._id) {
-                        binding.activityStoreStoreName.text =
-                            response.body()?.stores?.get((i))?.s_name ?: "noName"
-                        binding.activityStoreTime.text = response.body()?.stores?.get(i)?.s_time ?: "noTime"
-                        binding.activityStoreArea.text = response.body()?.stores?.get(i)?.s_address ?: "noAddress"
-                        Glide.with(baseContext)
-                            .load(response.body()?.stores?.get(i)?.s_image)
-                            .error(R.drawable.ic_no_image_svgrepo_com)
-                            .into(binding.activityStoreImage)
+                if (response.body()?.stores != null) {
+                    for (i in 0 until response.body()?.stores?.size!!) {
+                        if (storeId == response.body()?.stores?.get(i)?._id) {
+                            binding.activityStoreStoreName.text =
+                                response.body()?.stores?.get((i))?.s_name ?: "noName"
+                            binding.activityStoreTime.text =
+                                response.body()?.stores?.get(i)?.s_time ?: "noTime"
+                            binding.activityStoreArea.text =
+                                response.body()?.stores?.get(i)?.s_address ?: "noAddress"
+                            Glide.with(baseContext)
+                                .load(response.body()?.stores?.get(i)?.s_image)
+                                .error(R.drawable.ic_no_image_svgrepo_com)
+                                .into(binding.activityStoreImage)
+                        }
                     }
                 }
             }

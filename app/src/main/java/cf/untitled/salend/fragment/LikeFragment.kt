@@ -1,19 +1,14 @@
 package cf.untitled.salend.fragment
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import cf.untitled.salend.MyApplication
-import cf.untitled.salend.R
-import cf.untitled.salend.adapter.FavoriteProductAdpater
-import cf.untitled.salend.adapter.FavoriteStoreAdapter
+import cf.untitled.salend.adapter.NearbySaleRecyclerAdapter
+import cf.untitled.salend.adapter.SearchStoreAdapter
 import cf.untitled.salend.databinding.FragmentLikeBinding
 import cf.untitled.salend.model.*
 import cf.untitled.salend.retrofit.RetrofitService
@@ -33,15 +28,15 @@ class LikeFragment : Fragment() {
     private var param2: String? = null
     private lateinit var f: FragmentLikeBinding
 
-    val storeAdapter = FavoriteStoreAdapter()
-    val itemAdapter = FavoriteProductAdpater()
-
     private lateinit var favStoreStrArray: ArrayList<String?>
-    private lateinit var favItemStrArray: ArrayList<String?>
-    lateinit var favorStoreList: ArrayList<StoreData>
-    lateinit var favorItemList: ArrayList<ProductData>
 
+    private lateinit var favItemStrArray: ArrayList<String?>
+    var favorStoreList = ArrayList<StoreData>()
+    var favorItemList = ArrayList<ProductData>()
     private lateinit var binding: FragmentLikeBinding
+
+    var storeAdapter = SearchStoreAdapter(favorStoreList)
+    var itemAdapter = NearbySaleRecyclerAdapter(favorItemList)
 
     private var TAG = "LF";
     private var mode = "Store"
@@ -63,10 +58,8 @@ class LikeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this cf.untitled.salend.fragment
-        initFlag = true;
+        initFlag = true
         binding = FragmentLikeBinding.inflate(layoutInflater)
-        storeAdapter.windowSize = context?.resources?.displayMetrics?.widthPixels!!
-        itemAdapter.windowSize = context?.resources?.displayMetrics?.widthPixels!!
         return binding.root
     }
 
@@ -84,6 +77,7 @@ class LikeFragment : Fragment() {
                 favItemStrArray = ArrayList()
                 favorStoreList = ArrayList()
                 favorItemList = ArrayList()
+                
                 refreshList()
             }
         }
@@ -100,9 +94,9 @@ class LikeFragment : Fragment() {
             getRequest2()
         }
 
-        storeAdapter.favorStoreList = ArrayList()
-        setMode("Store")
-        f.favoritePageItemRecyclerview.layoutManager = GridLayoutManager(context, 2)
+        refreshItem()
+        setMode("Item")
+        f.favoritePageItemRecyclerview.layoutManager = LinearLayoutManager(this.context)
 
         if (thread.state == Thread.State.NEW)
             thread.start()
@@ -110,6 +104,12 @@ class LikeFragment : Fragment() {
         initFlag = true
     }
 
+    fun refreshStore(){
+        storeAdapter = SearchStoreAdapter(favorStoreList)
+    }
+    fun refreshItem(){
+        itemAdapter = NearbySaleRecyclerAdapter(favorItemList)
+    }
 
     fun refreshList() {
         if (AuthApiClient.instance.hasToken()) {
@@ -124,7 +124,7 @@ class LikeFragment : Fragment() {
                             Log.e(TAG, "refreshList: KakaoRefresh" )
                             favStoreStrArray = MyApplication.getStoreFavorite()
                             favItemStrArray = MyApplication.getProductFavorite()
-                            getRequest()    // 파이어베이스에서 꺼낸 값을 서버로 요청을 보냄
+                            getRequest2()    // 파이어베이스에서 꺼낸 값을 서버로 요청을 보냄
                         }
                     }.start()
                 }
@@ -152,7 +152,7 @@ class LikeFragment : Fragment() {
 
         if (str.trim() == "") {
             favorStoreList = ArrayList()
-            storeAdapter.favorStoreList =  favorStoreList
+            refreshStore()
             return
         }
 
@@ -161,7 +161,7 @@ class LikeFragment : Fragment() {
                 // 서버에 요청을 해서 성공한 경우
                 favorStoreList = response.body()!!.stores
                 Log.e(TAG, "onResponse: stores ${favorStoreList.size}" )
-                storeAdapter.favorStoreList = favorStoreList
+                refreshStore()
                 binding.favoriteTextList.text = "${favorStoreList.size}개의 찜 목록"
                 setMode("Store")
             }
@@ -184,14 +184,13 @@ class LikeFragment : Fragment() {
         val itemRetrofit =
             favItemStrArray.toString().replace("[", "").replace("]", "").replace(",", "")
         if (itemRetrofit.trim() == "") {
-            favorItemList = ArrayList()
-            itemAdapter.productArray = favorItemList
+            refreshItem()
             return
         }
         service.getItemFavor(itemRetrofit).enqueue(object : Callback<ProductArray2> {
             override fun onResponse(call: Call<ProductArray2>, response: Response<ProductArray2>) {
                 favorItemList = response.body()!!.items
-                itemAdapter.productArray = favorItemList
+                refreshItem()
                 binding.favoriteTextList.text = "${favorItemList.size}개의 찜 목록"
                 setMode("Item")
             }
@@ -207,11 +206,9 @@ class LikeFragment : Fragment() {
         this.mode = txt
         if(mode == "Store"){
             f.favoritePageItemRecyclerview.adapter = storeAdapter
-
         }
         else if(mode == "Item") {
             f.favoritePageItemRecyclerview.adapter = itemAdapter
-
         }
     }
 
@@ -221,7 +218,7 @@ class LikeFragment : Fragment() {
         if (initFlag) {
             Thread {
                 run {
-                    f.favoritePageItemButton.isSelected = false
+                    f.favoritePageItemButton.isSelected = true
                     f.favoritePageStoreButton.isSelected = false
                     refreshList()
                 }

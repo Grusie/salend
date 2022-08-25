@@ -55,10 +55,6 @@ class SearchStoreAdapter(private var data: ArrayList<StoreData>) :
                 holderLeft.setOnClickListener {
                     val intent = Intent(itemView.context, StoreChoiceActivity::class.java)
                     data[evenPosition].apply {
-                        intent.putExtra("category", "")
-                        intent.putExtra("name", s_name)
-                        intent.putExtra("time", s_time)
-                        intent.putExtra("image", s_image)
                         intent.putExtra("id", _id)
                         ContextCompat.startActivity(holder.itemView.context, intent, null)
                     }
@@ -81,10 +77,6 @@ class SearchStoreAdapter(private var data: ArrayList<StoreData>) :
                 holderRight.setOnClickListener {
                     val intent = Intent(itemView.context, StoreChoiceActivity::class.java)
                     data[oddPosition].apply {
-                        intent.putExtra("category", "")
-                        intent.putExtra("name", s_name)
-                        intent.putExtra("time", s_time)
-                        intent.putExtra("image", s_image)
                         intent.putExtra("id", _id)
                         ContextCompat.startActivity(holder.itemView.context, intent, null)
                     }
