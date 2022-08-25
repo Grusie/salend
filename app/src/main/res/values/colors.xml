@@ -24,4 +24,5 @@
     <color name="kakao_text_color">#664C4C</color>
     <color name="google_text_color">#646464</color>
     <color name="google_background_color">#F2F2F2</color>
+    <color name="base_text_color">#808080</color>
 </resources>

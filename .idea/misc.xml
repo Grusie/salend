@@ -128,23 +128,25 @@
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/layout/activity_main.xml" value="0.12" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/layout/activity_product.xml" value="0.264" />
-        <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/layout/activity_search.xml" value="0.152" />
+        <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/layout/activity_search.xml" value="0.2" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/layout/activity_splash.xml" value="0.16" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/layout/activity_store_choice.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/layout/auto_awesome.xml" value="0.176" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/layout/bottom_navigation_tab.xml" value="0.264" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/layout/category_choice.xml" value="0.1" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/layout/fragment_home.xml" value="0.2" />
-        <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/layout/fragment_like.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/layout/fragment_like.xml" value="0.2" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/layout/fragment_map.xml" value="0.16799999999999998" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/layout/fragment_my_page.xml" value="0.16799999999999998" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/layout/item_category.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/layout/item_map_info.xml" value="0.22826086956521738" />
-        <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/layout/item_nearby_sale.xml" value="0.2" />
+        <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/layout/item_nearby_sale.xml" value="0.176" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/layout/item_pay.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/layout/item_search_category.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/layout/item_search_store.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/layout/item_store.xml" value="0.2" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/layout/item_store_item.xml" value="0.11727456940222898" />
+        <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/layout/like_item_page.xml" value="0.2" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/layout/my_location.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salendFinal/app/src/main/res/menu/product_menu.xml" value="0.24114583333333334" />
         <entry key="..\:/Users/rbtjr/AndroidStudioProjects/salend_end/app/src/main/res/drawable/home_seletor.xml" value="0.137" />

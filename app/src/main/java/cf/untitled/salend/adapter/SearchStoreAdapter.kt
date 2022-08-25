@@ -1,16 +1,14 @@
 package cf.untitled.salend.adapter
 
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import cf.untitled.salend.*
-import cf.untitled.salend.databinding.ItemCategoryBinding
+import cf.untitled.salend.R
+import cf.untitled.salend.StoreChoiceActivity
 import cf.untitled.salend.databinding.ItemSearchStoreBinding
-import cf.untitled.salend.model.StoreArray
 import cf.untitled.salend.model.StoreData
 import com.bumptech.glide.Glide
 
@@ -28,11 +26,13 @@ class SearchStoreAdapter(private var data: ArrayList<StoreData>) :
         var rightStoreAddress = binding.rightItemSearchStoreAddress
 
     }
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): SearchStoreViewHolder {
-        val view = ItemSearchStoreBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val view =
+            ItemSearchStoreBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return SearchStoreViewHolder(view)
     }
 
@@ -47,12 +47,12 @@ class SearchStoreAdapter(private var data: ArrayList<StoreData>) :
                     .into(storeImg)
 
                 storeName.text = data[evenPosition].s_name
-                if(data[evenPosition].s_address!=null) {
+                if (data[evenPosition].s_address != null) {
                     val list = data[evenPosition].s_address!!.split(" ")
-                    storeAddress.text ="${list[0] + " " + list[1] + " " + list[2]}"
+                    storeAddress.text = "${list[0] + " " + list[1] + " " + list[2]}"
                 }
 
-                holderLeft.setOnClickListener{
+                holderLeft.setOnClickListener {
                     val intent = Intent(itemView.context, StoreChoiceActivity::class.java)
                     data[evenPosition].apply {
                         intent.putExtra("category", "")
@@ -74,11 +74,11 @@ class SearchStoreAdapter(private var data: ArrayList<StoreData>) :
                     .into(rightStoreImg)
 
                 rightStoreName.text = data[oddPosition].s_name
-                if(data[oddPosition].s_address!=null) {
+                if (data[oddPosition].s_address != null) {
                     val list = data[oddPosition].s_address!!.split(" ")
-                    rightStoreAddress.text ="${list[0] + " " + list[1] + " " + list[2]}"
+                    rightStoreAddress.text = "${list[0] + " " + list[1] + " " + list[2]}"
                 }
-                holderRight.setOnClickListener{
+                holderRight.setOnClickListener {
                     val intent = Intent(itemView.context, StoreChoiceActivity::class.java)
                     data[oddPosition].apply {
                         intent.putExtra("category", "")

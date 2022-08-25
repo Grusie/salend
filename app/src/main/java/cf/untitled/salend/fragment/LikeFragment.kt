@@ -1,5 +1,6 @@
 package cf.untitled.salend.fragment
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
@@ -64,9 +65,12 @@ class LikeFragment : Fragment() {
         // Inflate the layout for this cf.untitled.salend.fragment
         initFlag = true;
         binding = FragmentLikeBinding.inflate(layoutInflater)
+        storeAdapter.windowSize = context?.resources?.displayMetrics?.widthPixels!!
+        itemAdapter.windowSize = context?.resources?.displayMetrics?.widthPixels!!
         return binding.root
     }
 
+    @SuppressLint("ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -85,20 +89,20 @@ class LikeFragment : Fragment() {
         }
 
         f.favoritePageStoreButton.setOnClickListener {
+            f.favoritePageItemButton.isSelected = false
+            f.favoritePageStoreButton.isSelected = true
             getRequest()
-
         }
 
         f.favoritePageItemButton.setOnClickListener {
+            f.favoritePageItemButton.isSelected = true
+            f.favoritePageStoreButton.isSelected = false
             getRequest2()
-
         }
 
         storeAdapter.favorStoreList = ArrayList()
         setMode("Store")
         f.favoritePageItemRecyclerview.layoutManager = GridLayoutManager(context, 2)
-
-
 
         if (thread.state == Thread.State.NEW)
             thread.start()
@@ -158,10 +162,7 @@ class LikeFragment : Fragment() {
                 favorStoreList = response.body()!!.stores
                 Log.e(TAG, "onResponse: stores ${favorStoreList.size}" )
                 storeAdapter.favorStoreList = favorStoreList
-                binding.liketextlist.text = "${favorStoreList.size}개의 찜 목록"
-                binding.favoritePageStoreButton.setTextColor(Color.parseColor("#6BD089"))
-                binding.favoritePageItemButton.setTextColor(Color.parseColor("#808080"))
-
+                binding.favoriteTextList.text = "${favorStoreList.size}개의 찜 목록"
                 setMode("Store")
             }
 
@@ -190,11 +191,8 @@ class LikeFragment : Fragment() {
         service.getItemFavor(itemRetrofit).enqueue(object : Callback<ProductArray2> {
             override fun onResponse(call: Call<ProductArray2>, response: Response<ProductArray2>) {
                 favorItemList = response.body()!!.items
-                Log.e(TAG, "onResponse: Item ${favorItemList.size}" )
                 itemAdapter.productArray = favorItemList
-                binding.liketextlist.text = "${favorItemList.size}개의 찜 목록"
-                binding.favoritePageItemButton.setTextColor(Color.parseColor("#6BD089"))
-                binding.favoritePageStoreButton.setTextColor(Color.parseColor("#808080"))
+                binding.favoriteTextList.text = "${favorItemList.size}개의 찜 목록"
                 setMode("Item")
             }
 
@@ -223,6 +221,8 @@ class LikeFragment : Fragment() {
         if (initFlag) {
             Thread {
                 run {
+                    f.favoritePageItemButton.isSelected = false
+                    f.favoritePageStoreButton.isSelected = false
                     refreshList()
                 }
             }.start()
