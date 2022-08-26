@@ -1,23 +1,23 @@
 package cf.untitled.salend
 
-import android.annotation.TargetApi
-import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Paint
-import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.os.*
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.os.Message
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
-import android.webkit.*
+import android.webkit.JavascriptInterface
+import android.webkit.WebChromeClient
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.view.get
 import cf.untitled.salend.databinding.ActivityProductBinding
 import cf.untitled.salend.model.ProductData
 import cf.untitled.salend.retrofit.RetrofitClass
@@ -47,7 +47,6 @@ class ProductActivity : AppCompatActivity() {
         var client: WebViewClient = object : WebViewClient() {
 
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-                Log.e("grusie", "$url")
                 if (url != null && url.startsWith("intent://")) {
                     try {
                         val intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME)
@@ -96,12 +95,13 @@ class ProductActivity : AppCompatActivity() {
                 try {
                     CoroutineScope(Dispatchers.Default).launch {
                         withContext(CoroutineScope(Dispatchers.Main).coroutineContext) {
-                            if(success){
-                                Log.e("PA", "getResult: 결제 완료" )
-                                Toast.makeText(baseContext, "결제가 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                            if (success) {
+                                Log.e("PA", "getResult: 결제 완료")
+                                Toast.makeText(baseContext, "결제가 완료되었습니다.", Toast.LENGTH_SHORT)
+                                    .show()
                                 binding.payWebView.visibility = View.GONE
                                 // 여기다 구현하시면 됩니다 ^^
-                                thread(start=true) {
+                                thread(start = true) {
                                     MyApplication.setPayList(
                                         MyApplication.current_user_email!!,
                                         payId!!
@@ -110,7 +110,7 @@ class ProductActivity : AppCompatActivity() {
                                 }
                                 // finish()
                             } else {
-                                Log.e("PA", "getResult: 결제 실패" )
+                                Log.e("PA", "getResult: 결제 실패")
                                 binding.payWebView.visibility = View.GONE
                                 // finish()
                             }
@@ -219,16 +219,16 @@ class ProductActivity : AppCompatActivity() {
                     if (flag) {
                         menu?.getItem(0)?.icon =
                             ContextCompat.getDrawable(this, R.drawable.ic_star_selected)
-                        menu?.getItem(0)?.setChecked(true)
+                        menu?.getItem(0)?.isChecked = true
                     } else {
                         menu?.getItem(0)?.icon =
                             ContextCompat.getDrawable(this, R.drawable.ic_star)
-                        menu?.getItem(0)?.setChecked(false)
+                        menu?.getItem(0)?.isChecked = false
                     }
                 }
             }
-            menu?.getItem(0)?.setVisible(true)
-        } else menu?.getItem(0)?.setVisible(false)
+            menu?.getItem(0)?.isVisible = true
+        } else menu?.getItem(0)?.isVisible = false
 
 
         return super.onCreateOptionsMenu(menu)
@@ -242,26 +242,26 @@ class ProductActivity : AppCompatActivity() {
                 changeFavorite(item, true)
             }
         }
-        if(item.itemId == android.R.id.home){
+        if (item.itemId == android.R.id.home) {
             finish()
             return true
         }
         return super.onOptionsItemSelected(item)
     }
 
-    fun changeFavorite(item: MenuItem, flag: Boolean) {
+    private fun changeFavorite(item: MenuItem, flag: Boolean) {
         if (flag) {
             item.icon = ContextCompat.getDrawable(this, R.drawable.ic_star_selected)
             thread(start = true) {
                 MyApplication.setProductFavorite(MyApplication.current_user_email!!, productId)
             }
-            item.setChecked(true)
+            item.isChecked = true
         } else {
             item.icon = ContextCompat.getDrawable(this, R.drawable.ic_star)
             thread(start = true) {
                 MyApplication.delProductFavorite(MyApplication.current_user_email!!, productId)
             }
-            item.setChecked(false)
+            item.isChecked = false
         }
     }
 }

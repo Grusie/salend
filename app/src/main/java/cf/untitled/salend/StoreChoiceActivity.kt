@@ -1,16 +1,16 @@
 package cf.untitled.salend
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import androidx.recyclerview.widget.GridLayoutManager
-import cf.untitled.salend.adapter.StoreChoiceAdapter
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import cf.untitled.salend.adapter.NearbySaleRecyclerAdapter
 import cf.untitled.salend.databinding.ActivityStoreChoiceBinding
-import cf.untitled.salend.model.CategoryStore
+import cf.untitled.salend.model.ProductArray2
 import cf.untitled.salend.model.StoreArray
-import cf.untitled.salend.model.StoreItemData
 import cf.untitled.salend.retrofit.RetrofitClass
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
@@ -19,14 +19,12 @@ import com.google.firebase.ktx.Firebase
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.http.Url
-import java.net.URLEncoder
 import kotlin.concurrent.thread
 
 class StoreChoiceActivity : AppCompatActivity() {
-    var star = false
     val binding by lazy { ActivityStoreChoiceBinding.inflate(layoutInflater) }
     private lateinit var auth: FirebaseAuth
+    lateinit var storeId: String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,11 +37,9 @@ class StoreChoiceActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-
-
-        val storeId = intent.getStringExtra("id")
-        Log.e("SCA", "onCreate: ${storeId}" )
-
+        binding.activityStoreImgCardView.layoutParams.height =
+            this.windowManager.defaultDisplay.width * 2 / 3
+        storeId = intent.getStringExtra("id").toString()
 
         RetrofitClass.service.getStores().enqueue(object : Callback<StoreArray> {
             override fun onResponse(call: Call<StoreArray>, response: Response<StoreArray>) {
@@ -72,70 +68,74 @@ class StoreChoiceActivity : AppCompatActivity() {
         })
 
 
-        RetrofitClass.service.getStoreItem(storeId!!).enqueue(object : Callback<StoreItemData> {
-            override fun onResponse(call: Call<StoreItemData>, response: Response<StoreItemData>) {
-
-                val customAdapter = StoreChoiceAdapter()
-                binding.activityStoreRecyclerview.adapter = customAdapter
-                customAdapter.itemList = response.body()!!
+        RetrofitClass.service.getStoreItem(storeId!!).enqueue(object : Callback<ProductArray2> {
+            override fun onResponse(call: Call<ProductArray2>, response: Response<ProductArray2>) {
+                if (response.body() != null) {
+                    binding.activityStoreRecyclerview.adapter =
+                        NearbySaleRecyclerAdapter(response.body()!!.items)
+                }
                 binding.activityStoreRecyclerview.layoutManager =
-                    GridLayoutManager(this@StoreChoiceActivity, 2)
+                    LinearLayoutManager(this@StoreChoiceActivity)
             }
 
-            override fun onFailure(call: Call<StoreItemData>, t: Throwable) {
+            override fun onFailure(call: Call<ProductArray2>, t: Throwable) {
                 Log.i("StoreChoiceActivity:서버통신", t.localizedMessage)
             }
         })
+    }
 
-        if (MyApplication.current_user_email == null) {
-            binding.favoriteImageBtn.visibility = View.INVISIBLE
-        } else {
-            binding.favoriteImageBtn.visibility = View.VISIBLE
-        }
-
-        Thread() {
-            run {
-                var check = false
-                if(MyApplication.current_user_email != null) {
-                    check = MyApplication.checkStoreFavorite(storeId!!)
-                }
-
-                if (check) {
-                    runOnUiThread {
-                        binding.favoriteImageBtn.setImageResource(R.drawable.ic_favorite_selected)
-                        star = true
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.product_menu, menu)
+        if (MyApplication.current_user_email != null && MyApplication.current_user_email != "") {
+            thread(start = true) {
+                val flag = MyApplication.checkStoreFavorite(storeId)
+                runOnUiThread {
+                    if (flag) {
+                        menu?.getItem(0)?.icon =
+                            ContextCompat.getDrawable(this, R.drawable.ic_star_selected)
+                        menu?.getItem(0)?.isChecked = true
+                    } else {
+                        menu?.getItem(0)?.icon =
+                            ContextCompat.getDrawable(this, R.drawable.ic_star)
+                        menu?.getItem(0)?.isChecked = false
                     }
                 }
             }
-        }.start()
+            menu?.getItem(0)?.isVisible = true
+        } else menu?.getItem(0)?.isVisible = false
 
-        binding.favoriteImageBtn.setOnClickListener {
-            if (star) {  //눌러져있으면
-                binding.favoriteImageBtn.setImageResource(R.drawable.ic_favorite_svgrepo_com)
-                thread(start = true) {
-                    MyApplication.delStoreFavorite(MyApplication.current_user_email!!, storeId!!)
-                }
-                star = false
-            } else {   //안눌러져있을때
-                binding.favoriteImageBtn.setImageResource(R.drawable.ic_favorite_selected)
-                star = true
-                thread(start = true) {
-                    MyApplication.setStoreFavorite(MyApplication.current_user_email!!, storeId!!)
-                }
-            }
-        }
+
+        return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-        when (id) {
-            android.R.id.home -> {
-                finish()
-                return true
+        if (item.itemId == R.id.favorite_menu) {
+            if (item.isChecked) {
+                changeFavorite(item, false)
+            } else {
+                changeFavorite(item, true)
             }
+        }
+        if (item.itemId == android.R.id.home) {
+            finish()
+            return true
         }
         return super.onOptionsItemSelected(item)
     }
 
-
+    private fun changeFavorite(item: MenuItem, flag: Boolean) {
+        if (flag) {
+            item.icon = ContextCompat.getDrawable(this, R.drawable.ic_star_selected)
+            thread(start = true) {
+                MyApplication.setStoreFavorite(MyApplication.current_user_email!!, storeId)
+            }
+            item.isChecked = true
+        } else {
+            item.icon = ContextCompat.getDrawable(this, R.drawable.ic_star)
+            thread(start = true) {
+                MyApplication.delProductFavorite(MyApplication.current_user_email!!, storeId)
+            }
+            item.isChecked = false
+        }
+    }
 }

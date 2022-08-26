@@ -1,6 +1,9 @@
 package cf.untitled.salend.retrofit
 
-import cf.untitled.salend.model.*
+import cf.untitled.salend.model.ProductArray
+import cf.untitled.salend.model.ProductArray2
+import cf.untitled.salend.model.ProductData
+import cf.untitled.salend.model.StoreArray
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -13,7 +16,7 @@ interface RetrofitService {
     fun getProductArrayPage(@Path("page") page: String): Call<ProductArray>*/
 
     @GET("store/{id}")
-    fun getStoreItem(@Path("id") id: String) : Call<StoreItemData>
+    fun getStoreItem(@Path("id") id: String): Call<ProductArray2>
 
     //단일 상품
     @GET("item/{page}")
@@ -22,32 +25,33 @@ interface RetrofitService {
     //주변 상품
     @GET("item/nearby/")
     fun getProductArrayPage(
-        @Query("_loc") loc:String) : Call<ProductArray>
+        @Query("_loc") loc: String
+    ): Call<ProductArray>
 
     @GET("item")
-    fun getProducts() : Call<ProductArray2>
+    fun getProducts(): Call<ProductArray2>
 
     @GET("store/")
-    fun getNearbyStorePage() : Call<StoreArray>
+    fun getNearbyStorePage(): Call<StoreArray>
 
     @GET("store")
-    fun getStores() : Call<StoreArray>
+    fun getStores(): Call<StoreArray>
 
     @GET("item/search")
-    fun getProductSearchPage(@Query("query") query:String ) : Call<ProductArray2>
+    fun getProductSearchPage(@Query("query") query: String): Call<ProductArray2>
 
     @GET("store/search")
-    fun getStoreSearchPage(@Query("query") query:String ) : Call<StoreArray>
+    fun getStoreSearchPage(@Query("query") query: String): Call<StoreArray>
 
     @GET("store/favorite/")
     fun getStoreFavor(
         @Query("fav") fav: String
-    ) : Call<StoreArray>
+    ): Call<StoreArray>
 
     @GET("item/favorite")
     fun getItemFavor(
-        @Query("fav") fav : String
-    ) : Call<ProductArray2>
+        @Query("fav") fav: String
+    ): Call<ProductArray2>
 
 //    @GET("posts/1")
 //    fun getStudent(@Query("school_id") schoolId: Int,
