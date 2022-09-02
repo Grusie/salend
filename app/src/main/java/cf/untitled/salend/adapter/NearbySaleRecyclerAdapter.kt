@@ -41,13 +41,13 @@ class NearbySaleRecyclerAdapter(private var data: ArrayList<ProductData>) :
 
     override fun onBindViewHolder(holder: NearbySaleViewHolder, position: Int) {
         holder.apply {
-            var baseUrl = RetrofitClass.retrofit.baseUrl().toString()
+            //var baseUrl = RetrofitClass.retrofit.baseUrl().toString()
             val evenPosition = position * 2
             val oddPosition = position * 2 + 1
 
             if (evenPosition <= data.size - 1) {
                 Glide.with(img.context)
-                    .load(baseUrl + data[evenPosition].i_image) //TODO baseUrl 포함 image 처리
+                    .load(data[evenPosition].i_image) //TODO baseUrl 포함 image 처리
                     .error(R.drawable.ic_no_image_svgrepo_com)
                     .into(img)
                 val productId = data[evenPosition]._id
@@ -68,7 +68,7 @@ class NearbySaleRecyclerAdapter(private var data: ArrayList<ProductData>) :
 
             if (oddPosition <= data.size - 1) {
                 Glide.with(img2.context)
-                    .load(baseUrl+ data[oddPosition].i_image)       //TODO baseUrl 포함 image 처리
+                    .load(data[oddPosition].i_image)       //TODO baseUrl 포함 image 처리
                     .error(R.drawable.ic_no_image_svgrepo_com)
                     .into(img2)
                 val product_id = data[oddPosition]._id
