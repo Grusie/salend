@@ -41,7 +41,7 @@ class NearbySaleRecyclerAdapter(private var data: ArrayList<ProductData>) :
 
     override fun onBindViewHolder(holder: NearbySaleViewHolder, position: Int) {
         holder.apply {
-            var baseUrl = RetrofitClass.retrofit.baseUrl().toString()
+            //var baseUrl = RetrofitClass.retrofit.baseUrl().toString()
             val evenPosition = position * 2
             val oddPosition = position * 2 + 1
 

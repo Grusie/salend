@@ -144,7 +144,7 @@ class HomeFragment : Fragment() {
                     // 정상적으로 통신이 성공된 경우
                     var result: ProductArray? = response.body()
                     result?.near_by?.let { nearbyProductList.addAll(it) }
-                    result?.end_time?.let { endTimeProductList.addAll(it) }
+                    result?.end_time?.let { endTimeProductList.addAll(it.reversed()) }
                     Log.d("product","$nearbyProductList")
                     Log.d("product","$endTimeProductList")
                     recyclerSetData(nearbyProductList, endTimeProductList)
