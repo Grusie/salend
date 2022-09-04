@@ -5,12 +5,13 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import cf.untitled.salend.fragment.*
 
-
-class MainFragmentStatePagerAdapter(fm : FragmentManager, val fragmentCount : Int) : FragmentPagerAdapter(fm) {
-    override fun getCount(): Int  = fragmentCount
+//ViewPager를 활용한 navigation bottom view 구현
+class MainFragmentStatePagerAdapter(fm: FragmentManager, val fragmentCount: Int) :
+    FragmentPagerAdapter(fm) {
+    override fun getCount(): Int = fragmentCount
 
     override fun getItem(position: Int): Fragment {
-        when(position){
+        when (position) {
             0 -> return HomeFragment()
             1 -> return LikeFragment()
             2 -> return MapFragment()
@@ -19,5 +20,5 @@ class MainFragmentStatePagerAdapter(fm : FragmentManager, val fragmentCount : In
             else -> return HomeFragment()
         }
     }
-    
+
 }

@@ -20,12 +20,8 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-class LikeFragment : Fragment() {
-    private var param1: String? = null
-    private var param2: String? = null
+class LikeFragment : Fragment() {       //찜 페이지 프래그먼트
     private lateinit var f: FragmentLikeBinding
 
     private lateinit var favStoreStrArray: ArrayList<String?>
@@ -38,26 +34,16 @@ class LikeFragment : Fragment() {
     var storeAdapter = SearchStoreAdapter(favorStoreList)
     var itemAdapter = NearbySaleRecyclerAdapter(favorItemList)
 
-    private var TAG = "LF";
+    private var TAG = "LF"
     private var mode = "Store"
 
     private var initFlag = false
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this cf.untitled.salend.fragment
+    ): View {
         initFlag = true
         binding = FragmentLikeBinding.inflate(layoutInflater)
         return binding.root
@@ -68,11 +54,9 @@ class LikeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         f = FragmentLikeBinding.bind(view)
-        val TAG = "LF";
 
         val thread = Thread {
             run {
-                Log.e(TAG, "onViewCreated: RUN?" )
                 favStoreStrArray = ArrayList()
                 favItemStrArray = ArrayList()
                 favorStoreList = ArrayList()
@@ -119,9 +103,8 @@ class LikeFragment : Fragment() {
                 } else if (user != null) {
                     MyApplication.current_user_email = user.id.toString()
 
-                    Thread() {
+                    Thread {
                         run {
-                            Log.e(TAG, "refreshList: KakaoRefresh" )
                             favStoreStrArray = MyApplication.getStoreFavorite()
                             favItemStrArray = MyApplication.getProductFavorite()
                             getRequest2()    // 파이어베이스에서 꺼낸 값을 서버로 요청을 보냄
@@ -132,7 +115,6 @@ class LikeFragment : Fragment() {
             return
         }
         if (MyApplication.setStatus()) {
-            Log.e(TAG, "refreshList: GRefresh" )
             favStoreStrArray = MyApplication.getStoreFavorite()
             favItemStrArray = MyApplication.getProductFavorite()
             getRequest()   // 파이어베이스에서 꺼낸 값을 서버로 요청을 보냄
@@ -157,10 +139,10 @@ class LikeFragment : Fragment() {
         }
 
         service.getStoreFavor(str).enqueue(object : Callback<StoreArray> {
+            @SuppressLint("SetTextI18n")
             override fun onResponse(call: Call<StoreArray>, response: Response<StoreArray>) {
                 // 서버에 요청을 해서 성공한 경우
                 favorStoreList = response.body()!!.stores
-                Log.e(TAG, "onResponse: stores ${favorStoreList.size}" )
                 refreshStore()
                 binding.favoriteTextList.text = "${favorStoreList.size}개의 찜 목록"
                 setMode("Store")
@@ -188,6 +170,7 @@ class LikeFragment : Fragment() {
             return
         }
         service.getItemFavor(itemRetrofit).enqueue(object : Callback<ProductArray2> {
+            @SuppressLint("SetTextI18n")
             override fun onResponse(call: Call<ProductArray2>, response: Response<ProductArray2>) {
                 favorItemList = response.body()!!.items
                 refreshItem()
@@ -212,9 +195,9 @@ class LikeFragment : Fragment() {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
-        Log.e(TAG, "setUserVisibleHint: initFlag ${initFlag}" )
         if (initFlag) {
             Thread {
                 run {

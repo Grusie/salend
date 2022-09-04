@@ -8,6 +8,7 @@ import cf.untitled.salend.databinding.ItemPayBinding
 import cf.untitled.salend.model.BuyData
 import com.bumptech.glide.Glide
 
+//결제 리스트를 띄우기 위한 리사이클러뷰 구조 구현
 class PayAdapter(private var data: ArrayList<BuyData>) :
     RecyclerView.Adapter<PayAdapter.PayViewHolder>() {
     class PayViewHolder(binding: ItemPayBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -36,7 +37,7 @@ class PayAdapter(private var data: ArrayList<BuyData>) :
     }
 
     override fun onBindViewHolder(holder: PayViewHolder, position: Int) {
-        var buyInfo = data[position]
+        val buyInfo = data[position]
         holder.apply {
             productName.text = buyInfo.b_item?.i_name
             storeName.text = buyInfo.b_item?.i_store_name

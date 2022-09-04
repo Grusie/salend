@@ -1,6 +1,6 @@
 package cf.untitled.salend.model
 
-data class StoreData(
+data class StoreData(       //가게 정보를 담은 데이터 클래스
     var _id: String,
     var s_name: String?,
     var s_address: String?,
@@ -10,4 +10,8 @@ data class StoreData(
     var s_tag: List<Int>?,
     var s_lat: Double?,
     var s_lng: Double?,
+)
+
+data class StoreArray(      //가게 정보 리스트 데이터 클래스
+    var stores: ArrayList<StoreData>
 )

@@ -21,7 +21,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import kotlin.concurrent.thread
 
-class StoreChoiceActivity : AppCompatActivity() {
+class StoreChoiceActivity : AppCompatActivity() {       //가게 선택 액티비티
     val binding by lazy { ActivityStoreChoiceBinding.inflate(layoutInflater) }
     private lateinit var auth: FirebaseAuth
     lateinit var storeId: String
@@ -62,13 +62,13 @@ class StoreChoiceActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<StoreArray>, t: Throwable) {
-                TODO("Not yet implemented")
+                Log.e("getStoresError", "$t")
             }
 
         })
 
 
-        RetrofitClass.service.getStoreItem(storeId!!).enqueue(object : Callback<ProductArray2> {
+        RetrofitClass.service.getStoreItem(storeId).enqueue(object : Callback<ProductArray2> {
             override fun onResponse(call: Call<ProductArray2>, response: Response<ProductArray2>) {
                 if (response.body() != null) {
                     binding.activityStoreRecyclerview.adapter =
@@ -79,7 +79,7 @@ class StoreChoiceActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<ProductArray2>, t: Throwable) {
-                Log.i("StoreChoiceActivity:서버통신", t.localizedMessage)
+                t.localizedMessage?.let { Log.i("StoreChoiceActivity:서버통신", it) }
             }
         })
     }

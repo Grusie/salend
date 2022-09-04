@@ -3,11 +3,11 @@ package cf.untitled.salend.auth
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Paint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import cf.untitled.salend.MyApplication
 import cf.untitled.salend.R
 import cf.untitled.salend.databinding.ActivityLoginBinding
@@ -24,10 +24,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 
+@SuppressLint("StaticFieldLeak")
 private lateinit var binding: ActivityLoginBinding
-class LoginActivity : AppCompatActivity() {
+
+class LoginActivity : AppCompatActivity() {     //로그인 액티비티 (일반, 소셜 로그인 등을 구현)
 
     lateinit var googleSignInClient: GoogleSignInClient
+
     @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,14 +62,15 @@ class LoginActivity : AppCompatActivity() {
                         .subscribe { user ->
                             val userId = user.id.toString()
                             val userName = user.kakaoAccount?.profile?.nickname
-                            MyApplication.db.collection("profile").document(userId).addSnapshotListener { snapshot, e ->
-                                if (snapshot?.exists() == false) {
-                                    val userData = UserData(
-                                        userId, userName, ArrayList(), ArrayList(), ArrayList()
-                                    )
-                                    MyApplication.saveUser(userData)
+                            MyApplication.db.collection("profile").document(userId)
+                                .addSnapshotListener { snapshot, e ->
+                                    if (snapshot?.exists() == false) {
+                                        val userData = UserData(
+                                            userId, userName, ArrayList(), ArrayList(), ArrayList()
+                                        )
+                                        MyApplication.saveUser(userData)
+                                    }
                                 }
-                            }
                         }
 
                     finish()
@@ -77,9 +81,9 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.loginBtn.setOnClickListener {
-            val email:String = binding.authEmail.text.toString()
+            val email: String = binding.authEmail.text.toString()
             val password: String = binding.authPassword.text.toString()
-            if(email!="") {
+            if (email != "") {
                 MyApplication.auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
                         binding.authEmail.text.clear()
@@ -102,9 +106,8 @@ class LoginActivity : AppCompatActivity() {
                                 .show()
                         }
                     }
-            }
-            else {
-                Toast.makeText(baseContext,"아이디를 입력해 주세요",Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(baseContext, "아이디를 입력해 주세요", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -118,7 +121,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == android.R.id.home){
+        if (item.itemId == android.R.id.home) {
             finish()
             return true
         }
@@ -127,9 +130,10 @@ class LoginActivity : AppCompatActivity() {
 
     private fun firebaseSignIn() {
         val signInIntent = googleSignInClient.signInIntent
-        startActivityForResult(signInIntent,9001)
+        startActivityForResult(signInIntent, 9001)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -142,14 +146,15 @@ class LoginActivity : AppCompatActivity() {
                 val googleSign = GoogleSignIn.getLastSignedInAccount(this)
 
                 val userId = googleSign?.email
-                MyApplication.db.collection("profile").document(userId!!).addSnapshotListener { snapshot, e ->
-                    if (snapshot?.exists() == false) {
-                        val userData = UserData(
-                            userId, userId, ArrayList(),ArrayList(), ArrayList()
-                        )
-                        MyApplication.saveUser(userData)
+                MyApplication.db.collection("profile").document(userId!!)
+                    .addSnapshotListener { snapshot, e ->
+                        if (snapshot?.exists() == false) {
+                            val userData = UserData(
+                                userId, userId, ArrayList(), ArrayList(), ArrayList()
+                            )
+                            MyApplication.saveUser(userData)
+                        }
                     }
-                }
                 Log.d("grusie", "firebaseAuthWithGoogle:" + account.id)
                 firebaseAuthWithGoogle(account.idToken!!)
             } catch (e: ApiException) {
@@ -158,6 +163,7 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
+
     private fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         MyApplication.auth.signInWithCredential(credential)

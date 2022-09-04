@@ -4,27 +4,17 @@ import android.Manifest
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Rect
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
-import androidx.core.app.ActivityCompat
-import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import cf.untitled.salend.adapter.MainFragmentStatePagerAdapter
 import cf.untitled.salend.databinding.ActivityMainBinding
 import cf.untitled.salend.databinding.BottomNavigationTabBinding
-import cf.untitled.salend.databinding.FragmentHomeBinding
-import com.kakao.sdk.common.util.Utility
-import com.kakao.sdk.user.UserApiClient
-import com.kakao.sdk.user.rx
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import java.security.MessageDigest
-import java.util.*
 
 
+//메인 액티비티, 뷰페이저 및 퍼미션 체크 등을 구현
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     val PERMISSION_REQUEST_CODE = 2
@@ -32,12 +22,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val keyHash = Utility.getKeyHash(this)
-        Log.d("Hash", keyHash)
 
         if (ActivityCompat.checkSelfPermission(
                 this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION
+                Manifest.permission.ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         )
             configureBottomNavigation()
@@ -89,7 +77,7 @@ class MainActivity : AppCompatActivity() {
                                 startActivity(intent)
                             } catch (e: Exception) {
                                 e.printStackTrace()
-                                val intent = Intent(Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS);
+                                val intent = Intent(Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS)
                                 startActivity(intent)
                             }
                         }.setNegativeButton("취소") { _, _ ->

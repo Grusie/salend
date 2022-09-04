@@ -27,27 +27,10 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-// TODO: Rename parameter arguments, choose names that match
-// the cf.untitled.salend.fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 lateinit var activityResultLauncher: ActivityResultLauncher<Intent>     //location result값을 받아오기 위해 사용하는 Intent
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment() {       //메인 Fragment 앱 처음 실행 시 띄워지는 Fragment
     lateinit var binding: FragmentHomeBinding
-
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -106,8 +89,6 @@ class HomeFragment : Fragment() {
 
         for (i: Int in btnList.indices) {
             btnList[i].setOnClickListener {
-                /*val intent01 = Intent(this.context, CategoryActivity::class.java)
-                intent01.putExtra("storeName", textViewList[i].text.toString())*/
                 val intent = Intent(this.context, SearchActivity::class.java)
                 intent.putExtra("categoryName", "$i")
                 startActivity(intent)
@@ -117,31 +98,11 @@ class HomeFragment : Fragment() {
         return initRecyclerView()
     }
 
-    companion object {
-        /**`
-         * Use this factory method to create a new instance of
-         * this cf.untitled.salend.fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of cf.untitled.salend.fragment MainFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
-
-    private fun initRecyclerView(): View? {     //retrofit통신으로, ProductArray형태를 받아 옴
-        var nearbyProductList = ArrayList<ProductData>()
-        var endTimeProductList = ArrayList<ProductData>()
-        var latitude = MyApplication.sharedPref.getString("latitude", "0")
-        var longitude = MyApplication.sharedPref.getString("longitude", "0")
+    private fun initRecyclerView(): View {     //retrofit통신으로, ProductArray형태를 받아 옴
+        val nearbyProductList = ArrayList<ProductData>()
+        val endTimeProductList = ArrayList<ProductData>()
+        val latitude = MyApplication.sharedPref.getString("latitude", "0")
+        val longitude = MyApplication.sharedPref.getString("longitude", "0")
         RetrofitClass.service.getProductArrayPage("${latitude},${longitude}")
             .enqueue(object : Callback<ProductArray> {
                 override fun onResponse(
@@ -151,11 +112,9 @@ class HomeFragment : Fragment() {
                     if (response.isSuccessful) {
 
                         // 정상적으로 통신이 성공된 경우
-                        var result: ProductArray? = response.body()
+                        val result: ProductArray? = response.body()
                         result?.near_by?.let { nearbyProductList.addAll(it) }
                         result?.end_time?.let { endTimeProductList.addAll(it.reversed()) }
-                        Log.d("product", "$nearbyProductList")
-                        Log.d("product", "$endTimeProductList")
                         setRecyclerData(nearbyProductList, endTimeProductList)
 
                     } else {

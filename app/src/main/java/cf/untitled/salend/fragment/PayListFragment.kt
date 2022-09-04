@@ -18,29 +18,29 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class PayListFragment : Fragment() {
+class PayListFragment : Fragment() {        //파이어베이스에서 결제한 상품의 id 값을 받아와 정보를 띄워주는 결제 내역 프래그먼트
 
     lateinit var binding: FragmentPayListBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentPayListBinding.inflate(inflater)
-        var buyList = ArrayList<BuyData>()
+        val buyList = ArrayList<BuyData>()
         fun setRecyclerData(buyList: ArrayList<BuyData>) {
             binding.payListRv.adapter = PayAdapter(buyList)
             binding.payListRv.layoutManager = LinearLayoutManager(context)
         }
 
         if (MyApplication.checkLogIn()) {
-            MyApplication.getPayList(MyApplication.current_user_email!!)
+
+            Thread {
+                run {
+                    MyApplication.getPayList(MyApplication.current_user_email!!)
+                }
+            }.start()
 
             RetrofitClass.service.getBuyList("").enqueue(object :
                 Callback<BuyList> {
@@ -50,7 +50,7 @@ class PayListFragment : Fragment() {
                 ) {
                     if (response.isSuccessful) {
                         // 정상적으로 통신이 성공된 경우
-                        var result: BuyList? = response.body()
+                        val result: BuyList? = response.body()
                         result?.let { buyList.addAll(it.buyLists) }
 
                     } else {

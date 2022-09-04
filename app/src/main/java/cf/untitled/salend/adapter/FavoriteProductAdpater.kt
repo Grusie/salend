@@ -1,8 +1,7 @@
 package cf.untitled.salend.adapter
-
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Paint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -14,6 +13,7 @@ import cf.untitled.salend.model.ProductData
 import com.bumptech.glide.Glide
 import kotlin.properties.Delegates
 
+//삭제 예정
 class FavoriteProductAdpater : RecyclerView.Adapter<FavoriteProductAdpater.Holder>() {
 
     var productArray: ArrayList<ProductData> = ArrayList()
@@ -50,6 +50,7 @@ class FavoriteProductAdpater : RecyclerView.Adapter<FavoriteProductAdpater.Holde
     }
 
     inner class Holder(val binding: LikeItemPageBinding) : RecyclerView.ViewHolder(binding.root) {
+        @SuppressLint("SetTextI18n")
         fun setData(data: ProductData) {
             Glide.with(binding.root)
                 .load(data.i_image)
@@ -57,7 +58,7 @@ class FavoriteProductAdpater : RecyclerView.Adapter<FavoriteProductAdpater.Holde
                 .into(binding.likeItemPageImg)
             binding.likeItemPageStoreName.text = data.i_store_name
             binding.likeItemPageProductName.text = data.i_name
-            binding.likeItemPageProductPrice.text = "${data.i_price.toString()}￦"
+            "${data.i_price.toString()}￦".also { binding.likeItemPageProductPrice.text = it }
             binding.likeItemPageProductPrice.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG)
             binding.likeItemPageProductNowPrice.text = "${data.i_now_price.toString()}￦"
         }

@@ -10,7 +10,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import io.reactivex.disposables.CompositeDisposable
 
-class MyApplication : MultiDexApplication() {
+class MyApplication : MultiDexApplication() {       //파이어베이스 관련을 처리하는 클래스
     companion object {
 
         private var status: Boolean = false
@@ -32,7 +32,7 @@ class MyApplication : MultiDexApplication() {
             return status
         }
 
-        fun setStatus(): Boolean {
+        fun setStatus(): Boolean {      //로그인 상태 저장
             this.status = checkAuth()
             if (this.status)
                 this.current_user_email = auth.currentUser?.email
@@ -49,13 +49,13 @@ class MyApplication : MultiDexApplication() {
             }
         }
 
-        fun checkLogIn(): Boolean {
+        fun checkLogIn(): Boolean {     //로그인 체크 용
             return (current_user_email != null && current_user_email != "")
         }
 
 
         @JvmName("getStoreFavorite1")
-        fun getStoreFavorite(): ArrayList<String?> {
+        fun getStoreFavorite(): ArrayList<String?> {        //가게 찜 리스트 가져옴
             db = FirebaseFirestore.getInstance()
             val docRef = db.collection("profile")
 
@@ -68,7 +68,7 @@ class MyApplication : MultiDexApplication() {
         }
 
         @JvmName("getProductFavorite1")
-        fun getProductFavorite(): ArrayList<String?> {
+        fun getProductFavorite(): ArrayList<String?> {      //상품 찜 리스트 가져옴
             db = FirebaseFirestore.getInstance()
             val docRef = db.collection("profile")
             val task = docRef.whereEqualTo("u_id", current_user_email!!).get()
@@ -80,21 +80,21 @@ class MyApplication : MultiDexApplication() {
             return productFavorite
         }
 
-        fun setStoreFavorite(userId: String, storeId: String) {
+        fun setStoreFavorite(userId: String, storeId: String) {     //가게 찜 추가
             db = FirebaseFirestore.getInstance()
             var lastStoreFavorite = getStoreFavorite()
             lastStoreFavorite.add(storeId)
             updateStoreFavorite(userId, lastStoreFavorite)
         }
 
-        fun setProductFavorite(userId: String, productId: String) {
+        fun setProductFavorite(userId: String, productId: String) {     //상품 찜 추가
             db = FirebaseFirestore.getInstance()
             var lastProductFavorite = getProductFavorite()
             lastProductFavorite.add(productId)
             updateProductFavorite(userId, lastProductFavorite)
         }
 
-        fun getPayList(userId: String): ArrayList<String?> {
+        fun getPayList(userId: String): ArrayList<String?> {    //결제 리스트 받아옴
             db = FirebaseFirestore.getInstance()
             val docRef = db.collection("profile")
 
@@ -106,49 +106,49 @@ class MyApplication : MultiDexApplication() {
             return payList
         }
 
-        fun setPayList(userId: String, payId: String) {
+        fun setPayList(userId: String, payId: String) {     //결제 리스트 추가
             db = FirebaseFirestore.getInstance()
             var lastPayList = getPayList(userId)
             lastPayList.add(payId)
             updatePayList(userId, lastPayList)
         }
 
-        private fun updatePayList(userId: String, payList: ArrayList<String?>) {
+        private fun updatePayList(userId: String, payList: ArrayList<String?>) {        //결제 상태 수정
             db = FirebaseFirestore.getInstance()
             db.collection("profile").document(userId).update("u_pay_list", payList)
         }
 
-        private fun updateStoreFavorite(userId: String, storeFavorite: ArrayList<String?>) {
+        private fun updateStoreFavorite(userId: String, storeFavorite: ArrayList<String?>) {        //가게 찜 상태 수정
             db = FirebaseFirestore.getInstance()
             db.collection("profile").document(userId).update("u_store_favorite", storeFavorite)
         }
 
-        private fun updateProductFavorite(userId: String, productFavorite: ArrayList<String?>) {
+        private fun updateProductFavorite(userId: String, productFavorite: ArrayList<String?>) {        //상품 찜 상태 수정
             db = FirebaseFirestore.getInstance()
             db.collection("profile").document(userId).update("u_item_favorite", productFavorite)
         }
 
-        fun delStoreFavorite(userId: String, storeId: String) {
+        fun delStoreFavorite(userId: String, storeId: String) {     //가게 찜 제거
             val lastStoreFavorite = this.getStoreFavorite()
             lastStoreFavorite.removeAll(listOf(storeId).toSet())
             updateStoreFavorite(userId, lastStoreFavorite)
         }
 
-        fun delProductFavorite(userId: String, productId: String) {
+        fun delProductFavorite(userId: String, productId: String) {     //상품 찜 제거
             val lastProductFavorite = this.getProductFavorite()
             lastProductFavorite.removeAll(listOf(productId).toSet())
             updateProductFavorite(userId, lastProductFavorite)
         }
 
-        fun checkStoreFavorite(storeId: String): Boolean {
+        fun checkStoreFavorite(storeId: String): Boolean {      //유저의 가게 찜 상태 체크
             return this.getStoreFavorite().contains(storeId)
         }
 
-        fun checkProductFavorite(productId: String): Boolean {
+        fun checkProductFavorite(productId: String): Boolean {      //유저의 상품 찜 상태 체크
             return this.getProductFavorite().contains(productId)
         }
 
-        fun saveUser(userData: UserData) {
+        fun saveUser(userData: UserData) {      //firebase firestore에 유저정보 저장
             db = FirebaseFirestore.getInstance()
             db.collection("profile").document(userData.u_id!!).set(userData)
         }

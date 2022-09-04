@@ -31,58 +31,41 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import net.daum.mf.map.api.*
+import net.daum.mf.map.api.CalloutBalloonAdapter
+import net.daum.mf.map.api.MapPOIItem
+import net.daum.mf.map.api.MapPoint
+import net.daum.mf.map.api.MapView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import kotlin.properties.Delegates
 
-
-// TODO: Rename parameter arguments, choose names that match
-// the cf.untitled.salend.fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [mapFragment.newInstance] factory method to
- * create an instance of this cf.untitled.salend.fragment.
- */
-class MapFragment : Fragment() {
+class MapFragment : Fragment() {        //카카오맵 api를 활용한 map 프래그먼트
     private lateinit var mapView: MapView
     private lateinit var binding: FragmentMapBinding
-    private var latitude by Delegates.notNull<Double>()
-    private var longitude by Delegates.notNull<Double>()
     var nearbyStoreList = ArrayList<StoreData>()
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-    private lateinit var mCalloutBalloon : View
-    private lateinit var listener : MarkerEventListener
+
+    private lateinit var mCalloutBalloon: View
+    private lateinit var listener: MarkerEventListener
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     @SuppressLint("UseRequireInsteadOfGet")
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = FragmentMapBinding.inflate(layoutInflater)
-        mCalloutBalloon = layoutInflater.inflate(R.layout.item_map_info, null)
+        layoutInflater.inflate(R.layout.item_map_info, null).also { mCalloutBalloon = it }
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
         listener = this.context?.let { MarkerEventListener(it) }!!
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this cf.untitled.salend.fragment
         mapView = MapView(this.context)
         val mapViewContainer = binding.mapView as ViewGroup
         mapViewContainer.addView(mapView)
         setCurrentLocationTrackingMode(true)
-        mapView.setCalloutBalloonAdapter(CustomBalloonAdapter(layoutInflater, mCalloutBalloon))
+        mapView.setCalloutBalloonAdapter(CustomBalloonAdapter(mCalloutBalloon))
         mapView.setPOIItemEventListener(listener)
 
         RetrofitClass.service.getNearbyStorePage().enqueue(object :
@@ -90,12 +73,12 @@ class MapFragment : Fragment() {
             override fun onResponse(call: Call<StoreArray>, response: Response<StoreArray>) {
                 if (response.isSuccessful) {
                     // 정상적으로 통신이 성공된 경우
-                    var result: StoreArray? = response.body()
+                    val result: StoreArray? = response.body()
                     result?.stores?.let { nearbyStoreList.addAll(it) }
 
                     for (i in 0 until nearbyStoreList.size) {
-                        nearbyStoreList[i]._id?.let {
-                            nearbyStoreList[i].s_lat?.let {it1 ->
+                        nearbyStoreList[i]._id.let {
+                            nearbyStoreList[i].s_lat?.let { it1 ->
                                 nearbyStoreList[i].s_lng?.let { it2 ->
                                     createMapMarker(
                                         it,
@@ -161,11 +144,11 @@ class MapFragment : Fragment() {
         }
     }
 
-    private fun createMapMarker(id:String, latitude:Double, longitude:Double) {
+    private fun createMapMarker(id: String, latitude: Double, longitude: Double) {
         val marker = MapPOIItem()
         marker.apply {
-            for (i in 0 until nearbyStoreList.size){
-                if(nearbyStoreList[i]._id == id) {
+            for (i in 0 until nearbyStoreList.size) {
+                if (nearbyStoreList[i]._id == id) {
                     nearbyStoreList[i].apply {
                         itemName = s_name
                         userObject = _id
@@ -208,7 +191,8 @@ class MapFragment : Fragment() {
         mapView.addPOIItem(marker)
     }
 
-    class CustomBalloonAdapter(inflater: LayoutInflater, mCalloutBalloon: View): CalloutBalloonAdapter {
+    class CustomBalloonAdapter(mCalloutBalloon: View) :
+        CalloutBalloonAdapter {
         private val mCalloutBalloon2 = mCalloutBalloon
         val name: TextView = mCalloutBalloon2.findViewById(R.id.map_store_name)
         private val img: ImageView = mCalloutBalloon2.findViewById(R.id.map_store_image)
@@ -217,33 +201,15 @@ class MapFragment : Fragment() {
             // 마커 클릭 시 나오는 말풍선
             name.text = poiItem?.itemName
             if (poiItem?.customImageBitmap != null) {
-                img.setImageBitmap(poiItem?.customImageBitmap)
+                img.setImageBitmap(poiItem.customImageBitmap)
             }
 
             return mCalloutBalloon2
         }
+
         override fun getPressedCalloutBalloon(poiItem: MapPOIItem?): View {
             return mCalloutBalloon2
         }
-    }
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this cf.untitled.salend.fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of cf.untitled.salend.fragment mapFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MapFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }
 
@@ -252,6 +218,7 @@ class MarkerEventListener(val context: Context) : MapView.POIItemEventListener {
         return
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onCalloutBalloonOfPOIItemTouched(p0: MapView?, p1: MapPOIItem?) {
         return
     }
@@ -261,7 +228,7 @@ class MarkerEventListener(val context: Context) : MapView.POIItemEventListener {
         p1: MapPOIItem?,
         p2: MapPOIItem.CalloutBalloonButtonType?
     ) {
-        var intent = Intent(context, StoreChoiceActivity::class.java)
+        val intent = Intent(context, StoreChoiceActivity::class.java)
         intent.putExtra("id", p1?.userObject.toString())
         ContextCompat.startActivity(context, intent, null)
     }

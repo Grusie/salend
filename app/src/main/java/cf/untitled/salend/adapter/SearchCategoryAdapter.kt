@@ -1,6 +1,5 @@
 package cf.untitled.salend.adapter
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import cf.untitled.salend.databinding.ItemSearchCategoryBinding
 import cf.untitled.salend.model.CategoryData
 
+//검색페이지에서 카테고리 리사이클러뷰 구조 구현
 class SearchCategoryAdapter(private var data: ArrayList<CategoryData>) :
     RecyclerView.Adapter<SearchCategoryAdapter.SearchCategoryViewHolder>() {
     interface ItemClick {
@@ -21,23 +21,22 @@ class SearchCategoryAdapter(private var data: ArrayList<CategoryData>) :
         var category = binding.searchCategory
     }
 
-    @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: SearchCategoryViewHolder, position: Int) {
         holder.category.text = data[position].category
         if (itemClick != null) {
-            holder.category.setOnClickListener(View.OnClickListener {
+            holder.category.setOnClickListener {
                 itemClick?.onClick(it, position, holder.category.text as String)
-            })
+            }
         }
     }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): SearchCategoryAdapter.SearchCategoryViewHolder {
+    ): SearchCategoryViewHolder {
         val view =
             ItemSearchCategoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return SearchCategoryAdapter.SearchCategoryViewHolder(view)
+        return SearchCategoryViewHolder(view)
     }
 
     override fun getItemCount(): Int {

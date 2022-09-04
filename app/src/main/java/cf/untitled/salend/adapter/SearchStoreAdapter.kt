@@ -1,5 +1,6 @@
 package cf.untitled.salend.adapter
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import cf.untitled.salend.databinding.ItemSearchStoreBinding
 import cf.untitled.salend.model.StoreData
 import com.bumptech.glide.Glide
 
+//(검색페이지) -> 전체 페이지에서 가게 리사이클러뷰 구조 구현
 class SearchStoreAdapter(private var data: ArrayList<StoreData>) :
     RecyclerView.Adapter<SearchStoreAdapter.SearchStoreViewHolder>() {
     class SearchStoreViewHolder(binding: ItemSearchStoreBinding) :
@@ -36,6 +38,7 @@ class SearchStoreAdapter(private var data: ArrayList<StoreData>) :
         return SearchStoreViewHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: SearchStoreViewHolder, position: Int) {
         val evenPosition = position * 2
         val oddPosition = position * 2 + 1
@@ -49,7 +52,7 @@ class SearchStoreAdapter(private var data: ArrayList<StoreData>) :
                 storeName.text = data[evenPosition].s_name
                 if (data[evenPosition].s_address != null) {
                     val list = data[evenPosition].s_address!!.split(" ")
-                    storeAddress.text = "${list[0] + " " + list[1] + " " + list[2]}"
+                    storeAddress.text = list[0] + " " + list[1] + " " + list[2]
                 }
 
                 holderLeft.setOnClickListener {
@@ -72,7 +75,7 @@ class SearchStoreAdapter(private var data: ArrayList<StoreData>) :
                 rightStoreName.text = data[oddPosition].s_name
                 if (data[oddPosition].s_address != null) {
                     val list = data[oddPosition].s_address!!.split(" ")
-                    rightStoreAddress.text = "${list[0] + " " + list[1] + " " + list[2]}"
+                    rightStoreAddress.text = list[0] + " " + list[1] + " " + list[2]
                 }
                 holderRight.setOnClickListener {
                     val intent = Intent(itemView.context, StoreChoiceActivity::class.java)

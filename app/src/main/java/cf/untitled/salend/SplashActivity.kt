@@ -1,12 +1,12 @@
 package cf.untitled.salend
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.view.Window
+import androidx.appcompat.app.AppCompatActivity
 
-class SplashActivity : AppCompatActivity() {
+class SplashActivity : AppCompatActivity() {        //splash 이미지를 띄워주기 위한 액티비티
     override fun onCreate(savedInstanceState: Bundle?) {
         moveMain(1)
 
@@ -17,7 +17,7 @@ class SplashActivity : AppCompatActivity() {
 
     private fun moveMain(sec: Int) {
         Handler().postDelayed(Runnable {
-            run(){
+            run {
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()

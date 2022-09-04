@@ -1,15 +1,15 @@
 package cf.untitled.salend.auth
 
-import cf.untitled.salend.databinding.ActivityAuthBinding
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import cf.untitled.salend.MyApplication
+import cf.untitled.salend.databinding.ActivityAuthBinding
 import cf.untitled.salend.model.UserData
 
-class AuthActivity : AppCompatActivity() {      //회원가입 액티비티
+class AuthActivity : AppCompatActivity() {      //파이어베이스를 활용한 회원가입 액티비티
     lateinit var binding: ActivityAuthBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,13 +24,11 @@ class AuthActivity : AppCompatActivity() {      //회원가입 액티비티
             val email: String = binding.authEmail.text.toString()
             val password: String = binding.authPassword.text.toString()
             val passwordRetry: String = binding.authPasswordRetry.text.toString()
-            if (email == "" || email == null) {
+            if (email == "") {
                 Toast.makeText(this, "이메일을 입력해 주세요", Toast.LENGTH_SHORT).show()
-            }
-            else if (password != passwordRetry){
+            } else if (password != passwordRetry) {
                 Toast.makeText(this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
-            }
-            else {
+            } else {
                 MyApplication.auth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
                         binding.authEmail.text.clear()
@@ -64,14 +62,14 @@ class AuthActivity : AppCompatActivity() {      //회원가입 액티비티
                             Toast.makeText(this, "회원가입 실패", Toast.LENGTH_SHORT).show()
                         }
                     }.addOnFailureListener {
-                    Log.d("grusie", "실패")
-                }
+                        Log.d("grusie", "실패")
+                    }
             }
         }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == android.R.id.home){
+        if (item.itemId == android.R.id.home) {
             finish()
             return true
         }

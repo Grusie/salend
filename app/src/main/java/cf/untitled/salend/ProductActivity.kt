@@ -1,5 +1,6 @@
 package cf.untitled.salend
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Paint
@@ -32,9 +33,10 @@ import retrofit2.Response
 import java.net.URISyntaxException
 import kotlin.concurrent.thread
 
-class ProductActivity : AppCompatActivity() {
+class ProductActivity : AppCompatActivity() {       //상품 선택 시 띄워줄 액티비티, WebView를 활용한 카카오페이 결제 기능 구현
     lateinit var binding: ActivityProductBinding
     lateinit var productId: String
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         productId = intent.getStringExtra("product_id")!!
@@ -44,8 +46,9 @@ class ProductActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         setContentView(binding.root)
-        var client: WebViewClient = object : WebViewClient() {
+        val client: WebViewClient = object : WebViewClient() {
 
+            @Deprecated("Deprecated in Java")
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
                 if (url != null && url.startsWith("intent://")) {
                     try {
@@ -96,11 +99,9 @@ class ProductActivity : AppCompatActivity() {
                     CoroutineScope(Dispatchers.Default).launch {
                         withContext(CoroutineScope(Dispatchers.Main).coroutineContext) {
                             if (success) {
-                                Log.e("PA", "getResult: 결제 완료")
                                 Toast.makeText(baseContext, "결제가 완료되었습니다.", Toast.LENGTH_SHORT)
                                     .show()
                                 binding.payWebView.visibility = View.GONE
-                                // 여기다 구현하시면 됩니다 ^^
                                 thread(start = true) {
                                     MyApplication.setPayList(
                                         MyApplication.current_user_email!!,
@@ -108,11 +109,9 @@ class ProductActivity : AppCompatActivity() {
                                     )
                                     Log.d("grusie", "결제 완료 : $payId")
                                 }
-                                // finish()
                             } else {
                                 Log.e("PA", "getResult: 결제 실패")
                                 binding.payWebView.visibility = View.GONE
-                                // finish()
                             }
 
                         }
@@ -128,7 +127,7 @@ class ProductActivity : AppCompatActivity() {
             settings.javaScriptEnabled = true
             settings.javaScriptCanOpenWindowsAutomatically = true
             addJavascriptInterface(WebViewData(), "Leaf")
-            settings.setDomStorageEnabled(true)
+            settings.domStorageEnabled = true
             settings.setSupportMultipleWindows(true)
             settings.useWideViewPort = true
             settings.loadWithOverviewMode = true
@@ -141,7 +140,7 @@ class ProductActivity : AppCompatActivity() {
                     resultMsg: Message
                 ): Boolean {
                     val newWebView = WebView(this@ProductActivity)
-                    newWebView.settings.javaScriptEnabled = true
+                    true.also { newWebView.settings.javaScriptEnabled = it }
                     val dialog = Dialog(this@ProductActivity).apply {
                         setContentView(newWebView)
                     }
@@ -176,25 +175,29 @@ class ProductActivity : AppCompatActivity() {
     private fun initProduct(productId: String?) {
         RetrofitClass.service.getSingleProductDataPage("$productId").enqueue(object :
             Callback<ProductData> {
+            @SuppressLint("SetTextI18n")
             override fun onResponse(call: Call<ProductData>, response: Response<ProductData>) {
                 if (response.isSuccessful) {
-                    var saleRate = 0
+                    val saleRate: Int
                     // 정상적으로 통신이 성공된 경우
-                    var result: ProductData? = response.body()
+                    val result: ProductData? = response.body()
                     saleRate =
-                        100 - ((result?.i_now_price!!.toDouble() / result?.i_price!!.toDouble()) * 100).toInt()
+                        100 - ((result?.i_now_price!!.toDouble() / result.i_price!!.toDouble()) * 100).toInt()
                     binding.apply {
+                        if (this@ProductActivity.isFinishing) {
+                            return
+                        }
                         Glide.with(this@ProductActivity)
-                            .load(result?.i_image)
+                            .load(result.i_image)
                             .error(R.drawable.ic_no_image_svgrepo_com)
                             .into(productInfoImg)
-                        productInfoName.text = result?.i_name
-                        productInfoPrice.text = result?.i_price.toString() + "￦"
+                        productInfoName.text = result.i_name
+                        (result.i_price.toString() + "￦").also { productInfoPrice.text = it }
                         productInfoPrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-                        productInfoNowPrice.text = result?.i_now_price.toString() + "￦"
+                        productInfoNowPrice.text = result.i_now_price.toString() + "￦"
                         productInfoRate.text = "${saleRate}% 할인 가격"
-                        productInfoExp.text = "유통기한 : ${result?.i_exp}"
-                        productInfoExp.text = result?.i_store_name + " / 유통기한 : ${result?.i_exp}"
+                        productInfoExp.text = "유통기한 : ${result.i_exp}"
+                        productInfoExp.text = result.i_store_name + " / 유통기한 : ${result.i_exp}"
                     }
                 } else {
                     // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
@@ -205,7 +208,7 @@ class ProductActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<ProductData>, t: Throwable) {
                 // 통신 실패 (인터넷 끊킴, 예외 발생 등 시스템적인 이유)
-                Log.d("retrofit", "onFailure 에러: " + t.message.toString());
+                Log.d("retrofit", "onFailure 에러: " + t.message.toString())
             }
         })
     }
