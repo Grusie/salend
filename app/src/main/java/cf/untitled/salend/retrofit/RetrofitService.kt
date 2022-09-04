@@ -1,9 +1,6 @@
 package cf.untitled.salend.retrofit
 
-import cf.untitled.salend.model.ProductArray
-import cf.untitled.salend.model.ProductArray2
-import cf.untitled.salend.model.ProductData
-import cf.untitled.salend.model.StoreArray
+import cf.untitled.salend.model.*
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -52,6 +49,11 @@ interface RetrofitService {
     fun getItemFavor(
         @Query("fav") fav: String
     ): Call<ProductArray2>
+
+    @GET("buy/buylist")             //TODO buy api 생성되면 수정
+    fun getBuyList(
+        @Query("id") id: String
+    ): Call<BuyList>
 
 //    @GET("posts/1")
 //    fun getStudent(@Query("school_id") schoolId: Int,

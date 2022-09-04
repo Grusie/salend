@@ -40,7 +40,7 @@
                     style="@style/title_text_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="지역"
+                    android:text="지역을 선택 해주세요"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/location_tv" />
 
@@ -58,16 +58,16 @@
         </androidx.appcompat.widget.Toolbar>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:layout_marginHorizontal="@dimen/base_margin"
             android:id="@+id/search_view"
-            android:background="@drawable/border_radius"
-            android:backgroundTint="@color/light_gray"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/base_margin"
+            android:background="@drawable/border_radius"
+            android:backgroundTint="@color/light_gray"
             android:drawableLeft="@drawable/search_icon_resize"
-            android:paddingLeft="@dimen/base_padding"
-            android:hint="상품이나 카테고리를 검색해보세요."
             android:drawablePadding="@dimen/base_padding"
+            android:hint="상품이나 카테고리를 검색해보세요."
+            android:paddingLeft="@dimen/base_padding"
             android:textAlignment="viewStart"
             app:layout_constraintTop_toBottomOf="@id/main_toolbar" />
 
@@ -76,16 +76,15 @@
             android:layout_height="2dp"
             android:background="@color/light_gray"
             app:layout_constraintBottom_toTopOf="@id/category_linear"
-            app:layout_constraintTop_toBottomOf="@id/search_view"
-            />
+            app:layout_constraintTop_toBottomOf="@id/search_view" />
 
         <LinearLayout
             android:id="@+id/category_linear"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginVertical="@dimen/base_margin"
             android:orientation="vertical"
             android:weightSum="2"
-            android:layout_marginVertical="@dimen/base_margin"
             app:layout_constraintTop_toBottomOf="@id/search_view">
 
             <LinearLayout
@@ -106,17 +105,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:src="@drawable/korean_food_icon"
-                        android:padding="@dimen/half_padding"></ImageView>
+                        android:padding="@dimen/half_padding"
+                        android:src="@drawable/korean_food_icon"></ImageView>
 
                     <TextView
                         android:id="@+id/category_text_1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
+                        android:layout_marginTop="@dimen/half_margin"
                         android:textAlignment="center"
-                        tools:ignore="RtlCompat"
-                        android:layout_marginTop="@dimen/half_margin"/>
+                        tools:ignore="RtlCompat" />
                 </cf.untitled.salend.customView.CustomCardView>
 
                 <cf.untitled.salend.customView.CustomCardView
@@ -129,17 +128,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:src="@drawable/western_food_icon"
-                        android:padding="@dimen/half_padding"></ImageView>
+                        android:padding="@dimen/half_padding"
+                        android:src="@drawable/western_food_icon"></ImageView>
 
                     <TextView
                         android:id="@+id/category_text_2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
+                        android:layout_marginTop="@dimen/half_margin"
                         android:textAlignment="center"
-                        tools:ignore="RtlCompat"
-                        android:layout_marginTop="@dimen/half_margin"/>
+                        tools:ignore="RtlCompat" />
                 </cf.untitled.salend.customView.CustomCardView>
 
                 <cf.untitled.salend.customView.CustomCardView
@@ -152,17 +151,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:src="@drawable/chinese_food_icon"
-                        android:padding="@dimen/half_padding"></ImageView>
+                        android:padding="@dimen/half_padding"
+                        android:src="@drawable/chinese_food_icon"></ImageView>
 
                     <TextView
                         android:id="@+id/category_text_3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
+                        android:layout_marginTop="@dimen/half_margin"
                         android:textAlignment="center"
-                        tools:ignore="RtlCompat"
-                        android:layout_marginTop="@dimen/half_margin"/>
+                        tools:ignore="RtlCompat" />
                 </cf.untitled.salend.customView.CustomCardView>
 
                 <cf.untitled.salend.customView.CustomCardView
@@ -175,17 +174,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:src="@drawable/japanese_food_icon"
-                        android:padding="@dimen/half_padding"></ImageView>
+                        android:padding="@dimen/half_padding"
+                        android:src="@drawable/japanese_food_icon"></ImageView>
 
                     <TextView
                         android:id="@+id/category_text_4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
+                        android:layout_marginTop="@dimen/half_margin"
                         android:textAlignment="center"
-                        tools:ignore="RtlCompat"
-                        android:layout_marginTop="@dimen/half_margin"/>
+                        tools:ignore="RtlCompat" />
                 </cf.untitled.salend.customView.CustomCardView>
             </LinearLayout>
 
@@ -206,17 +205,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:src="@drawable/snack_food_icon"
-                        android:padding="@dimen/half_padding"></ImageView>
+                        android:padding="@dimen/half_padding"
+                        android:src="@drawable/snack_food_icon"></ImageView>
 
                     <TextView
                         android:id="@+id/category_text_5"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
+                        android:layout_marginTop="@dimen/half_margin"
                         android:textAlignment="center"
-                        tools:ignore="RtlCompat"
-                        android:layout_marginTop="@dimen/half_margin"/>
+                        tools:ignore="RtlCompat" />
                 </cf.untitled.salend.customView.CustomCardView>
 
                 <cf.untitled.salend.customView.CustomCardView
@@ -229,16 +228,16 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:src="@drawable/convenience_store_icon"
-                        android:padding="@dimen/half_padding"></ImageView>
+                        android:padding="@dimen/half_padding"
+                        android:src="@drawable/convenience_store_icon"></ImageView>
 
                     <TextView
                         android:id="@+id/category_text_6"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
-                        android:textAlignment="center"
                         android:layout_marginTop="@dimen/half_margin"
+                        android:textAlignment="center"
                         tools:ignore="RtlCompat" />
                 </cf.untitled.salend.customView.CustomCardView>
 
@@ -252,17 +251,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:src="@drawable/cafe_icon"
-                        android:padding="@dimen/half_padding"></ImageView>
+                        android:padding="@dimen/half_padding"
+                        android:src="@drawable/cafe_icon"></ImageView>
 
                     <TextView
                         android:id="@+id/category_text_7"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
+                        android:layout_marginTop="@dimen/half_margin"
                         android:textAlignment="center"
-                        tools:ignore="RtlCompat"
-                        android:layout_marginTop="@dimen/half_margin"/>
+                        tools:ignore="RtlCompat" />
                 </cf.untitled.salend.customView.CustomCardView>
 
                 <cf.untitled.salend.customView.CustomCardView
@@ -275,8 +274,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:src="@drawable/bakery_icon"
-                        android:padding="@dimen/half_padding"></ImageView>
+                        android:padding="@dimen/half_padding"
+                        android:src="@drawable/bakery_icon"></ImageView>
 
                     <TextView
                         android:id="@+id/category_text_8"
@@ -294,25 +293,24 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="@color/light_gray"
-            app:layout_constraintTop_toBottomOf="@id/category_linear"
             app:layout_constraintBottom_toTopOf="@id/nearby_sale_tab"
-            />
+            app:layout_constraintTop_toBottomOf="@id/category_linear" />
 
 
         <LinearLayout
             android:id="@+id/nearby_sale_tab"
-            android:layout_marginTop="@dimen/base_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/base_margin"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/category_linear"
-            app:layout_constraintBottom_toTopOf="@+id/endTime_sale_tab">
+            app:layout_constraintBottom_toTopOf="@+id/endTime_sale_tab"
+            app:layout_constraintTop_toBottomOf="@+id/category_linear">
 
             <TextView
                 style="@style/middle_title_text_style"
-                android:padding="@dimen/base_padding"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="@dimen/base_padding"
                 android:text="내 주변 할인상품" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -322,20 +320,22 @@
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
         </LinearLayout>
+
         <View
             android:id="@+id/horizon3"
-            app:layout_constraintTop_toBottomOf="@id/nearby_sale_tab"
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="@color/light_gray" />
+            android:background="@color/light_gray"
+            app:layout_constraintTop_toBottomOf="@id/nearby_sale_tab" />
+
         <LinearLayout
             android:id="@+id/endTime_sale_tab"
-            android:layout_marginTop="@dimen/base_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/base_margin"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/nearby_sale_tab"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nearby_sale_tab">
 
             <TextView
                 style="@style/middle_title_text_style"

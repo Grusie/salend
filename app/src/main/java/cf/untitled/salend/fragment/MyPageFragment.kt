@@ -3,13 +3,13 @@ package cf.untitled.salend.fragment
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import cf.untitled.salend.auth.LoginActivity
+import androidx.fragment.app.Fragment
 import cf.untitled.salend.MyApplication
 import cf.untitled.salend.R
+import cf.untitled.salend.auth.LoginActivity
 import cf.untitled.salend.databinding.FragmentMyPageBinding
 import com.google.firebase.firestore.FirebaseFirestore
 import com.kakao.sdk.auth.AuthApiClient
@@ -27,7 +27,7 @@ private const val ARG_PARAM2 = "param2"
  */
 class MyPageFragment : Fragment() {
     lateinit var binding: FragmentMyPageBinding
-    //var current_user_email : String? = null
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -58,40 +58,40 @@ class MyPageFragment : Fragment() {
         }
         return binding.root
     }
-    private fun kakaoLogout(){
+
+    private fun kakaoLogout() {
         UserApiClient.instance.logout { error ->
             if (error != null) {
                 Log.e("grusie", "로그아웃 실패. SDK에서 토큰 삭제됨", error)
-            }
-            else {
+            } else {
                 Log.i("grusie", "로그아웃 성공. SDK에서 토큰 삭제됨")
             }
         }
     }
+
     override fun onResume() {
         super.onResume()
 
-        if(MyApplication.checkAuth()) changeLoginStatus("LogIn")
+        if (MyApplication.checkAuth()) changeLoginStatus("LogIn")
         else changeLoginStatus("LogOut")
 
         if (AuthApiClient.instance.hasToken()) {
             UserApiClient.instance.me { user, error ->
-                    if(error != null){
-                        Log.e("grusie", "사용자 정보 요청 실패", error)
-                        kakaoLogout()
-                        changeLoginStatus("LogOut")
-                    }
-                    else if(user != null){
-                        changeLoginStatus("kakao")
-                    }
+                if (error != null) {
+                    Log.e("grusie", "사용자 정보 요청 실패", error)
+                    kakaoLogout()
+                    changeLoginStatus("LogOut")
+                } else if (user != null) {
+                    changeLoginStatus("kakao")
                 }
+            }
         }
     }
 
     private fun changeLoginStatus(status: String) {
-        if(status == "LogIn"){
-            binding.apply{
-                if(MyApplication.checkAuth())
+        if (status == "LogIn") {
+            binding.apply {
+                if (MyApplication.checkAuth())
                     MyApplication.current_user_email = MyApplication.auth.currentUser?.email!!
 
                 MyApplication.db = FirebaseFirestore.getInstance()
@@ -104,18 +104,17 @@ class MyPageFragment : Fragment() {
                 val docRef = MyApplication.db.collection("profile")
                 docRef.whereEqualTo("u_id", MyApplication.current_user_email).get()
                     .addOnSuccessListener { document ->
-                        for(fields in document){
+                        for (fields in document) {
                             authInfo.text = fields["u_name"] as String + "님 반갑습니다."
                         }
-                        Log.d("grusie","asasd")
+                        Log.d("grusie", "asasd")
                     }
                     .addOnFailureListener { exception ->
                         Log.d("grusie", "get failed with ", exception)
                     }
             }
-            
-        }
-        else if(status == "LogOut") {
+
+        } else if (status == "LogOut") {
             binding.apply {
                 profileImg.visibility = View.GONE
                 authInfo.visibility = View.GONE
@@ -124,9 +123,8 @@ class MyPageFragment : Fragment() {
                 MyApplication.current_user_email = null
                 authInfo.text = ""
             }
-        }
-        else if(status == "kakao"){
-            Log.d("grusie","kakaoLogin?")
+        } else if (status == "kakao") {
+            Log.d("grusie", "kakaoLogin?")
             binding.apply {
                 MyApplication.db = FirebaseFirestore.getInstance()
                 profileImg.visibility = View.VISIBLE
@@ -138,8 +136,7 @@ class MyPageFragment : Fragment() {
                 UserApiClient.instance.me { user, error ->
                     if (error != null) {
                         Log.e("name", "사용자 정보 요청 실패", error)
-                    }
-                    else if (user != null) {/*
+                    } else if (user != null) {/*
                         Log.i("name", "사용자 정보 요청 성공" +
                                 "\n회원번호: ${user.id}" +
                                 "\n이메일: ${user.kakaoAccount?.email}" +
@@ -153,7 +150,7 @@ class MyPageFragment : Fragment() {
                                 for (fields in document) {
                                     authInfo.text = "안녕하세요 " + fields["u_name"] as String + "님!"
                                 }
-                            }.addOnFailureListener{ exception ->
+                            }.addOnFailureListener { exception ->
                                 Log.d("grusie", "get failed with ", exception)
                             }
                         profileImg.setImageResource(R.drawable.ic_person_selected)

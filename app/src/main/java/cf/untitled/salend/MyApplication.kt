@@ -49,6 +49,10 @@ class MyApplication : MultiDexApplication() {
             }
         }
 
+        fun checkLogIn(): Boolean {
+            return (current_user_email != null && current_user_email != "")
+        }
+
 
         @JvmName("getStoreFavorite1")
         fun getStoreFavorite(): ArrayList<String?> {
@@ -94,7 +98,7 @@ class MyApplication : MultiDexApplication() {
             db = FirebaseFirestore.getInstance()
             val docRef = db.collection("profile")
 
-            val task = docRef.whereEqualTo("u_id", current_user_email!!).get()
+            val task = docRef.whereEqualTo("u_id", userId).get()
             var asd = Tasks.await(task)
             val uPay = asd.documents[0].data?.get("u_pay_list") as ArrayList<String?>?
             if (uPay != null)
@@ -109,30 +113,30 @@ class MyApplication : MultiDexApplication() {
             updatePayList(userId, lastPayList)
         }
 
-        fun updatePayList(userId: String, payList: ArrayList<String?>) {
+        private fun updatePayList(userId: String, payList: ArrayList<String?>) {
             db = FirebaseFirestore.getInstance()
             db.collection("profile").document(userId).update("u_pay_list", payList)
         }
 
-        fun updateStoreFavorite(userId: String, storeFavorite: ArrayList<String?>) {
+        private fun updateStoreFavorite(userId: String, storeFavorite: ArrayList<String?>) {
             db = FirebaseFirestore.getInstance()
             db.collection("profile").document(userId).update("u_store_favorite", storeFavorite)
         }
 
-        fun updateProductFavorite(userId: String, productFavorite: ArrayList<String?>) {
+        private fun updateProductFavorite(userId: String, productFavorite: ArrayList<String?>) {
             db = FirebaseFirestore.getInstance()
             db.collection("profile").document(userId).update("u_item_favorite", productFavorite)
         }
 
         fun delStoreFavorite(userId: String, storeId: String) {
             val lastStoreFavorite = this.getStoreFavorite()
-            lastStoreFavorite.removeAll(listOf(storeId))
+            lastStoreFavorite.removeAll(listOf(storeId).toSet())
             updateStoreFavorite(userId, lastStoreFavorite)
         }
 
         fun delProductFavorite(userId: String, productId: String) {
             val lastProductFavorite = this.getProductFavorite()
-            lastProductFavorite.removeAll(listOf(productId))
+            lastProductFavorite.removeAll(listOf(productId).toSet())
             updateProductFavorite(userId, lastProductFavorite)
         }
 

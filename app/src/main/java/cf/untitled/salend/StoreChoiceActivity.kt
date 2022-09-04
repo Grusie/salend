@@ -86,7 +86,7 @@ class StoreChoiceActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.product_menu, menu)
-        if (MyApplication.current_user_email != null && MyApplication.current_user_email != "") {
+        if (MyApplication.checkLogIn()) {
             thread(start = true) {
                 val flag = MyApplication.checkStoreFavorite(storeId)
                 runOnUiThread {
@@ -133,7 +133,7 @@ class StoreChoiceActivity : AppCompatActivity() {
         } else {
             item.icon = ContextCompat.getDrawable(this, R.drawable.ic_star)
             thread(start = true) {
-                MyApplication.delProductFavorite(MyApplication.current_user_email!!, storeId)
+                MyApplication.delStoreFavorite(MyApplication.current_user_email!!, storeId)
             }
             item.isChecked = false
         }

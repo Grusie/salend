@@ -212,7 +212,7 @@ class ProductActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.product_menu, menu)
-        if (MyApplication.current_user_email != null && MyApplication.current_user_email != "") {
+        if (MyApplication.checkLogIn()) {
             thread(start = true) {
                 val flag = MyApplication.checkProductFavorite(productId)
                 runOnUiThread {

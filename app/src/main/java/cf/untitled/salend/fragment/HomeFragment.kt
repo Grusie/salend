@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,8 +12,12 @@ import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.cardview.widget.CardView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import cf.untitled.salend.*
+import cf.untitled.salend.LocationSelectActivity
+import cf.untitled.salend.MyApplication
+import cf.untitled.salend.R
+import cf.untitled.salend.SearchActivity
 import cf.untitled.salend.adapter.NearbySaleRecyclerAdapter
 import cf.untitled.salend.databinding.FragmentHomeBinding
 import cf.untitled.salend.model.ProductArray
@@ -50,8 +53,10 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        MyApplication.sharedPref = requireActivity().getSharedPreferences("location", Context.MODE_PRIVATE)
-        MyApplication.edit = MyApplication.sharedPref.edit()        //Location을 저장할 SharedPreference 선언
+        MyApplication.sharedPref =
+            requireActivity().getSharedPreferences("location", Context.MODE_PRIVATE)
+        MyApplication.edit =
+            MyApplication.sharedPref.edit()        //Location을 저장할 SharedPreference 선언
 
         binding = FragmentHomeBinding.inflate(layoutInflater)
         val textViewList: Array<TextView> = arrayOf(        //카테고리 버튼 배열
@@ -76,11 +81,11 @@ class HomeFragment : Fragment() {
         )
         val stringArray = resources.getStringArray(R.array.category)
 
-        for(i in stringArray.indices) {
+        for (i in stringArray.indices) {
             textViewList[i].text = stringArray[i]
         }
 
-        binding.locationInfo.text = MyApplication.sharedPref.getString("location","지역")
+        binding.locationInfo.text = MyApplication.sharedPref.getString("location", "지역")
         activityResultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {      //액티비티 결과 콜백 지정
                 if (it.resultCode == Activity.RESULT_OK) {
@@ -99,7 +104,7 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
-        for(i: Int in btnList.indices){
+        for (i: Int in btnList.indices) {
             btnList[i].setOnClickListener {
                 /*val intent01 = Intent(this.context, CategoryActivity::class.java)
                 intent01.putExtra("storeName", textViewList[i].text.toString())*/
@@ -135,36 +140,40 @@ class HomeFragment : Fragment() {
     private fun initRecyclerView(): View? {     //retrofit통신으로, ProductArray형태를 받아 옴
         var nearbyProductList = ArrayList<ProductData>()
         var endTimeProductList = ArrayList<ProductData>()
-        var latitude = MyApplication.sharedPref.getString("latitude","0")
-        var longitude = MyApplication.sharedPref.getString("longitude","0")
-        RetrofitClass.service.getProductArrayPage("${latitude},${longitude}").enqueue(object : Callback<ProductArray> {
-            override fun onResponse(call: Call<ProductArray>, response: Response<ProductArray>) {
-                if (response.isSuccessful) {
+        var latitude = MyApplication.sharedPref.getString("latitude", "0")
+        var longitude = MyApplication.sharedPref.getString("longitude", "0")
+        RetrofitClass.service.getProductArrayPage("${latitude},${longitude}")
+            .enqueue(object : Callback<ProductArray> {
+                override fun onResponse(
+                    call: Call<ProductArray>,
+                    response: Response<ProductArray>
+                ) {
+                    if (response.isSuccessful) {
 
-                    // 정상적으로 통신이 성공된 경우
-                    var result: ProductArray? = response.body()
-                    result?.near_by?.let { nearbyProductList.addAll(it) }
-                    result?.end_time?.let { endTimeProductList.addAll(it.reversed()) }
-                    Log.d("product","$nearbyProductList")
-                    Log.d("product","$endTimeProductList")
-                    recyclerSetData(nearbyProductList, endTimeProductList)
+                        // 정상적으로 통신이 성공된 경우
+                        var result: ProductArray? = response.body()
+                        result?.near_by?.let { nearbyProductList.addAll(it) }
+                        result?.end_time?.let { endTimeProductList.addAll(it.reversed()) }
+                        Log.d("product", "$nearbyProductList")
+                        Log.d("product", "$endTimeProductList")
+                        setRecyclerData(nearbyProductList, endTimeProductList)
 
-                } else {
-                    // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
-                    Log.d("retrofit", "${response.code()}")
-                    Log.d("retrofit", "onResponse 실패")
+                    } else {
+                        // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
+                        Log.d("retrofit", "${response.code()}")
+                        Log.d("retrofit", "onResponse 실패")
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<ProductArray>, t: Throwable) {
-                // 통신 실패 (인터넷 끊킴, 예외 발생 등 시스템적인 이유)
-                Log.d("retrofit", "onFailure 에러: " + t.message.toString())
-            }
-        })
+                override fun onFailure(call: Call<ProductArray>, t: Throwable) {
+                    // 통신 실패 (인터넷 끊킴, 예외 발생 등 시스템적인 이유)
+                    Log.d("retrofit", "onFailure 에러: " + t.message.toString())
+                }
+            })
         return binding.root
     }
 
-    private fun recyclerSetData(        //리사이클러 뷰 데이터 지정
+    private fun setRecyclerData(        //리사이클러 뷰 데이터 지정
         nearByProductList: ArrayList<ProductData>,
         endTimeProductList: ArrayList<ProductData>
     ) {
