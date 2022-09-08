@@ -55,9 +55,9 @@ interface RetrofitService {     //retrofit 통신에 사용할 함수들을 정�
     ): Call<ProductArray2>
 
     //결제 목록들을 가져옴
-    @GET("buy/buylist")             //TODO buy api 생성되면 수정
+    @GET("pay/buys")             //TODO buy api 생성되면 수정
     fun getBuyList(
-        @Query("id") id: String
+        @Query("buys") buys: String
     ): Call<BuyList>
 
 }

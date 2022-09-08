@@ -61,7 +61,7 @@ class LikeFragment : Fragment() {       //찜 페이지 프래그먼트
                 favItemStrArray = ArrayList()
                 favorStoreList = ArrayList()
                 favorItemList = ArrayList()
-                
+
                 refreshList()
             }
         }
@@ -198,14 +198,16 @@ class LikeFragment : Fragment() {       //찜 페이지 프래그먼트
     @Deprecated("Deprecated in Java")
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
-        if (initFlag) {
-            Thread {
-                run {
-                    f.favoritePageItemButton.isSelected = true
-                    f.favoritePageStoreButton.isSelected = false
-                    refreshList()
-                }
-            }.start()
+        if (isVisibleToUser) {
+            if (initFlag) {
+                Thread {
+                    run {
+                        f.favoritePageItemButton.isSelected = true
+                        f.favoritePageStoreButton.isSelected = false
+                        refreshList()
+                    }
+                }.start()
+            }
         }
     }
 }

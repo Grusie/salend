@@ -1,5 +1,6 @@
 package cf.untitled.salend.adapter
 
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -7,6 +8,8 @@ import cf.untitled.salend.R
 import cf.untitled.salend.databinding.ItemPayBinding
 import cf.untitled.salend.model.BuyData
 import com.bumptech.glide.Glide
+import org.json.JSONObject
+import java.text.SimpleDateFormat
 
 //결제 리스트를 띄우기 위한 리사이클러뷰 구조 구현
 class PayAdapter(private var data: ArrayList<BuyData>) :
@@ -38,13 +41,18 @@ class PayAdapter(private var data: ArrayList<BuyData>) :
 
     override fun onBindViewHolder(holder: PayViewHolder, position: Int) {
         val buyInfo = data[position]
+        val itemInfo = JSONObject(buyInfo.b_item)
         holder.apply {
-            productName.text = buyInfo.b_item?.i_name
-            storeName.text = buyInfo.b_item?.i_store_name
-            price.text = buyInfo.b_item?.i_price.toString()
-            nowPrice.text = buyInfo.b_item?.i_now_price.toString()
-            date.text = buyInfo.b_date.toString()
-            Glide.with(img.context).load(buyInfo.b_item?.i_image)
+            price.paintFlags = price.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            productName.text = itemInfo.getString("i_name")
+            storeName.text = itemInfo.getString("i_store_name")
+            price.text = itemInfo.getString("i_price") + "￦"
+            nowPrice.text = itemInfo.getString("i_now_price") + "￦"
+
+            val pattern = "yyyy.MM.dd"
+            val simpleDateFormat = SimpleDateFormat(pattern)
+            date.text = simpleDateFormat.format(buyInfo.b_date)
+            Glide.with(img.context).load(itemInfo.getString("i_image"))
                 .error(R.drawable.ic_shopping_selected).into(img)
         }
     }
